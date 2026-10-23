@@ -660,6 +660,10 @@ export type Messages = {
   "waalerts.numberLabel": string;
   "waalerts.numberHint": string;
   "waalerts.consent": string;
+  "waalerts.titleEmployer": string;
+  "waalerts.onDescEmployer": string;
+  "waalerts.offDescEmployer": string;
+  "waalerts.consentEmployer": string;
   "waalerts.turnOn": string;
   "waalerts.turnOff": string;
   "waalerts.saving": string;

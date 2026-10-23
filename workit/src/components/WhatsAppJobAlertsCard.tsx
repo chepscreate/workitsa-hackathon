@@ -28,10 +28,21 @@ function toWa(raw: string): string {
 
 const isValidSaMobile = (wa: string) => /^27[6-8]\d{8}$/.test(wa);
 
-export default function WhatsAppJobAlertsCard({ profile }: { profile: UserProfile }) {
+export default function WhatsAppJobAlertsCard({
+  profile,
+  variant = "worker",
+}: {
+  profile: UserProfile;
+  variant?: "worker" | "employer";
+}) {
   const { refreshProfile } = useAuth();
   const { t } = useTranslation();
   const on = !!profile.whatsappJobOptIn;
+  const emp = variant === "employer";
+  const titleKey = emp ? "waalerts.titleEmployer" : "waalerts.title";
+  const onDescKey = emp ? "waalerts.onDescEmployer" : "waalerts.onDesc";
+  const offDescKey = emp ? "waalerts.offDescEmployer" : "waalerts.offDesc";
+  const consentKey = emp ? "waalerts.consentEmployer" : "waalerts.consent";
 
   const [editing, setEditing] = useState(false);
   const [number, setNumber] = useState(profile.whatsappNumber || profile.phone || "");
@@ -82,7 +93,7 @@ export default function WhatsAppJobAlertsCard({ profile }: { profile: UserProfil
           <span className="text-xl leading-none mt-0.5" aria-hidden>💬</span>
           <div className="min-w-0">
             <p className="font-medium text-[var(--color-ink)]">
-              {t("waalerts.title")}
+              {t(titleKey)}
               {on && (
                 <span className="ml-2 text-xs font-semibold text-[var(--color-sage-600)]">
                   ● {t("waalerts.on")}
@@ -90,7 +101,7 @@ export default function WhatsAppJobAlertsCard({ profile }: { profile: UserProfil
               )}
             </p>
             <p className="text-xs text-[var(--color-ink-muted)] mt-0.5 max-w-md">
-              {on ? t("waalerts.onDesc") : t("waalerts.offDesc")}
+              {on ? t(onDescKey) : t(offDescKey)}
             </p>
           </div>
         </div>
@@ -139,7 +150,7 @@ export default function WhatsAppJobAlertsCard({ profile }: { profile: UserProfil
               onChange={(e) => setConsent(e.target.checked)}
               className="w-5 h-5 mt-0.5 accent-[var(--color-sage-600)]"
             />
-            <span className="text-sm text-[var(--color-ink-soft)]">{t("waalerts.consent")}</span>
+            <span className="text-sm text-[var(--color-ink-soft)]">{t(consentKey)}</span>
           </label>
 
           {error && <p className="text-xs text-[var(--color-brick)]">{error}</p>}

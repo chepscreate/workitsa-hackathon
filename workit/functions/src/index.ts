@@ -104,6 +104,7 @@ export {
   onJobVisibleWhatsAppAlert,
   onJobConfirmedWhatsAppRecord,
   onOfferResolvedWhatsApp,
+  onOfferCreatedNotifyEmployerWhatsApp,
 } from "./whatsappJobChannel";
 
 export { onBusinessLeadCreated } from "./businessLeads";

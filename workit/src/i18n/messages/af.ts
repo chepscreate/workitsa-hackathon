@@ -748,6 +748,13 @@ const af: Messages = {
   "waalerts.numberHint": "SA-nommer, bv. 067 748 2643. Ons stuur net werkwaarskuwings — nooit jou ID of iemand se adres nie.",
   "waalerts.consent":
     "Ek stem in om werkwaarskuwings op WhatsApp te ontvang. Ek kan enige tyd STOP antwoord.",
+  "waalerts.titleEmployer": "Huur op WhatsApp",
+  "waalerts.onDescEmployer":
+    "Aan — ons stuur jou 'n WhatsApp wanneer 'n werker 'n aanbod maak. Antwoord OFFERS om te sien, dan ACCEPT of DECLINE hier.",
+  "waalerts.offDescEmployer":
+    "Kry aanbodwaarskuwings op WhatsApp en huur sonder om die app oop te maak — sien aanbiedinge en kies die regte werker met een antwoord.",
+  "waalerts.consentEmployer":
+    "Ek stem in om aanbodwaarskuwings op WhatsApp te ontvang. Ek kan enige tyd STOP antwoord.",
   "waalerts.turnOn": "Skakel aan",
   "waalerts.turnOff": "Skakel af",
   "waalerts.saving": "Stoor tans…",

@@ -1,5 +1,31 @@
 # Workit — Changelog
 
+## 2026-10-23 (WhatsApp — employers accept/decline offers over WhatsApp)
+
+### Added — employer side of the WhatsApp loop
+Employers can now hire entirely over WhatsApp, closing the two-sided loop
+(worker offers over WhatsApp → employer accepts over WhatsApp).
+In [whatsappJobChannel.ts](workit/functions/src/whatsappJobChannel.ts):
+- **`onOfferCreatedNotifyEmployerWhatsApp`** (new trigger, exported in
+  [index.ts](workit/functions/src/index.ts)) — when a worker makes an offer, the
+  employer (if WhatsApp-opted-in) gets a WhatsApp notice. In-window → free text
+  with the `OFFERS` prompt; cold → `offer_received` template (⚠ to be submitted
+  for approval).
+- **Employer commands in `handleWhatsAppJobReply`** — messages from an
+  employer-side user route to a new `handleEmployerReply`:
+  - **`OFFERS`** — lists their pending offers, numbered, and remembers the list.
+  - **`ACCEPT n`** — hires offer #n via `acceptOfferServer` (mirrors the
+    single-worker path of `lib/jobs.ts` acceptOffer: assigns the job, sets
+    `agreedPrice` + `requireStartPin`, auto-rejects the other pending offers).
+    Setting the offer to `accepted` fires the existing `onOfferResolvedWhatsApp`
+    (worker is WhatsApp'd) + `onOfferAccepted` email/push. Crew jobs defer to the app.
+  - **`DECLINE n`** — rejects offer #n. Accept requires an explicit `ACCEPT`/`HIRE`
+    word so a stray "ok"/"yes" can never hire by accident.
+- **Opt-in UI** — `WhatsAppJobAlertsCard` gained an `employer` variant (new
+  `waalerts.*Employer` keys in en/af/zu); rendered in the employer account section.
+
+tsc clean (app + functions); production build clean.
+
 ## 2026-10-20 (WhatsApp — offer feedback + quote-tolerant pricing)
 
 ### Fixed — counter-offer price ignored when wrapped in quotes

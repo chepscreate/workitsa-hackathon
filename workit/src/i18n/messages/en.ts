@@ -744,6 +744,13 @@ const en: Messages = {
   "waalerts.numberHint": "SA number, e.g. 067 748 2643. We only send job alerts — never your ID or anyone's address.",
   "waalerts.consent":
     "I agree to receive job alerts on WhatsApp. I can reply STOP any time.",
+  "waalerts.titleEmployer": "Hire on WhatsApp",
+  "waalerts.onDescEmployer":
+    "On — we'll WhatsApp you when a worker makes an offer. Reply OFFERS to review, then ACCEPT or DECLINE right here.",
+  "waalerts.offDescEmployer":
+    "Get offer alerts on WhatsApp and hire without opening the app — review offers and accept the right worker in one reply.",
+  "waalerts.consentEmployer":
+    "I agree to receive offer alerts on WhatsApp. I can reply STOP any time.",
   "waalerts.turnOn": "Turn on",
   "waalerts.turnOff": "Turn off",
   "waalerts.saving": "Saving…",

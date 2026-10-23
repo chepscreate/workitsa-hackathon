@@ -294,6 +294,11 @@ function AccountInner() {
         </div>
       )}
 
+      {/* Employer WhatsApp opt-in (review + accept/decline offers over WhatsApp) */}
+      {isEmployerSide(role) && profile && (
+        <WhatsAppJobAlertsCard profile={profile} variant="employer" />
+      )}
+
       {isEmployerSide(role) && (
         <section className="mb-8">
           <div className="flex items-end justify-between gap-3 mb-4 flex-wrap">

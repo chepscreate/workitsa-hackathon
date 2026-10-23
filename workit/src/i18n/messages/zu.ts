@@ -753,6 +753,13 @@ const zu: Messages = {
   "waalerts.numberHint": "Inombolo yase-SA, isb. 067 748 2643. Sithumela izexwayiso zomsebenzi kuphela — akusona i-ID yakho noma ikheli lomuntu.",
   "waalerts.consent":
     "Ngiyavuma ukuthola izexwayiso zomsebenzi ku-WhatsApp. Ngingaphendula ngo-STOP noma nini.",
+  "waalerts.titleEmployer": "Qasha ku-WhatsApp",
+  "waalerts.onDescEmployer":
+    "Kuvuliwe — sizokuthumela i-WhatsApp lapho umsebenzi enza isiphakamiso. Phendula ngo-OFFERS ukubuka, bese u-ACCEPT noma u-DECLINE lapha.",
+  "waalerts.offDescEmployer":
+    "Thola izexwayiso zeziphakamiso ku-WhatsApp uqashe ngaphandle kokuvula i-app — buka iziphakamiso ukhethe umsebenzi ofanele ngempendulo eyodwa.",
+  "waalerts.consentEmployer":
+    "Ngiyavuma ukuthola izexwayiso zeziphakamiso ku-WhatsApp. Ngingaphendula ngo-STOP noma nini.",
   "waalerts.turnOn": "Vula",
   "waalerts.turnOff": "Vala",
   "waalerts.saving": "Iyagcina…",

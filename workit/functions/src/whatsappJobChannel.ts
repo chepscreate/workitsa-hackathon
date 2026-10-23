@@ -35,7 +35,7 @@
  * POPIA: messages carry only job title, category, suburb/city and budget — never
  * ID numbers, exact addresses or customer phone numbers.
  */
-import { onDocumentWritten, onDocumentUpdated } from "firebase-functions/v2/firestore";
+import { onDocumentWritten, onDocumentUpdated, onDocumentCreated } from "firebase-functions/v2/firestore";
 import { logger } from "firebase-functions";
 import { defineSecret } from "firebase-functions/params";
 import { getFirestore, FieldValue } from "firebase-admin/firestore";
@@ -49,6 +49,9 @@ const WHATSAPP_PHONE_NUMBER_ID = defineSecret("WHATSAPP_PHONE_NUMBER_ID");
 const GRAPH_VERSION = "v21.0";
 /** Approved template name (see the ops doc for the exact submitted copy). */
 const JOB_ALERT_TEMPLATE = "job_alert";
+/** Cold "new offer" notice to an employer. ⚠ Submit + get approved before cold
+ *  sends work; in-window (employer texted us in 24h) uses free text instead. */
+const OFFER_RECEIVED_TEMPLATE = "offer_received";
 const TEMPLATE_LANG = "en";
 
 // --- Matching (mirrors jobAlerts.ts) ---
@@ -74,9 +77,22 @@ const REPORT = /^report\b/i;
 const OFFER = /^offer[\s"'“”‘’]+(?:r\s*)?(\d{2,6})\b/i;
 /** A bare "1", or "1 400" / 1 "400" → pick job #1 (optionally counter R400). */
 const NUMBER = /^([1-9])(?:[\s"'“”‘’]+(?:r\s*)?(\d{2,6}))?\b/i;
+
+// --- Employer-side commands (accept/decline offers over WhatsApp) ---
+/** List the employer's pending offers. */
+const OFFERS = /^(?:offers?|my offers?|pending)\b/i;
+/** ACCEPT / ACCEPT 1 / HIRE 1 → hire offer #n (or the only pending one).
+ *  Explicit word required — a stray "ok"/"yes" must never hire by accident. */
+const EMP_ACCEPT = /^(?:accept|hire)\b\s*(\d+)?/i;
+/** DECLINE / DECLINE 1 / REJECT 2 / PASS → decline offer #n (or the only one). */
+const EMP_DECLINE = /^(?:decline|reject|deny|pass)\b\s*(\d+)?/i;
+
+const isEmployerSideRole = (r?: string) => r === "employer" || r === "business";
+
 const isJobKeyword = (t: string) =>
   ACCEPT.test(t) || START.test(t) || DONE.test(t) || STOP.test(t) || JOBS.test(t)
-  || AVAILABLE.test(t) || SOS.test(t) || REPORT.test(t) || OFFER.test(t) || NUMBER.test(t);
+  || AVAILABLE.test(t) || SOS.test(t) || REPORT.test(t) || OFFER.test(t) || NUMBER.test(t)
+  || OFFERS.test(t) || EMP_DECLINE.test(t);
 
 type JobDoc = {
   title?: string;
@@ -125,6 +141,8 @@ type ThreadDoc = {
   lastJobTitle?: string;
   lastInboundAt?: number;
   lastList?: string[];
+  /** Employer's last numbered offers list (for ACCEPT n / DECLINE n). */
+  empOfferList?: Array<{ jobId: string; offerId: string }>;
 };
 
 const onlyDigits = (s: string) => (s ?? "").replace(/\D/g, "");
@@ -395,6 +413,179 @@ async function lookupWorkerByWa(wa: string): Promise<WorkerDoc | null> {
   return { ...(d.data() as WorkerDoc), uid: d.id };
 }
 
+// ---------- Employer side: accept / decline offers over WhatsApp ----------
+
+type OfferFull = {
+  status?: string;
+  workerId?: string;
+  workerName?: string;
+  workerPhotoURL?: string | null;
+  price?: number;
+  createdAt?: number;
+};
+
+/** Pending offers across an employer's still-open jobs, oldest first. */
+async function listEmployerPendingOffers(
+  employerUid: string,
+): Promise<Array<{ jobId: string; offerId: string; title: string; workerName: string; price: number }>> {
+  const db = getFirestore();
+  const jobsSnap = await db.collection("jobs").where("employerId", "==", employerUid).get();
+  const out: Array<{ jobId: string; offerId: string; title: string; workerName: string; price: number; at: number }> = [];
+  await Promise.all(
+    jobsSnap.docs.map(async (jd) => {
+      const j = jd.data() as JobDoc;
+      if (j.status !== "open") return; // only jobs that can still be filled
+      const offersSnap = await db.collection(`jobs/${jd.id}/offers`).where("status", "==", "pending").get();
+      offersSnap.forEach((od) => {
+        const o = od.data() as OfferFull;
+        out.push({
+          jobId: jd.id,
+          offerId: od.id,
+          title: j.title ?? "Job",
+          workerName: o.workerName ?? "A worker",
+          price: typeof o.price === "number" ? o.price : (j.suggestedPrice ?? 0),
+          at: Number(o.createdAt ?? 0),
+        });
+      });
+    }),
+  );
+  out.sort((a, b) => a.at - b.at);
+  return out.slice(0, 9).map(({ at, ...rest }) => { void at; return rest; });
+}
+
+/**
+ * Accept an offer server-side — mirrors the single-worker path of
+ * lib/jobs.ts acceptOffer: flip the offer to accepted, assign the job, and
+ * auto-reject the other pending offers. Setting offer.status fires the existing
+ * onOfferResolvedWhatsApp (worker gets WhatsApp'd) + onOfferAccepted email/push.
+ * Crew jobs (workersNeeded > 1) are deferred to the app.
+ */
+async function acceptOfferServer(jobId: string, offerId: string): Promise<"ok" | "gone" | "crew"> {
+  const db = getFirestore();
+  const jobRef = db.doc(`jobs/${jobId}`);
+  const jobSnap = await jobRef.get();
+  const job = jobSnap.exists ? (jobSnap.data() as JobDoc & { workersNeeded?: number; assignedAt?: number }) : null;
+  if (!job || job.status !== "open") return "gone";
+  if ((job.workersNeeded ?? 1) > 1) return "crew";
+
+  const offerRef = db.doc(`jobs/${jobId}/offers/${offerId}`);
+  const offerSnap = await offerRef.get();
+  const offer = offerSnap.exists ? (offerSnap.data() as OfferFull) : null;
+  if (!offer || offer.status !== "pending" || !offer.workerId) return "gone";
+
+  const now = Date.now();
+  await offerRef.set({ status: "accepted" }, { merge: true });
+  await jobRef.set(
+    {
+      status: "assigned",
+      assignedWorkerId: offer.workerId,
+      assignedWorkerName: offer.workerName ?? "A worker",
+      ...(offer.workerPhotoURL ? { assignedWorkerPhotoURL: offer.workerPhotoURL } : {}),
+      assignedWorkerIds: [offer.workerId],
+      agreedPrice: typeof offer.price === "number" ? offer.price : (job.suggestedPrice ?? 0),
+      ...(job.assignedAt ? {} : { assignedAt: now }),
+      // Safety default (matches the in-app accept): doorstep start code on.
+      requireStartPin: true,
+      updatedAt: now,
+    },
+    { merge: true },
+  );
+  // Auto-reject the remaining pending offers (each fires the worker's notice).
+  const others = await db.collection(`jobs/${jobId}/offers`).where("status", "==", "pending").get();
+  await Promise.all(
+    others.docs.filter((d) => d.id !== offerId).map((d) => d.ref.set({ status: "rejected" }, { merge: true })),
+  );
+  return "ok";
+}
+
+/**
+ * Handle an employer's WhatsApp message: OFFERS (list), ACCEPT n (hire),
+ * DECLINE n (pass). Returns true if handled, false to fall through to support.
+ */
+async function handleEmployerReply(args: {
+  fromRaw: string;
+  text: string;
+  employer: WorkerDoc;
+  threadRef: FirebaseFirestore.DocumentReference;
+  send: (to: string, body: string) => Promise<void>;
+}): Promise<boolean> {
+  const { fromRaw, text, employer, threadRef, send } = args;
+  const db = getFirestore();
+
+  // --- OFFERS: list pending offers, numbered, and remember the list ---
+  if (OFFERS.test(text)) {
+    const list = await listEmployerPendingOffers(employer.uid);
+    if (list.length === 0) {
+      await send(fromRaw, "You have no pending offers right now. We'll WhatsApp you the moment a worker makes one. 👍");
+      return true;
+    }
+    const lines = list.map((x, i) => `*${i + 1}.* ${x.workerName} — *R${x.price}* — "${x.title.slice(0, 40)}"`);
+    await threadRef.set(
+      { empOfferList: list.map((x) => ({ jobId: x.jobId, offerId: x.offerId })), empOfferListAt: Date.now() },
+      { merge: true },
+    );
+    await send(
+      fromRaw,
+      `📋 *Your pending offers:*\n\n${lines.join("\n")}\n\nReply *ACCEPT 1* to hire, or *DECLINE 1* to pass.`,
+    );
+    return true;
+  }
+
+  // --- ACCEPT n / DECLINE n (bare ACCEPT/DECLINE work when there's one offer) ---
+  const am = text.match(EMP_ACCEPT);
+  const dm = text.match(EMP_DECLINE);
+  if (am || dm) {
+    const isAccept = !!am;
+    const numStr = am?.[1] ?? dm?.[1];
+
+    // Prefer the remembered list; otherwise fetch a fresh one.
+    const thread = (await threadRef.get()).data() as ThreadDoc | undefined;
+    let list = Array.isArray(thread?.empOfferList) ? thread!.empOfferList! : [];
+    if (list.length === 0) {
+      const fresh = await listEmployerPendingOffers(employer.uid);
+      list = fresh.map((x) => ({ jobId: x.jobId, offerId: x.offerId }));
+      await threadRef.set({ empOfferList: list, empOfferListAt: Date.now() }, { merge: true });
+    }
+    if (list.length === 0) {
+      await send(fromRaw, "You have no pending offers to act on right now. Text *OFFERS* to check.");
+      return true;
+    }
+    const idx = numStr ? parseInt(numStr, 10) - 1 : list.length === 1 ? 0 : -1;
+    if (idx < 0 || idx >= list.length) {
+      await send(
+        fromRaw,
+        `Reply *${isAccept ? "ACCEPT" : "DECLINE"} 1* with the number from your offers list. Text *OFFERS* to see it.`,
+      );
+      return true;
+    }
+    const pick = list[idx];
+
+    if (isAccept) {
+      const outcome = await acceptOfferServer(pick.jobId, pick.offerId);
+      await send(
+        fromRaw,
+        outcome === "ok"
+          ? "✅ *Hired!* The worker has been notified on WhatsApp and the job is now assigned. Other offers on it were declined automatically."
+          : outcome === "crew"
+            ? "This is a multi-worker (crew) job — please accept crew offers in the app so you can manage the whole team."
+            : "That offer is no longer available (the job may have just been filled or closed). Text *OFFERS* to see what's still open.",
+      );
+    } else {
+      const offerRef = db.doc(`jobs/${pick.jobId}/offers/${pick.offerId}`);
+      const os = await offerRef.get();
+      if (os.exists && (os.data() as OfferFull).status === "pending") {
+        await offerRef.set({ status: "rejected" }, { merge: true });
+        await send(fromRaw, "👍 Offer declined — the worker has been let know. Text *OFFERS* to review the rest.");
+      } else {
+        await send(fromRaw, "That offer isn't pending anymore. Text *OFFERS* to see your current offers.");
+      }
+    }
+    return true;
+  }
+
+  return false; // not an employer command → let support handle it
+}
+
 /**
  * Try to handle an inbound WhatsApp message as a worker job command.
  * Returns true if handled here (Jarvis stops); false if it's not a job
@@ -466,6 +657,12 @@ export async function handleWhatsAppJobReply(args: {
     );
     await send(fromRaw, "You've been opted out of WhatsApp job alerts. 👋 Switch them back on anytime in your Workit account.");
     return true;
+  }
+
+  // --- Employer side: accept/decline offers over WhatsApp.
+  //     Employers never fall through to the worker commands below. ---
+  if (isEmployerSideRole(worker.role)) {
+    return handleEmployerReply({ fromRaw, text, employer: worker, threadRef, send });
   }
 
   // --- SOS / emergency (checked early — safety first) ---
@@ -741,6 +938,53 @@ export const onOfferResolvedWhatsApp = onDocumentUpdated(
       logger.info("wa offer-resolved sent", { workerId, status: after.status });
     } catch (err) {
       logger.error("wa offer-resolved failed", { workerId, err: String(err) });
+    }
+  },
+);
+
+// =====================================================================
+// 5) Offer created: WhatsApp the employer so they can accept/decline it
+//    right there (closes the two-sided loop over WhatsApp).
+// =====================================================================
+
+export const onOfferCreatedNotifyEmployerWhatsApp = onDocumentCreated(
+  {
+    document: "jobs/{jobId}/offers/{offerId}",
+    secrets: [WHATSAPP_TOKEN, WHATSAPP_PHONE_NUMBER_ID],
+    timeoutSeconds: 60,
+  },
+  async (event) => {
+    const offer = event.data?.data() as OfferFull | undefined;
+    if (!offer || offer.status !== "pending") return;
+
+    try {
+      const db = getFirestore();
+      const job = (await db.doc(`jobs/${event.params.jobId}`).get()).data() as JobDoc | undefined;
+      if (!job?.employerId) return;
+      const emp = (await db.doc(`users/${job.employerId}`).get()).data() as WorkerDoc | undefined;
+      if (!emp?.whatsappJobOptIn) return; // employer hasn't opted into WhatsApp
+      const wa = toWa(emp.whatsappNumber);
+      if (!wa) return;
+
+      const title = (job.title ?? "your job").slice(0, 50);
+      const worker = offer.workerName ?? "A worker";
+      const price = typeof offer.price === "number" ? offer.price : (job.suggestedPrice ?? "—");
+
+      // In-window → free text with the OFFERS prompt; cold → template (gated).
+      const t = (await db.doc(`waJobThreads/${wa}`).get()).data() as ThreadDoc | undefined;
+      const inWindow = Date.now() - Number(t?.lastInboundAt ?? 0) < SESSION_WINDOW_MS;
+      if (inWindow) {
+        await sendText(
+          wa,
+          `💬 *New offer* on "${title}": *${worker}* offered *R${price}*.\n\n`
+            + "Reply *OFFERS* to review, then *ACCEPT 1* to hire or *DECLINE 1* to pass — all here on WhatsApp.",
+        );
+      } else {
+        await sendTemplate(wa, OFFER_RECEIVED_TEMPLATE, [title, worker, String(price)]);
+      }
+      logger.info("wa employer offer-notify sent", { jobId: event.params.jobId, inWindow });
+    } catch (err) {
+      logger.error("wa employer offer-notify failed", { err: String(err) });
     }
   },
 );
