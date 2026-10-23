@@ -1,0 +1,330 @@
+[
+  {
+    "businessName": "Sekuriteit Sonder Grense",
+    "email": "info@sekuriteitsondergrense.co.za",
+    "contactName": "",
+    "suburb": "Unitas Park, Vereeniging",
+    "category": "Security",
+    "source": "https://sekuriteitsondergrense.co.za/"
+  },
+  {
+    "businessName": "APM Security Services",
+    "email": "services@apmsecurity.co.za",
+    "contactName": "",
+    "suburb": "Johannesburg (Gauteng-wide guarding)",
+    "category": "Security",
+    "source": "https://www.apmsecurityservices.com/"
+  },
+  {
+    "businessName": "Mamba Security",
+    "email": "mamba@mambagroup.co.za",
+    "contactName": "",
+    "suburb": "Eastleigh, Edenvale (East Rand)",
+    "category": "Security",
+    "source": "https://www.mambasecurity.co.za/"
+  },
+  {
+    "businessName": "Guards on Duty Security Services",
+    "email": "marcb@guardsonduty.co.za",
+    "contactName": "Marc",
+    "suburb": "West Rand",
+    "category": "Security",
+    "source": "https://www.guardsonduty.co.za/west-rand-guarding.html"
+  },
+  {
+    "businessName": "Mulalo Painters",
+    "email": "mulalo@mulalopainters.co.za",
+    "contactName": "",
+    "suburb": "Roodepoort",
+    "category": "Painting & Waterproofing",
+    "source": "https://www.mulalopainters.co.za/"
+  },
+  {
+    "businessName": "HMC Works Painting Contractors",
+    "email": "info@hmcworks.co.za",
+    "contactName": "",
+    "suburb": "Benoni",
+    "category": "Painting & Waterproofing",
+    "source": "https://www.hmcworks.co.za/painting-contractors-benoni/"
+  },
+  {
+    "businessName": "Gauteng Wall and Roof Coatings and Gutters",
+    "email": "info@gautengwallandroofcoatings.co.za",
+    "contactName": "",
+    "suburb": "Strubenvale, Springs",
+    "category": "Painting & Waterproofing",
+    "source": "https://gautengwallandroofcoatings.co.za/contact/"
+  },
+  {
+    "businessName": "JT Fumigators",
+    "email": "info@jtfumigators.co.za",
+    "contactName": "",
+    "suburb": "Germiston",
+    "category": "Pest Control",
+    "source": "https://www.jtfumigators.co.za/pest-control-germiston/"
+  },
+  {
+    "businessName": "Eco-Fumigation",
+    "email": "info@eco-fumigation.co.za",
+    "contactName": "",
+    "suburb": "Centurion (serves Roodepoort & West Rand)",
+    "category": "Pest Control",
+    "source": "https://www.eco-fumigation.co.za/pages/areas/roodepoort.php"
+  },
+  {
+    "businessName": "Refrigeration Appliance Repair",
+    "email": "info@refrigerationappliancerepair.co.za",
+    "contactName": "",
+    "suburb": "Vanderbijlpark",
+    "category": "Appliance Repair",
+    "source": "https://refrigerationappliancerepair.co.za/vanderbijlpark-appliance-repairs/"
+  },
+  {
+    "businessName": "Bergen's Appliance Repairs (Boksburg)",
+    "email": "boksburg@bergens.co.za",
+    "contactName": "Tanya",
+    "suburb": "Parkrand, Boksburg",
+    "category": "Appliance Repair",
+    "source": "https://bergens.co.za/branches/boksburg/"
+  },
+  {
+    "businessName": "Crisp & Clean (Town Square at Newmarket)",
+    "email": "newmarket@crispandclean.co.za",
+    "contactName": "",
+    "suburb": "Newmarket, Alberton",
+    "category": "Laundry & Dry Cleaning",
+    "source": "https://www.crispandclean.co.za/find-a-branch/gauteng/"
+  },
+  {
+    "businessName": "Crisp & Clean (Meadowdale Mall)",
+    "email": "meadowdale@crispandclean.co.za",
+    "contactName": "",
+    "suburb": "Meadowdale, Germiston",
+    "category": "Laundry & Dry Cleaning",
+    "source": "https://www.crispandclean.co.za/find-a-branch/gauteng/"
+  },
+  {
+    "businessName": "Crisp & Clean (Bell Drive Crossing)",
+    "email": "noordheuwel@crispandclean.co.za",
+    "contactName": "",
+    "suburb": "Noordheuwel, Krugersdorp",
+    "category": "Laundry & Dry Cleaning",
+    "source": "https://www.crispandclean.co.za/find-a-branch/gauteng/"
+  },
+  {
+    "businessName": "Crisp & Clean (Ridgeview Shopping Centre)",
+    "email": "helderkruin@crispandclean.co.za",
+    "contactName": "",
+    "suburb": "Helderkruin, Roodepoort",
+    "category": "Laundry & Dry Cleaning",
+    "source": "https://www.crispandclean.co.za/find-a-branch/gauteng/"
+  },
+  {
+    "businessName": "Alfa Trio Autobody Repair Centre",
+    "email": "reception@alfatrio.co.za",
+    "contactName": "",
+    "suburb": "Duncanville, Vereeniging",
+    "category": "Panel Beaters",
+    "source": "https://alfatrio.co.za/"
+  },
+  {
+    "businessName": "Auto Bonn Vaal Autobody",
+    "email": "loryn@autobonn.co.za",
+    "contactName": "Loryn",
+    "suburb": "Duncanville, Vereeniging",
+    "category": "Panel Beaters",
+    "source": "https://sambra.biz/item/auto-bonn-vaal-autobody/"
+  },
+  {
+    "businessName": "Royal Cleaners (Car Valet & Detailing)",
+    "email": "bookings@royalcleaners.co.za",
+    "contactName": "",
+    "suburb": "Germiston",
+    "category": "Car Wash & Valet",
+    "source": "https://royalcleaners.co.za/locations/germiston/car-valet"
+  },
+  {
+    "businessName": "CrossFit Alberton 2.0",
+    "email": "angie@crossfitalberton.co.za",
+    "contactName": "Angelique Mitchell",
+    "suburb": "Alberton",
+    "category": "Gym & Fitness",
+    "source": "https://crossfitalberton2.co.za/"
+  },
+  {
+    "businessName": "Just Gym Vanderbijlpark",
+    "email": "cgm.vanderbijl@just-gym.co.za",
+    "contactName": "",
+    "suburb": "Vanderbijlpark",
+    "category": "Gym & Fitness",
+    "source": "https://www.planetfitness.co.za/stores/vanderbijl/"
+  },
+  {
+    "businessName": "Extreme Clean Vaal Triangle",
+    "email": "paul@extremeclean.co.za",
+    "contactName": "Paul",
+    "suburb": "Vaal Triangle (Vereeniging/Vanderbijlpark)",
+    "category": "Cleaning",
+    "source": "https://extremecleaning.co.za/extreme-clean-vaal-triangle/"
+  },
+  {
+    "businessName": "Nature's Garden Services & Nursery",
+    "email": "carol@naturesgardenservices.co.za",
+    "contactName": "Carol",
+    "suburb": "Walkerville (JHB South)",
+    "category": "Garden & Landscaping",
+    "source": "https://walkervillesa.co.za/directory.html"
+  },
+  {
+    "businessName": "Stepping Stones Gardens",
+    "email": "info@steppingstonesgardens.co.za",
+    "contactName": "Catherine Dickie",
+    "suburb": "Johannesburg South",
+    "category": "Garden & Landscaping",
+    "source": "https://www.steppingstonesgardens.co.za/"
+  },
+  {
+    "businessName": "Rosetta Nursery",
+    "email": "rosettanursery@gmail.com",
+    "contactName": "Jennifer",
+    "suburb": "Eland Smallholdings, Randfontein",
+    "category": "Nursery & Farm",
+    "source": "https://rosettanursery.wixsite.com/website"
+  },
+  {
+    "businessName": "Kazimingi Plant Nursery",
+    "email": "orders@kazimingi.co.za",
+    "contactName": "Divan Willemse",
+    "suburb": "Marister, Benoni",
+    "category": "Nursery & Farm",
+    "source": "https://www.kazimingi.co.za/about/"
+  },
+  {
+    "businessName": "Wilcom Farming",
+    "email": "info@wilcomfarming.co.za",
+    "contactName": "",
+    "suburb": "Benoni (East Rand)",
+    "category": "Nursery & Farm",
+    "source": "https://www.wilcomfarming.co.za/"
+  },
+  {
+    "businessName": "Careful Movers",
+    "email": "info@carefulmovers.co.za",
+    "contactName": "",
+    "suburb": "Kya Sand (serves Alberton, Boksburg & East Rand)",
+    "category": "Moving & Removals",
+    "source": "https://carefulmovers.co.za/alberton-furniture-removals/"
+  },
+  {
+    "businessName": "Derbey Civils",
+    "email": "civils@derbeyprojects.co.za",
+    "contactName": "",
+    "suburb": "Vanderbijlpark",
+    "category": "Building & Renovations",
+    "source": "https://derbeyprojects.co.za/"
+  },
+  {
+    "businessName": "Linga Longa Function Venue",
+    "email": "linga.longa@mweb.co.za",
+    "contactName": "Maureen",
+    "suburb": "Vanderbijlpark (Vaal Triangle)",
+    "category": "Events Venue",
+    "source": "https://www.lingalongavaal.co.za/"
+  },
+  {
+    "businessName": "The Venue on Vaal",
+    "email": "info@thevenueonvaal.co.za",
+    "contactName": "",
+    "suburb": "Vaal River, Vereeniging area",
+    "category": "Events Venue",
+    "source": "https://www.thevenueonvaal.co.za/"
+  },
+  {
+    "businessName": "The Moon and Sixpence",
+    "email": "info@moonandsixpence.co.za",
+    "contactName": "Cecilia Kruger",
+    "suburb": "Zwartkop, Muldersdrift",
+    "category": "Events Venue",
+    "source": "https://moonandsixpence.co.za/"
+  },
+  {
+    "businessName": "Usambara Venue",
+    "email": "info@usambara.co.za",
+    "contactName": "",
+    "suburb": "Krugersdorp",
+    "category": "Events Venue",
+    "source": "https://usambara.co.za/"
+  },
+  {
+    "businessName": "Lieu De Grace Venue",
+    "email": "info@lieudegracevenue.co.za",
+    "contactName": "Vivien",
+    "suburb": "Muldersdrift",
+    "category": "Events Venue",
+    "source": "https://lieudegracevenue.co.za/"
+  },
+  {
+    "businessName": "Black Apron Waiter Service",
+    "email": "info@blackapron.co.za",
+    "contactName": "",
+    "suburb": "Northcliff, Johannesburg",
+    "category": "Events Staffing",
+    "source": "https://blackapron.co.za/"
+  },
+  {
+    "businessName": "BlackJack Events",
+    "email": "info@blackjackevents.co.za",
+    "contactName": "Dave de Jong",
+    "suburb": "Kramerville, Sandton",
+    "category": "Events Staffing",
+    "source": "http://blackjackevents.co.za/staff-services/"
+  },
+  {
+    "businessName": "Thoby's Catering & Food Kitchen",
+    "email": "thobekadhlomo14@gmail.com",
+    "contactName": "Thobeka Radebe",
+    "suburb": "Isiziba Section, Tembisa",
+    "category": "Events & Catering",
+    "source": "https://acalytica.com/thobys-catering"
+  },
+  {
+    "businessName": "Sakhumzi Restaurant",
+    "email": "dine@sakhumzi.co.za",
+    "contactName": "",
+    "suburb": "Vilakazi Street, Orlando West, Soweto",
+    "category": "Restaurant & Hospitality",
+    "source": "https://sakhumzi.co.za/"
+  },
+  {
+    "businessName": "Lebo's Soweto Backpackers",
+    "email": "lebo@sowetobackpackers.com",
+    "contactName": "Lebo",
+    "suburb": "Orlando West, Soweto",
+    "category": "Guesthouse & B&B",
+    "source": "https://www.sowetobackpackers.com/"
+  },
+  {
+    "businessName": "Aalwyns Guest House",
+    "email": "info@aalwyns.co.za",
+    "contactName": "",
+    "suburb": "Vanderbijlpark",
+    "category": "Guesthouse & B&B",
+    "source": "https://www.aalwyns.co.za/"
+  },
+  {
+    "businessName": "La Rochelle Guesthouse (Olive Life)",
+    "email": "stay@olivelife.co.za",
+    "contactName": "",
+    "suburb": "Walkerville (JHB South)",
+    "category": "Guesthouse & B&B",
+    "source": "https://walkervillesa.co.za/directory.html"
+  },
+  {
+    "businessName": "Flexagon Freight & Logistics",
+    "email": "info@flexagonfreight.co.za",
+    "contactName": "",
+    "suburb": "Kempton Park CBD (serves Tembisa & Isando)",
+    "category": "Courier & Delivery",
+    "source": "https://www.flexagonfreight.co.za/logistics-kempton-park/"
+  }
+]

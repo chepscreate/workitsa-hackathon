@@ -1,0 +1,105 @@
+<svg width="1080" height="1080" viewBox="0 0 1080 1080" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>Workit — Know who's coming before they arrive</title>
+  <desc>Safety feature post: ID-verified workers, doorstep start code, share with trusted contact, SOS button.</desc>
+
+  <!-- background -->
+  <rect x="0" y="0" width="1080" height="1080" fill="#F6EFE6"/>
+  <!-- ink top accent band -->
+  <rect x="0" y="0" width="1080" height="10" fill="#1F1710"/>
+
+  <!-- logo mark -->
+  <g transform="translate(64,52) scale(1.35)">
+    <rect x="6" y="6" width="52" height="52" rx="14" fill="#1F1710"/>
+    <rect x="9" y="9" width="46" height="46" rx="11" fill="none" stroke="#F6EFE6" stroke-width="1.5" opacity=".55"/>
+    <path d="M14 19L21 47L28 30L36 47L43 30Q47 22 50 19L50 50" stroke="#F6EFE6" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <line x1="43" y1="22" x2="57" y2="22" stroke="#F6EFE6" stroke-width="4.5" stroke-linecap="round"/>
+  </g>
+  <text x="175" y="108" font-family="Georgia, 'Times New Roman', serif" font-size="50" font-weight="700" fill="#1F1710">Workit</text>
+
+  <!-- launching badge top-right -->
+  <rect x="700" y="66" width="316" height="46" rx="23" fill="#5E7D63" opacity="0.15"/>
+  <text x="858" y="96" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" letter-spacing="2" fill="#3F5A43">LAUNCHING IN GAUTENG</text>
+
+  <!-- SAFETY category pill -->
+  <rect x="64" y="162" width="168" height="38" rx="19" fill="#C2632E" opacity="0.14"/>
+  <text x="148" y="188" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700" letter-spacing="2.5" fill="#9A4E22">SAFETY</text>
+
+  <!-- headline -->
+  <text x="70" y="296" font-family="Georgia, 'Times New Roman', serif" font-size="64" font-weight="700" fill="#1F1710">Know who&#x2019;s coming.</text>
+  <text x="70" y="372" font-family="Georgia, 'Times New Roman', serif" font-size="64" font-weight="700" fill="#C2632E">Before they arrive.</text>
+
+  <!-- sub copy -->
+  <text x="70" y="438" font-family="Arial, Helvetica, sans-serif" font-size="29" fill="#5A4A3C">Every Workit worker is ID-checked, rated</text>
+  <text x="70" y="476" font-family="Arial, Helvetica, sans-serif" font-size="29" fill="#5A4A3C">and trusted before they reach your door.</text>
+
+  <!-- divider rule -->
+  <line x1="70" y1="514" x2="560" y2="514" stroke="#C2632E" stroke-width="3" opacity="0.35"/>
+
+  <!-- feature icon circles -->
+  <circle cx="200" cy="660" r="88" fill="#5E7D63" opacity="0.14"/>
+  <circle cx="540" cy="660" r="88" fill="#C2632E" opacity="0.12"/>
+  <circle cx="880" cy="660" r="88" fill="#5E7D63" opacity="0.14"/>
+
+  <!-- Icon 1: Shield + checkmark (ID Verified) -->
+  <g transform="translate(200,660)">
+    <path d="M0,-44 L38,-27 L38,8 C38,34 21,46 0,56 C-21,46 -38,34 -38,8 L-38,-27 Z" fill="#1F1710"/>
+    <path d="M-18,0 L-5,15 L22,-17" stroke="#F6EFE6" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  </g>
+
+  <!-- Icon 2: Phone with 4-dot start code -->
+  <g transform="translate(540,660)">
+    <rect x="-26" y="-46" width="52" height="86" rx="11" fill="none" stroke="#1F1710" stroke-width="7"/>
+    <!-- dots representing the code -->
+    <circle cx="-11" cy="-18" r="6" fill="#1F1710"/>
+    <circle cx="11" cy="-18" r="6" fill="#1F1710"/>
+    <circle cx="-11" cy="5" r="6" fill="#1F1710"/>
+    <circle cx="11" cy="5" r="6" fill="#1F1710"/>
+    <!-- home button -->
+    <circle cx="0" cy="28" r="6" fill="#1F1710" opacity="0.5"/>
+  </g>
+
+  <!-- Icon 3: Person + share arrows (trusted contact) -->
+  <g transform="translate(880,660)">
+    <!-- person silhouette (left) -->
+    <circle cx="-18" cy="-22" r="15" fill="#1F1710"/>
+    <path d="M-40,32 C-40,10 -28,-4 -18,-4 C-8,-4 4,10 4,32 Z" fill="#1F1710"/>
+    <!-- share nodes (right) -->
+    <circle cx="28" cy="-30" r="10" fill="#C2632E"/>
+    <circle cx="28" cy="10" r="10" fill="#C2632E"/>
+    <circle cx="48" cy="-10" r="10" fill="#C2632E"/>
+    <line x1="28" y1="-30" x2="48" y2="-10" stroke="#C2632E" stroke-width="4.5"/>
+    <line x1="28" y1="10" x2="48" y2="-10" stroke="#C2632E" stroke-width="4.5"/>
+  </g>
+
+  <!-- icon labels — bold line -->
+  <g font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#1F1710" text-anchor="middle">
+    <text x="200" y="792">ID Verified</text>
+    <text x="540" y="792">Doorstep Code</text>
+    <text x="880" y="792">Tell Someone</text>
+  </g>
+  <!-- icon labels — detail line -->
+  <g font-family="Arial, Helvetica, sans-serif" font-size="19" fill="#6A5A4C" text-anchor="middle">
+    <text x="200" y="818">Worker ID checked</text>
+    <text x="540" y="818">Confirm on arrival</text>
+    <text x="880" y="818">Share job details</text>
+  </g>
+
+  <!-- bottom chips row -->
+  <rect x="64"  y="858" width="242" height="50" rx="25" fill="#1F1710" opacity="0.08"/>
+  <rect x="322" y="858" width="220" height="50" rx="25" fill="#1F1710" opacity="0.08"/>
+  <rect x="558" y="858" width="222" height="50" rx="25" fill="#1F1710" opacity="0.08"/>
+  <rect x="796" y="858" width="220" height="50" rx="25" fill="#C2632E" opacity="0.12"/>
+  <g font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700" fill="#3A2C20" text-anchor="middle">
+    <text x="185" y="890">Free during launch</text>
+    <text x="432" y="890">Verified workers</text>
+    <text x="669" y="890">Rate your worker</text>
+    <text x="906" y="890">SOS button</text>
+  </g>
+
+  <!-- CTA button -->
+  <rect x="200" y="936" width="680" height="84" rx="42" fill="#C2632E"/>
+  <text x="540" y="988" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700" fill="#F6EFE6">Hire safely &#xB7; workitsa.co.za</text>
+
+  <!-- footer byline -->
+  <text x="540" y="1054" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#9A8A7A">Furthersky Solutions &#xB7; Workit</text>
+</svg>

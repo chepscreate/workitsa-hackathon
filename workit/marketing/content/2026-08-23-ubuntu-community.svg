@@ -1,0 +1,66 @@
+<svg width="1080" height="1080" viewBox="0 0 1080 1080" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>Workit — Umuntu ngumuntu ngabantu. A person is a person through other people.</title>
+  <desc>Cream Workit social post built around the Ubuntu proverb, tying it to Workit connecting Gauteng neighbours for work in English, Afrikaans and isiZulu. Language switcher mockup, feature chips, workitsa.co.za call to action.</desc>
+  <defs>
+    <linearGradient id="bg1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#faf4ec"/>
+      <stop offset="1" stop-color="#f1e2cc"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="1080" height="1080" fill="url(#bg1)"/>
+  <rect x="0" y="0" width="1080" height="10" fill="#5d7a47"/>
+
+  <!-- logo mark -->
+  <g transform="translate(64,46) scale(1.35)">
+    <rect x="6" y="6" width="52" height="52" rx="14" fill="#1f1612"/>
+    <rect x="9" y="9" width="46" height="46" rx="11" fill="none" stroke="#faf4ec" stroke-width="1.5" opacity=".55"/>
+    <path d="M14 19L21 47L28 30L36 47L43 30Q47 22 50 19L50 50" stroke="#faf4ec" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <line x1="43" y1="22" x2="57" y2="22" stroke="#faf4ec" stroke-width="4.5" stroke-linecap="round"/>
+  </g>
+  <text x="175" y="102" font-family="Georgia, 'Times New Roman', serif" font-size="50" font-weight="700" fill="#1f1612">Workit</text>
+
+  <rect x="736" y="60" width="280" height="46" rx="23" fill="#dee6d4"/>
+  <text x="876" y="90" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" letter-spacing="2" fill="#3f5a3a">LAUNCHING IN GAUTENG</text>
+
+  <!-- proverb block -->
+  <rect x="90" y="150" width="900" height="256" rx="24" fill="#1f1612"/>
+  <text x="540" y="234" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="46" font-weight="700" fill="#faf4ec">&#8220;Umuntu ngumuntu ngabantu.&#8221;</text>
+  <text x="540" y="278" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="22" fill="#e7cdb1">A person is a person through other people.</text>
+  <rect x="470" y="306" width="140" height="3" fill="#d97742" opacity="0.6"/>
+  <text x="540" y="352" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="18" letter-spacing="1" fill="#c9b8a4">isiZulu proverb &#8212; the idea Workit is built on</text>
+  <text x="540" y="384" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="17" fill="#a99a88">Ubuntu: we get things done by helping each other.</text>
+
+  <!-- headline -->
+  <text x="540" y="474" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="42" font-weight="700" fill="#1f1612">Your neighbour needs a hand.</text>
+  <text x="540" y="522" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="42" font-weight="700" fill="#d97742">You might be exactly who they're looking for.</text>
+
+  <!-- language switcher mockup -->
+  <g font-family="Arial, Helvetica, sans-serif">
+    <rect x="315" y="566" width="450" height="72" rx="36" fill="#ffffff" stroke="#e4d3ba" stroke-width="2"/>
+    <rect x="323" y="574" width="140" height="56" rx="28" fill="#d97742"/>
+    <text x="393" y="610" text-anchor="middle" font-size="22" font-weight="700" fill="#faf4ec">English</text>
+    <text x="540" y="610" text-anchor="middle" font-size="22" font-weight="700" fill="#5a4636">Afrikaans</text>
+    <text x="681" y="610" text-anchor="middle" font-size="22" font-weight="700" fill="#5a4636">isiZulu</text>
+  </g>
+  <text x="540" y="666" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="19" fill="#6a5a4c">Set the app to whichever one is easiest for you.</text>
+
+  <!-- feature chips row -->
+  <g font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700" text-anchor="middle">
+    <rect x="128" y="712" width="264" height="54" rx="27" fill="#dee6d4"/>
+    <text x="260" y="746" fill="#3f5a3a">ID-verified both sides</text>
+
+    <rect x="408" y="712" width="264" height="54" rx="27" fill="#f0dcc2"/>
+    <text x="540" y="746" fill="#7a4620">Cash or EFT on completion</text>
+
+    <rect x="688" y="712" width="264" height="54" rx="27" fill="#f4dede"/>
+    <text x="820" y="746" fill="#7a2e21">Free during launch</text>
+  </g>
+
+  <!-- CTA -->
+  <rect x="200" y="826" width="680" height="84" rx="42" fill="#d97742"/>
+  <text x="540" y="878" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="33" font-weight="700" fill="#faf4ec">Post a job or find work &#183; workitsa.co.za</text>
+
+  <text x="540" y="962" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="24" font-style="italic" fill="#5d7a47">One Gauteng. Many languages. Honest work.</text>
+
+  <text x="540" y="1030" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#9a8a7a">Furthersky Solutions &#183; Workit</text>
+</svg>

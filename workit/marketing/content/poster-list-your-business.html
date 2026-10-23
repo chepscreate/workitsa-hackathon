@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Workit — Put your business in front of customers (poster)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#EFE5D6;display:flex;justify-content:center;align-items:flex-start;padding:28px;font-family:'Manrope',system-ui,sans-serif}
+  .wk{width:100%;max-width:460px;background:#1F1710;color:#F6EFE6;border-radius:18px;padding:38px 34px;box-shadow:0 24px 60px rgba(0,0,0,.2)}
+  .top{display:flex;align-items:center;gap:10px;margin-bottom:26px}
+  .brand{font-family:'Fraunces',Georgia,serif;font-size:23px;font-weight:600}
+  .tag{margin-left:auto;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#9FBFA4;font-weight:600}
+  h1{font-family:'Fraunces',Georgia,serif;font-size:35px;line-height:1.1;font-weight:600;letter-spacing:-.01em;margin:0 0 16px}
+  .sub{font-size:15.5px;line-height:1.55;color:#D8CBBA;margin:0 0 22px}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+  .chip{font-size:12px;font-weight:600;background:rgba(217,130,74,.20);color:#F0B58C;padding:6px 11px;border-radius:999px}
+  .foot{display:flex;align-items:center;gap:16px;border-top:1px solid rgba(246,239,230,.18);padding-top:20px}
+  .qr{width:104px;height:104px;background:#fff;border-radius:12px;padding:7px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+  .cta .l{font-family:'Fraunces',serif;font-size:19px;font-weight:600;line-height:1.2;color:#F6EFE6}
+  .cta .u{font-size:15px;color:#F0B58C;font-weight:700;margin-top:4px}
+  .cta .b{font-size:11px;color:#A89886;margin-top:9px}
+</style>
+</head>
+<body>
+  <div class="wk">
+    <div class="top">
+      <svg viewBox="0 0 64 64" width="38" height="38" aria-hidden="true"><rect x="6" y="6" width="52" height="52" rx="14" fill="#C2632E"/><rect x="9" y="9" width="46" height="46" rx="11" fill="none" stroke="#F6EFE6" stroke-width="1.5" opacity=".55"/><path d="M14 19L21 47L28 30L36 47L43 30Q47 22 50 19L50 50" stroke="#F6EFE6" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/><line x1="43" y1="22" x2="57" y2="22" stroke="#F6EFE6" stroke-width="4.5" stroke-linecap="round"/></svg>
+      <span class="brand">Workit</span>
+      <span class="tag">For business</span>
+    </div>
+    <h1>Put your business in front of ready customers.</h1>
+    <p class="sub">List your services on Workit and reach people across Gauteng looking for trusted workers — with a verified business badge that builds instant trust.</p>
+    <div class="chips"><span class="chip">Free during launch</span><span class="chip">Featured listings</span><span class="chip">Verified badge</span></div>
+    <div class="foot">
+      <div class="qr"><div id="qr"></div></div>
+      <div class="cta"><div class="l">Scan to list your business</div><div class="u">workitsa.co.za</div><div class="b">Furthersky Solutions</div></div>
+    </div>
+  </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>new QRCode(document.getElementById('qr'),{text:'https://workitsa.co.za',width:90,height:90,colorDark:'#1F1710',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M});</script>
+</body>
+</html>

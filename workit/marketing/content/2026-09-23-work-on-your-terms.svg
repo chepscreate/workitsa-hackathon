@@ -1,0 +1,67 @@
+<svg width="1080" height="1080" viewBox="0 0 1080 1080" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>Workit &#8212; work on your terms</title>
+  <desc>Cream Workit social post for workers: wordmark, headline "Work on your terms.", a checklist card with four reasons workers choose Workit (no CV needed, choose your own hours, get paid when done, build your name), trust line, workitsa.co.za call to action and trilingual greeting.</desc>
+  <defs>
+    <linearGradient id="bg1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#faf4ec"/>
+      <stop offset="1" stop-color="#f1e2cc"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="1080" height="1080" fill="url(#bg1)"/>
+
+  <text x="540" y="74" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" letter-spacing="4" fill="#d97742">WORKIT &#183; GAUTENG</text>
+  <text x="540" y="150" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="78" font-weight="700" fill="#1f1612">Workit</text>
+  <rect x="490" y="170" width="100" height="6" rx="3" fill="#d97742"/>
+
+  <text x="540" y="234" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="50" font-weight="700" fill="#1f1612">Work on</text>
+  <text x="540" y="288" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="50" font-weight="700" fill="#d97742">your terms.</text>
+
+  <g font-family="Arial, Helvetica, sans-serif" font-size="23" fill="#5a4636" text-anchor="middle">
+    <text x="540" y="330">Choose jobs that fit your day &#8212; not the other way around.</text>
+  </g>
+
+  <!-- checklist card -->
+  <g font-family="Arial, Helvetica, sans-serif">
+    <rect x="120" y="368" width="840" height="460" rx="24" fill="#ffffff" stroke="#e6d7c3" stroke-width="2"/>
+    <text x="156" y="408" font-size="18" font-weight="700" letter-spacing="2" fill="#5d7a47">WHY WORKERS CHOOSE WORKIT</text>
+
+    <g>
+      <rect x="152" y="428" width="776" height="84" rx="16" fill="#f0dcc2"/>
+      <circle cx="200" cy="470" r="28" fill="#d97742"/>
+      <polyline points="188,471 197,480 214,459" fill="none" stroke="#faf4ec" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="246" y="462" font-size="26" font-weight="700" fill="#1f1612">No CV, no interview</text>
+      <text x="246" y="494" font-size="18" fill="#5a4636">Just an ID, a phone and a willingness to work.</text>
+    </g>
+
+    <g>
+      <rect x="152" y="526" width="776" height="84" rx="16" fill="#dee6d4"/>
+      <circle cx="200" cy="568" r="28" fill="#5d7a47"/>
+      <polyline points="188,569 197,578 214,557" fill="none" stroke="#faf4ec" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="246" y="560" font-size="26" font-weight="700" fill="#1f1612">Choose your own hours</text>
+      <text x="246" y="592" font-size="18" fill="#5a4636">Take a job today, skip tomorrow &#8212; you decide.</text>
+    </g>
+
+    <g>
+      <rect x="152" y="624" width="776" height="84" rx="16" fill="#f0dcc2"/>
+      <circle cx="200" cy="666" r="28" fill="#b85a2a"/>
+      <polyline points="188,667 197,676 214,655" fill="none" stroke="#faf4ec" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="246" y="658" font-size="26" font-weight="700" fill="#1f1612">Get paid when it&#8217;s done</text>
+      <text x="246" y="690" font-size="18" fill="#5a4636">Cash or EFT, straight from the person who hired you.</text>
+    </g>
+
+    <g>
+      <rect x="152" y="722" width="776" height="84" rx="16" fill="#dee6d4"/>
+      <circle cx="200" cy="764" r="28" fill="#5d7a47"/>
+      <polyline points="188,765 197,774 214,753" fill="none" stroke="#faf4ec" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="246" y="756" font-size="26" font-weight="700" fill="#1f1612">Build your name</text>
+      <text x="246" y="788" font-size="18" fill="#5a4636">Every job well done adds to your rating.</text>
+    </g>
+  </g>
+
+  <text x="540" y="880" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="23" fill="#5a4636">ID-verified both ways &#183; free during launch &#183; launching in Gauteng</text>
+
+  <rect x="270" y="916" width="540" height="70" rx="35" fill="#d97742"/>
+  <text x="540" y="960" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="700" fill="#faf4ec">Find work near you &#183; workitsa.co.za</text>
+
+  <text x="540" y="1036" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="26" font-style="italic" fill="#5d7a47">Sawubona &#183; Dumela &#183; Goeie dag</text>
+</svg>

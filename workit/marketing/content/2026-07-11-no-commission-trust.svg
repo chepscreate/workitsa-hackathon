@@ -1,0 +1,52 @@
+<svg width="1080" height="1080" viewBox="0 0 1080 1080" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>Workit &#8212; no commission during launch, trust built in</title>
+  <desc>Cream Workit social post: wordmark, headline "100% of the price. Straight to them.", explanation that Workit takes no commission during launch and pays cash or EFT direct, a trust row of ID-verified badges and safety toolkit, workitsa.co.za call to action and trilingual greeting.</desc>
+  <defs>
+    <linearGradient id="bg1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#faf4ec"/>
+      <stop offset="1" stop-color="#f1e2cc"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="1080" height="1080" fill="url(#bg1)"/>
+
+  <text x="540" y="74" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" letter-spacing="4" fill="#d97742">WORKIT &#183; GAUTENG</text>
+  <text x="540" y="150" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="78" font-weight="700" fill="#1f1612">Workit</text>
+  <rect x="490" y="170" width="100" height="6" rx="3" fill="#d97742"/>
+
+  <text x="540" y="250" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="50" font-weight="700" fill="#1f1612">100% of the price.</text>
+  <text x="540" y="308" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="50" font-weight="700" fill="#b85a2a">Straight to them.</text>
+
+  <text x="540" y="366" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" fill="#5a4636">No commission during launch &#8212; agree a price, pay</text>
+  <text x="540" y="398" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" fill="#5a4636">cash or EFT direct to the worker when the job's done.</text>
+
+  <g font-family="Arial, Helvetica, sans-serif">
+    <g>
+      <rect x="72" y="450" width="936" height="118" rx="18" fill="#dee6d4"/>
+      <circle cx="140" cy="509" r="34" fill="#5d7a47"/>
+      <text x="140" y="522" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="34" font-weight="700" fill="#faf4ec">&#10003;</text>
+      <text x="204" y="500" font-size="29" font-weight="700" fill="#1f1612">ID-verified, both sides</text>
+      <text x="204" y="536" font-size="19" fill="#5a4636">You know who's coming. They know who's hiring.</text>
+    </g>
+    <g>
+      <rect x="72" y="586" width="936" height="118" rx="18" fill="#f0dcc2"/>
+      <circle cx="140" cy="645" r="34" fill="#d97742"/>
+      <text x="140" y="658" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="34" font-weight="700" fill="#faf4ec">&#10003;</text>
+      <text x="204" y="636" font-size="29" font-weight="700" fill="#1f1612">Safety toolkit built in</text>
+      <text x="204" y="672" font-size="19" fill="#5a4636">Doorstep start code, trusted-contact share, SOS button.</text>
+    </g>
+    <g>
+      <rect x="72" y="722" width="936" height="118" rx="18" fill="#dee6d4"/>
+      <circle cx="140" cy="781" r="34" fill="#5d7a47"/>
+      <text x="140" y="794" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="34" font-weight="700" fill="#faf4ec">&#10003;</text>
+      <text x="204" y="772" font-size="29" font-weight="700" fill="#1f1612">Rate each other after</text>
+      <text x="204" y="808" font-size="19" fill="#5a4636">Every job builds a track record you can trust.</text>
+    </g>
+  </g>
+
+  <text x="540" y="890" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" fill="#5a4636">No card needed &#183; free during launch &#183; launching in Gauteng</text>
+
+  <rect x="230" y="928" width="620" height="70" rx="35" fill="#d97742"/>
+  <text x="540" y="972" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="700" fill="#faf4ec">Try Workit, free &#183; workitsa.co.za</text>
+
+  <text x="540" y="1046" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="26" font-style="italic" fill="#5d7a47">Sawubona &#183; Dumela &#183; Goeie dag</text>
+</svg>

@@ -1,0 +1,59 @@
+# ---- WorkitEarnit repo ignore (root) ----
+# The Next.js app has its own .gitignore in workit/ and workit/functions/;
+# this covers the parent folder.
+
+# Dependencies (every level)
+node_modules/
+**/node_modules/
+.pnp
+.pnp.*
+
+# Next.js / build output
+workit/.next/
+workit/out/
+workit/build/
+workit/functions/lib/
+*.tsbuildinfo
+
+# Secrets / env — NEVER commit real values
+.env
+.env.*
+**/.env
+**/.env.*
+!**/.env.local.example
+!**/.env.example
+**/.runtimeconfig.json
+
+# Keys / certs / service accounts
+*.pem
+*.key
+*.p8
+*.p12
+*serviceAccount*.json
+*adminsdk*.json
+
+# Python (demo/ + scripts/)
+__pycache__/
+**/__pycache__/
+*.pyc
+
+# Firebase local logs/cache
+.firebase/
+**/firebase-debug.log
+**/firestore-debug.log
+**/*-debug.log
+
+# Local tooling / machine-specific config
+.vercel
+
+# Office temp/lock files
+~$*
+**/~$*
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Personal / financial application docs — kept locally, never committed
+Documents/Peo Pele Application/

@@ -1,0 +1,80 @@
+<svg width="1080" height="1080" viewBox="0 0 1080 1080" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>Workit — Plumbing, wiring, repairs, sorted by someone nearby</title>
+  <desc>Category spotlight post for tradespeople on Workit: plumbing, electrical, handyman and painting jobs, with verified workers, free during launch, and cash or EFT on completion.</desc>
+
+  <rect x="0" y="0" width="1080" height="1080" fill="#F6EFE6"/>
+
+  <!-- logo mark -->
+  <g transform="translate(64,56) scale(1.35)">
+    <rect x="6" y="6" width="52" height="52" rx="14" fill="#1F1710"/>
+    <rect x="9" y="9" width="46" height="46" rx="11" fill="none" stroke="#F6EFE6" stroke-width="1.5" opacity=".55"/>
+    <path d="M14 19L21 47L28 30L36 47L43 30Q47 22 50 19L50 50" stroke="#F6EFE6" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <line x1="43" y1="22" x2="57" y2="22" stroke="#F6EFE6" stroke-width="4.5" stroke-linecap="round"/>
+  </g>
+  <text x="175" y="112" font-family="Georgia, 'Times New Roman', serif" font-size="50" font-weight="700" fill="#1F1710">Workit</text>
+
+  <rect x="740" y="70" width="276" height="46" rx="23" fill="#5E7D63" opacity="0.15"/>
+  <text x="878" y="99" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" letter-spacing="2" fill="#3F5A43">LAUNCHING IN GAUTENG</text>
+
+  <!-- headline -->
+  <text x="70" y="280" font-family="Georgia, 'Times New Roman', serif" font-size="58" font-weight="700" fill="#1F1710">Plumbing. Wiring. Repairs.</text>
+  <text x="70" y="352" font-family="Georgia, 'Times New Roman', serif" font-size="58" font-weight="700" fill="#1F1710">Sorted by someone nearby.</text>
+
+  <!-- subtext -->
+  <text x="70" y="416" font-family="Arial, Helvetica, sans-serif" font-size="30" fill="#5A4A3C">Verified tradespeople near you on Workit —</text>
+  <text x="70" y="456" font-family="Arial, Helvetica, sans-serif" font-size="30" fill="#5A4A3C">post the job, get fair offers, pay when it's done.</text>
+
+  <!-- icon row -->
+  <g>
+    <circle cx="165" cy="620" r="78" fill="#5E7D63" opacity="0.16"/>
+    <circle cx="405" cy="620" r="78" fill="#C2632E" opacity="0.14"/>
+    <circle cx="645" cy="620" r="78" fill="#5E7D63" opacity="0.16"/>
+    <circle cx="885" cy="620" r="78" fill="#C2632E" opacity="0.14"/>
+  </g>
+
+  <!-- Plumbing: water drop -->
+  <g transform="translate(165,612)">
+    <path d="M0,-30 C18,-8 18,16 0,30 C-18,16 -18,-8 0,-30 Z" fill="#1F1710"/>
+  </g>
+
+  <!-- Electrical: lightning bolt -->
+  <g transform="translate(405,612)">
+    <path d="M-6,-32 L11,-32 L-2,-2 L11,-2 L-10,34 L-3,2 L-15,2 Z" fill="#1F1710"/>
+  </g>
+
+  <!-- Handyman: hammer, swung at an angle -->
+  <g transform="translate(645,612) rotate(45)">
+    <rect x="-6" y="-8" width="12" height="48" rx="6" fill="#1F1710"/>
+    <rect x="-26" y="-32" width="52" height="20" rx="6" fill="#1F1710"/>
+  </g>
+
+  <!-- Painting: roller, barrel + offset handle -->
+  <g transform="translate(885,612)">
+    <rect x="-30" y="-36" width="60" height="18" rx="9" fill="#1F1710"/>
+    <line x1="16" y1="-27" x2="6" y2="-6" stroke="#1F1710" stroke-width="6" stroke-linecap="round"/>
+    <rect x="0" y="-8" width="11" height="40" rx="5.5" fill="#1F1710"/>
+  </g>
+
+  <g font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="700" fill="#1F1710" text-anchor="middle">
+    <text x="165" y="736">Plumbing</text>
+    <text x="405" y="736">Electrical</text>
+    <text x="645" y="736">Handyman</text>
+    <text x="885" y="736">Painting</text>
+  </g>
+
+  <!-- chips -->
+  <rect x="150" y="800" width="290" height="56" rx="28" fill="#C2632E" opacity="0.12"/>
+  <rect x="460" y="800" width="260" height="56" rx="28" fill="#C2632E" opacity="0.12"/>
+  <rect x="740" y="800" width="190" height="56" rx="28" fill="#C2632E" opacity="0.12"/>
+  <g font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" fill="#9A4E22" text-anchor="middle">
+    <text x="295" y="836">Free during launch</text>
+    <text x="590" y="836">Verified workers</text>
+    <text x="835" y="836">Cash or EFT</text>
+  </g>
+
+  <!-- CTA -->
+  <rect x="260" y="910" width="560" height="86" rx="43" fill="#C2632E"/>
+  <text x="540" y="964" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700" fill="#F6EFE6">Get started &#183; workitsa.co.za</text>
+
+  <text x="540" y="1030" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="16" fill="#8A7A6B">Furthersky Solutions &#183; Workit</text>
+</svg>

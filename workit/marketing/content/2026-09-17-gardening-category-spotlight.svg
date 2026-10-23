@@ -1,0 +1,78 @@
+<svg width="1080" height="1080" viewBox="0 0 1080 1080" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>Workit &#8212; gardening and landscaping category spotlight</title>
+  <desc>Cream Workit social post spotlighting the gardening and landscaping category for spring: wordmark, headline "Spring cleanup, sorted.", a row of garden service chips, three numbered steps (post the job, verified worker responds, pay when done), trust line, workitsa.co.za call to action and trilingual greeting.</desc>
+  <defs>
+    <linearGradient id="bg1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#faf4ec"/>
+      <stop offset="1" stop-color="#f1e2cc"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="1080" height="1080" fill="url(#bg1)"/>
+
+  <text x="540" y="74" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" letter-spacing="4" fill="#d97742">WORKIT &#183; GAUTENG</text>
+  <text x="540" y="150" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="78" font-weight="700" fill="#1f1612">Workit</text>
+  <rect x="490" y="170" width="100" height="6" rx="3" fill="#d97742"/>
+
+  <text x="540" y="234" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="50" font-weight="700" fill="#1f1612">Spring cleanup,</text>
+  <text x="540" y="288" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="50" font-weight="700" fill="#d97742">sorted.</text>
+
+  <g font-family="Arial, Helvetica, sans-serif" font-size="23" fill="#5a4636" text-anchor="middle">
+    <text x="540" y="330">The garden&#8217;s waking up. This week&#8217;s category: Gardening &amp; Landscaping.</text>
+  </g>
+
+  <!-- category chips card -->
+  <g font-family="Arial, Helvetica, sans-serif">
+    <rect x="120" y="366" width="840" height="182" rx="24" fill="#ffffff" stroke="#e6d7c3" stroke-width="2"/>
+    <text x="156" y="406" font-size="18" font-weight="700" letter-spacing="2" fill="#5d7a47">GARDENING &amp; LANDSCAPING</text>
+
+    <g font-size="19" font-weight="700" fill="#faf4ec">
+      <rect x="156" y="426" width="182" height="46" rx="23" fill="#5d7a47"/>
+      <text x="247" y="455" text-anchor="middle">Lawn mowing</text>
+
+      <rect x="352" y="426" width="192" height="46" rx="23" fill="#d97742"/>
+      <text x="448" y="455" text-anchor="middle">Hedge trimming</text>
+
+      <rect x="558" y="426" width="150" height="46" rx="23" fill="#b85a2a"/>
+      <text x="633" y="455" text-anchor="middle">Weeding</text>
+
+      <rect x="156" y="484" width="176" height="46" rx="23" fill="#b85a2a"/>
+      <text x="244" y="513" text-anchor="middle">Tree pruning</text>
+
+      <rect x="346" y="484" width="212" height="46" rx="23" fill="#5d7a47"/>
+      <text x="452" y="513" text-anchor="middle">Garden clearing</text>
+
+      <rect x="572" y="484" width="112" height="46" rx="23" fill="#d97742"/>
+      <text x="628" y="513" text-anchor="middle">Fencing</text>
+    </g>
+    <text x="900" y="513" text-anchor="end" font-size="19" font-weight="700" fill="#5a4636">+ more</text>
+  </g>
+
+  <g font-family="Arial, Helvetica, sans-serif">
+    <g>
+      <rect x="72" y="580" width="936" height="106" rx="18" fill="#f0dcc2"/>
+      <circle cx="136" cy="633" r="30" fill="#d97742"/>
+      <text x="136" y="645" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="34" font-weight="700" fill="#faf4ec">1</text>
+      <text x="196" y="624" font-size="27" font-weight="700" fill="#1f1612">Post the garden job</text>
+      <text x="196" y="658" font-size="19" fill="#5a4636">Say what needs doing, where and when &#8212; and what you&#8217;ll pay.</text>
+    </g>
+    <g>
+      <rect x="72" y="700" width="936" height="106" rx="18" fill="#dee6d4"/>
+      <circle cx="136" cy="753" r="30" fill="#5d7a47"/>
+      <text x="136" y="765" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="34" font-weight="700" fill="#faf4ec">2</text>
+      <text x="196" y="744" font-size="27" font-weight="700" fill="#1f1612">A verified worker nearby responds</text>
+      <text x="196" y="778" font-size="19" fill="#5a4636">ID-verified, close by, ready to start on your day.</text>
+    </g>
+    <g>
+      <rect x="72" y="820" width="936" height="106" rx="18" fill="#f0dcc2"/>
+      <circle cx="136" cy="873" r="30" fill="#b85a2a"/>
+      <text x="136" y="885" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="34" font-weight="700" fill="#faf4ec">3</text>
+      <text x="196" y="864" font-size="27" font-weight="700" fill="#1f1612">Pay when the garden looks right</text>
+      <text x="196" y="898" font-size="19" fill="#5a4636">Cash or EFT, straight to the worker. Then you rate each other.</text>
+    </g>
+  </g>
+
+  <text x="540" y="970" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="22" fill="#5a4636">No card needed &#183; free during launch &#183; launching in Gauteng</text>
+
+  <rect x="230" y="1000" width="620" height="66" rx="33" fill="#d97742"/>
+  <text x="540" y="1041" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#faf4ec">Get your garden sorted &#183; workitsa.co.za</text>
+</svg>

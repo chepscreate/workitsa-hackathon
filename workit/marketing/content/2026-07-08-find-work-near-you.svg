@@ -1,0 +1,101 @@
+<svg width="1080" height="1080" viewBox="0 0 1080 1080" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>Workit — Jobs near you, ready when you are</title>
+  <desc>Worker-facing post: browse nearby gigs, accept the ones that fit your day, get paid cash or EFT on completion. Free during launch in Gauteng.</desc>
+  <defs>
+    <linearGradient id="wbg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#faf4ec"/>
+      <stop offset="1" stop-color="#f1e2cc"/>
+    </linearGradient>
+  </defs>
+
+  <!-- background -->
+  <rect x="0" y="0" width="1080" height="1080" fill="url(#wbg)"/>
+  <!-- ink top accent band -->
+  <rect x="0" y="0" width="1080" height="10" fill="#1f1612"/>
+
+  <!-- logo mark -->
+  <g transform="translate(64,52) scale(1.35)">
+    <rect x="6" y="6" width="52" height="52" rx="14" fill="#1f1612"/>
+    <rect x="9" y="9" width="46" height="46" rx="11" fill="none" stroke="#faf4ec" stroke-width="1.5" opacity=".55"/>
+    <path d="M14 19L21 47L28 30L36 47L43 30Q47 22 50 19L50 50" stroke="#faf4ec" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <line x1="43" y1="22" x2="57" y2="22" stroke="#faf4ec" stroke-width="4.5" stroke-linecap="round"/>
+  </g>
+  <text x="175" y="108" font-family="Georgia, 'Times New Roman', serif" font-size="50" font-weight="700" fill="#1f1612">Workit</text>
+
+  <!-- launching badge top-right -->
+  <rect x="700" y="66" width="316" height="46" rx="23" fill="#dee6d4"/>
+  <text x="858" y="96" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" letter-spacing="2" fill="#3f5a3a">LAUNCHING IN GAUTENG</text>
+
+  <!-- FOR WORKERS category pill -->
+  <rect x="64" y="162" width="216" height="38" rx="19" fill="#f0dcc2"/>
+  <text x="172" y="188" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700" letter-spacing="2.5" fill="#b85a2a">FOR WORKERS</text>
+
+  <!-- headline -->
+  <text x="70" y="296" font-family="Georgia, 'Times New Roman', serif" font-size="64" font-weight="700" fill="#1f1612">Jobs near you,</text>
+  <text x="70" y="372" font-family="Georgia, 'Times New Roman', serif" font-size="64" font-weight="700" fill="#d97742">ready when you are.</text>
+
+  <!-- sub copy -->
+  <text x="70" y="438" font-family="Arial, Helvetica, sans-serif" font-size="29" fill="#5a4636">Browse gigs close to home, accept the ones</text>
+  <text x="70" y="476" font-family="Arial, Helvetica, sans-serif" font-size="29" fill="#5a4636">that fit your day, and get paid when it's done.</text>
+
+  <!-- divider rule -->
+  <line x1="70" y1="514" x2="560" y2="514" stroke="#d97742" stroke-width="3" opacity="0.35"/>
+
+  <!-- feature icon circles -->
+  <circle cx="200" cy="660" r="88" fill="#dee6d4"/>
+  <circle cx="540" cy="660" r="88" fill="#f0dcc2"/>
+  <circle cx="880" cy="660" r="88" fill="#dee6d4"/>
+
+  <!-- Icon 1: Location pin (browse nearby jobs) -->
+  <g transform="translate(200,660)">
+    <path d="M0,-46 C24,-46 41,-28 41,-6 C41,24 0,58 0,58 C0,58 -41,24 -41,-6 C-41,-28 -24,-46 0,-46 Z" fill="#1f1612"/>
+    <circle cx="0" cy="-6" r="15" fill="#faf4ec"/>
+  </g>
+
+  <!-- Icon 2: Clipboard with checkmark (accept a job) -->
+  <g transform="translate(540,660)">
+    <rect x="-30" y="-44" width="60" height="82" rx="9" fill="none" stroke="#1f1612" stroke-width="7"/>
+    <rect x="-14" y="-52" width="28" height="16" rx="5" fill="#1f1612"/>
+    <path d="M-14,2 L-3,13 L18,-12" stroke="#1f1612" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  </g>
+
+  <!-- Icon 3: Cash note (get paid) -->
+  <g transform="translate(880,660)">
+    <rect x="-44" y="-30" width="88" height="60" rx="8" fill="none" stroke="#1f1612" stroke-width="7"/>
+    <circle cx="0" cy="0" r="15" fill="none" stroke="#1f1612" stroke-width="6"/>
+    <line x1="-32" y1="-14" x2="-24" y2="-14" stroke="#1f1612" stroke-width="6" stroke-linecap="round"/>
+    <line x1="24" y1="14" x2="32" y2="14" stroke="#1f1612" stroke-width="6" stroke-linecap="round"/>
+  </g>
+
+  <!-- icon labels — bold line -->
+  <g font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#1f1612" text-anchor="middle">
+    <text x="200" y="792">Browse Nearby</text>
+    <text x="540" y="792">Accept a Job</text>
+    <text x="880" y="792">Get Paid</text>
+  </g>
+  <!-- icon labels — detail line -->
+  <g font-family="Arial, Helvetica, sans-serif" font-size="19" fill="#6a5a4c" text-anchor="middle">
+    <text x="200" y="818">Gigs near home</text>
+    <text x="540" y="818">Chat &amp; agree a price</text>
+    <text x="880" y="818">Cash or EFT</text>
+  </g>
+
+  <!-- bottom chips row -->
+  <rect x="50"  y="858" width="242" height="50" rx="25" fill="#1f1612" opacity="0.08"/>
+  <rect x="308" y="858" width="240" height="50" rx="25" fill="#1f1612" opacity="0.08"/>
+  <rect x="564" y="858" width="238" height="50" rx="25" fill="#1f1612" opacity="0.08"/>
+  <rect x="818" y="858" width="212" height="50" rx="25" fill="#d97742" opacity="0.14"/>
+  <g font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700" fill="#3a2c20" text-anchor="middle">
+    <text x="171" y="890">Free during launch</text>
+    <text x="428" y="890">Verified employers</text>
+    <text x="683" y="890">You set your price</text>
+    <text x="924" y="890">Same-day gigs</text>
+  </g>
+
+  <!-- CTA button -->
+  <rect x="200" y="936" width="680" height="84" rx="42" fill="#d97742"/>
+  <text x="540" y="988" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700" fill="#faf4ec">Find work &#xB7; workitsa.co.za</text>
+
+  <!-- footer byline -->
+  <text x="540" y="1054" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#9a8a7a">Furthersky Solutions &#xB7; Workit</text>
+</svg>

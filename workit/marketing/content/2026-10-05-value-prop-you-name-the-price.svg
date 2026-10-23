@@ -1,0 +1,53 @@
+<svg width="1080" height="1080" viewBox="0 0 1080 1080" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>Workit &#8212; you name the price</title>
+  <desc>Cream Workit social post: wordmark, headline "You name the price.", an example job card with an offer of R350 and two worker responses (one accepts, one sends a counter-offer), trust line, workitsa.co.za call to action and trilingual greeting.</desc>
+  <defs>
+    <linearGradient id="bg1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#faf4ec"/>
+      <stop offset="1" stop-color="#f1e2cc"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="1080" height="1080" fill="url(#bg1)"/>
+
+  <text x="540" y="74" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" letter-spacing="4" fill="#d97742">WORKIT &#183; GAUTENG</text>
+  <text x="540" y="150" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="78" font-weight="700" fill="#1f1612">Workit</text>
+  <rect x="490" y="170" width="100" height="6" rx="3" fill="#d97742"/>
+
+  <text x="540" y="256" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="58" font-weight="700" fill="#1f1612">You name the price.</text>
+  <text x="540" y="302" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" fill="#5a4636">Workers accept it &#8212; or make you an honest counter-offer.</text>
+
+  <g font-family="Arial, Helvetica, sans-serif">
+    <!-- example job card -->
+    <rect x="112" y="340" width="856" height="146" rx="20" fill="#fffaf3" stroke="#e6d3ba" stroke-width="2"/>
+    <text x="150" y="380" font-size="16" font-weight="700" letter-spacing="3" fill="#b85a2a">EXAMPLE JOB</text>
+    <text x="150" y="424" font-family="Georgia, 'Times New Roman', serif" font-size="36" font-weight="700" fill="#1f1612">Garden clean-up</text>
+    <text x="150" y="462" font-size="20" fill="#5a4636">Saturday morning &#183; Randburg</text>
+    <rect x="700" y="378" width="230" height="74" rx="16" fill="#d97742"/>
+    <text x="815" y="406" text-anchor="middle" font-size="16" font-weight="700" letter-spacing="2" fill="#faf4ec">YOUR OFFER</text>
+    <text x="815" y="440" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="32" font-weight="700" fill="#faf4ec">R350</text>
+
+    <!-- connector -->
+    <rect x="537" y="486" width="6" height="30" fill="#e6d3ba"/>
+
+    <!-- response 1: accepted -->
+    <rect x="112" y="516" width="856" height="104" rx="18" fill="#dee6d4"/>
+    <circle cx="176" cy="568" r="30" fill="#5d7a47"/>
+    <path d="M162 569 L172 579 L192 557" fill="none" stroke="#faf4ec" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="228" y="560" font-size="28" font-weight="700" fill="#1f1612">Accepted at R350</text>
+    <text x="228" y="594" font-size="19" fill="#5a4636">ID-verified worker nearby &#183; ready for Saturday</text>
+
+    <!-- response 2: counter-offer -->
+    <rect x="112" y="636" width="856" height="104" rx="18" fill="#f0dcc2"/>
+    <circle cx="176" cy="688" r="30" fill="#b85a2a"/>
+    <text x="176" y="700" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="34" font-weight="700" fill="#faf4ec">R</text>
+    <text x="228" y="680" font-size="28" font-weight="700" fill="#1f1612">Counter-offer: R400</text>
+    <text x="228" y="714" font-size="19" fill="#5a4636">&#8220;That includes taking the garden refuse away.&#8221;</text>
+  </g>
+
+  <text x="540" y="796" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="23" fill="#5a4636">You choose who &#183; pay cash or EFT when it&#8217;s done &#183; free during launch</text>
+
+  <rect x="290" y="828" width="500" height="70" rx="35" fill="#d97742"/>
+  <text x="540" y="872" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="700" fill="#faf4ec">Post a job &#183; workitsa.co.za</text>
+
+  <text x="540" y="952" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="26" font-style="italic" fill="#5d7a47">Sawubona &#183; Dumela &#183; Goeie dag</text>
+</svg>

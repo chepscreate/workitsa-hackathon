@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Workit — Growth to 20,000 users</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--serif:'Fraunces',Georgia,serif;--sans:'Manrope',system-ui,sans-serif;--ink:#1F1710;--soft:#5A4A3C;--muted:#8A7A6B;--cream:#F4EADB;--paper:#FFFDF9;--line:rgba(31,23,16,.12);--ochre:#C2632E;--sage:#5E7D63}
+  *{box-sizing:border-box;margin:0}
+  body{background:#EFE5D6;font-family:var(--sans);color:var(--ink);padding:32px;display:flex;justify-content:center}
+  .card{width:100%;max-width:940px;background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:34px 38px;box-shadow:0 24px 60px rgba(0,0,0,.12)}
+  .head{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+  .brand{font-family:var(--serif);font-size:22px;letter-spacing:-.01em}
+  h1{font-family:var(--serif);font-size:30px;line-height:1.1;letter-spacing:-.01em;margin-top:14px}
+  .sub{color:var(--soft);font-size:15px;margin-top:6px}
+  .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:24px 0 8px}
+  .m{background:var(--cream);border-radius:12px;padding:14px 16px}
+  .m .l{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+  .m .v{font-family:var(--serif);font-size:26px;margin-top:4px}
+  .legend{display:flex;gap:18px;font-size:12.5px;color:var(--soft);margin:18px 0 6px}
+  .legend span{display:flex;align-items:center;gap:6px}
+  .sw{width:11px;height:11px;border-radius:3px}
+  .chartwrap{position:relative;width:100%;height:340px}
+  .foot{margin-top:22px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted);line-height:1.5}
+  .foot b{color:var(--soft)}
+  @media (max-width:680px){.cards{grid-template-columns:repeat(2,1fr)}body{padding:14px}}
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="head">
+      <svg viewBox="0 0 64 64" width="38" height="38" aria-hidden><rect x="6" y="6" width="52" height="52" rx="14" fill="#1F1710"/><rect x="9" y="9" width="46" height="46" rx="11" fill="none" stroke="#F6EFE6" stroke-width="1.5" opacity=".55"/><path d="M14 19L21 47L28 30L36 47L43 30Q47 22 50 19L50 50" stroke="#F6EFE6" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/><line x1="43" y1="22" x2="57" y2="22" stroke="#F6EFE6" stroke-width="4.5" stroke-linecap="round"/></svg>
+      <span class="brand">Workit</span>
+    </div>
+    <h1>Growth to 20,000 users</h1>
+    <p class="sub">Gauteng launch · ~6-month target · two-sided (workers + employers)</p>
+
+    <div class="cards">
+      <div class="m"><div class="l">Target users</div><div class="v">20,000</div></div>
+      <div class="m"><div class="l">Timeline</div><div class="v">~6 months</div></div>
+      <div class="m"><div class="l">Employers (demand)</div><div class="v">6,000</div></div>
+      <div class="m"><div class="l">North-star KPI</div><div class="v" style="font-size:19px;padding-top:4px">Jobs filled</div></div>
+    </div>
+
+    <div class="legend">
+      <span><span class="sw" style="background:#C2632E"></span>Workers (supply) — 70%</span>
+      <span><span class="sw" style="background:#5E7D63"></span>Employers (demand) — 30%</span>
+    </div>
+
+    <div class="chartwrap">
+      <canvas id="g" role="img" aria-label="Stacked bar chart of Workit users per month, months 1 to 6. Totals 500, 1,500, 3,500, 7,000, 12,500, 20,000; each split 70% workers and 30% employers.">Totals: 500, 1500, 3500, 7000, 12500, 20000.</canvas>
+    </div>
+
+    <p class="foot">
+      <b>Target trajectory</b> for the Gauteng launch. Growth is <b>demand-led</b> — worker
+      sign-ups are paced to job availability, so the metric that matters is <b>jobs filled</b>
+      and time-to-first-job, not headline users. Furthersky Solutions · workitsa.co.za
+    </p>
+  </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+  const totals = {
+    id: 'totals',
+    afterDatasetsDraw(chart) {
+      const ctx = chart.ctx;
+      const last = chart.getDatasetMeta(chart.data.datasets.length - 1);
+      chart.data.labels.forEach((_, i) => {
+        const t = chart.data.datasets.reduce((s, d) => s + d.data[i], 0);
+        const bar = last.data[i];
+        ctx.save();
+        ctx.fillStyle = '#1F1710';
+        ctx.font = '600 13px Manrope, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(t.toLocaleString(), bar.x, bar.y - 8);
+        ctx.restore();
+      });
+    },
+  };
+  new Chart(document.getElementById('g'), {
+    type: 'bar',
+    plugins: [totals],
+    data: {
+      labels: ['Month 1', 'Month 2', 'Month 3', 'Month 4', 'Month 5', 'Month 6'],
+      datasets: [
+        { label: 'Workers', data: [350, 1050, 2450, 4900, 8750, 14000], backgroundColor: '#C2632E', stack: 'u', borderRadius: 3 },
+        { label: 'Employers', data: [150, 450, 1050, 2100, 3750, 6000], backgroundColor: '#5E7D63', stack: 'u', borderRadius: 3 },
+      ],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      layout: { padding: { top: 24 } },
+      plugins: { legend: { display: false }, tooltip: { callbacks: { footer: (it) => 'Total: ' + it.reduce((s, i) => s + i.parsed.y, 0).toLocaleString() } } },
+      scales: {
+        x: { stacked: true, grid: { display: false }, ticks: { color: '#5A4A3C', font: { family: 'Manrope', size: 12 } } },
+        y: { stacked: true, beginAtZero: true, max: 21000, ticks: { color: '#8A7A6B', font: { family: 'Manrope', size: 12 }, callback: (v) => v.toLocaleString() }, grid: { color: 'rgba(31,23,16,0.10)' } },
+      },
+    },
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Workit — 90-second ad (silent)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Manrope:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--font-serif:'Fraunces',Georgia,'Times New Roman',serif;--font-sans:'Manrope',system-ui,-apple-system,'Segoe UI',sans-serif}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%}
+body{background:radial-gradient(120% 90% at 50% 16%,#2a2017 0%,#140d08 70%);display:flex;align-items:center;justify-content:center;overflow:hidden;font-family:var(--font-sans)}
+.scaler{transform-origin:center center}
+.a3-stage{position:relative;width:340px;height:604px;border-radius:30px;overflow:hidden;border:1px solid rgba(31,23,16,.25);background:#1F1710;box-shadow:0 30px 80px rgba(0,0,0,.45)}
+.a3-top{position:absolute;top:0;left:0;right:0;z-index:20;display:flex;flex-direction:column;align-items:center;pointer-events:none}
+.a3-bar{height:3px;width:100%;background:rgba(255,255,255,.16)}
+.a3-fill{height:100%;width:0;background:#D9824A;transition:width .5s ease}
+.a3-ch{margin-top:9px;font-size:10px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:#C2632E;padding:3px 11px;border-radius:999px;min-height:18px}
+.a3-scene{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:54px 24px 22px;opacity:0;transition:opacity .65s ease;pointer-events:none}
+.a3-scene.on{opacity:1}
+.bg-ink{background:#1F1710;color:#F6EFE6}.bg-cream{background:#F4EADB;color:#1F1710}.bg-ochre{background:#C2632E;color:#fff}.bg-deep{background:#160F0A;color:#F6EFE6}
+.rev{opacity:0;transform:translateY(13px);transition:opacity .55s ease,transform .55s ease}
+.a3-scene.on .rev{opacity:1;transform:none}
+.jw-h2{font-family:var(--font-serif);letter-spacing:-.01em}
+.s-wrap{text-align:center;max-width:280px}
+.s-big{font-size:30px;line-height:1.1}.s-sub{font-size:15px;opacity:.82;margin-top:12px;line-height:1.4}
+.bead{height:6px;width:96px;border-radius:4px;margin:16px auto 0;background:repeating-linear-gradient(90deg,#D9824A 0 12px,#1F1710 12px 19px,#5E7D63 19px 31px,#ECC1A1 31px 38px)}
+.bg-ink .bead,.bg-deep .bead,.bg-ochre .bead{background:repeating-linear-gradient(90deg,#ECC1A1 0 12px,#F6EFE6 12px 19px,#9FC0A2 19px 31px,#C2632E 31px 38px)}
+.pil-head{font-size:23px;margin-bottom:16px}
+.pil{display:flex;gap:11px;align-items:flex-start;margin-top:11px;text-align:left}
+.pd{width:10px;height:10px;border-radius:50%;background:#D9824A;margin-top:4px;flex:0 0 auto}
+.pl{font-size:15px;font-weight:500}.pdesc{font-size:12px;opacity:.72;margin-top:1px;line-height:1.35}
+.ph-wrap{display:flex;flex-direction:column;align-items:center}
+.ph{width:232px;height:404px;border-radius:30px;background:#211910;padding:8px;position:relative;box-shadow:0 0 0 0 rgba(0,0,0,0)}
+.ph.emp{box-shadow:0 0 0 3px rgba(236,193,161,.4)}.ph.wrk{box-shadow:0 0 0 3px rgba(159,192,162,.45)}
+.ph-notch{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:66px;height:14px;background:#211910;border-radius:0 0 11px 11px;z-index:7}
+.ph-scr{position:relative;width:216px;height:388px;border-radius:23px;overflow:hidden;background:#F8F2E9;color:#1F1710}
+.sb{height:22px;display:flex;align-items:center;justify-content:space-between;padding:0 13px;font-size:10px;font-weight:500;color:#1F1710}
+.bar{display:inline-block;width:3px;height:7px;background:#1F1710;border-radius:1px;margin-left:2px;vertical-align:middle}
+.batt{display:inline-block;width:14px;height:8px;border:1px solid #1F1710;border-radius:2px;margin-left:4px;vertical-align:middle}
+.body{height:366px;padding:11px 13px;display:flex;flex-direction:column}
+.ph-h{font-size:15px}.grow{flex:1}
+.chip{display:inline-block;font-size:10.5px;font-weight:500;padding:4px 9px;border-radius:999px}
+.sel{background:#C2632E;color:#fff}.un{background:#E7DCCB;color:#7A6A59}
+.fld{background:#FFFDF9;border:.5px solid rgba(31,23,16,.13);border-radius:10px;padding:7px 10px;margin-top:7px}
+.fld small{display:block;font-size:9.5px;color:#8A7A6B}.fld .v{font-size:12.5px}
+.btn{background:#C2632E;color:#fff;font-weight:500;font-size:12px;text-align:center;padding:9px;border-radius:10px}
+.btn.o{background:transparent;color:#1F1710;border:.5px solid rgba(31,23,16,.28)}
+.twobtn{display:flex;gap:7px;margin-top:8px}.twobtn>div{flex:1}
+.row{display:flex;align-items:center;gap:8px;background:#FFFDF9;border:.5px solid rgba(31,23,16,.12);border-radius:11px;padding:7px 8px;margin-top:7px}
+.row.hi{border-color:#C2632E;background:#FBEEE4}
+.av{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:500;font-family:var(--font-serif);font-size:12px;flex:0 0 auto}
+.nm{font-size:11.5px;font-weight:500}.mt{font-size:9.5px;color:#8A7A6B}
+.star{color:#D9CDBF;font-size:20px;transition:color .35s}.a3-scene.on .star{color:#D9824A}
+.bub{max-width:82%;padding:6px 10px;border-radius:13px;font-size:11.5px;line-height:1.3}
+.bub.l{background:#EADFCE;color:#3A2E22;align-self:flex-start;border-bottom-left-radius:4px}
+.bub.r{background:#C2632E;color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+.sos{background:#B23A2B;color:#fff;font-size:9px;font-weight:500;padding:4px 9px;border-radius:999px}
+.vrow{display:flex;align-items:center;gap:8px;font-size:12px;margin-top:9px}
+.vt{width:18px;height:18px;border-radius:50%;background:#E7EFE5;color:#3F5A45;display:flex;align-items:center;justify-content:center;font-size:11px;flex:0 0 auto}
+.jt{font-size:11.5px;font-weight:500}.js{font-size:9.5px;color:#8A7A6B}.jp{margin-left:auto;font-family:var(--font-serif);font-size:13px;color:#C2632E}
+.toast{display:flex;align-items:center;gap:6px;background:#E7EFE5;color:#3F5A45;border-radius:10px;padding:8px 10px;font-size:11px;font-weight:500}
+.pushcard{display:flex;gap:9px;align-items:center;background:#FFFDF9;border:.5px solid rgba(31,23,16,.14);border-radius:14px;padding:10px 11px;box-shadow:0 8px 20px rgba(31,23,16,.1)}
+.thumbs{display:flex;gap:6px;margin-top:4px}.thumbs i{width:34px;height:26px;border-radius:6px;background:repeating-linear-gradient(135deg,#ECC1A1 0 7px,#CFE0D0 7px 14px)}
+.cap{font-size:12.5px;text-align:center;max-width:236px;margin-top:12px;line-height:1.35;color:inherit;opacity:.86}
+.mapbox{position:relative;flex:1;margin-top:8px;border-radius:12px;background:#ECE2D2;border:.5px solid rgba(31,23,16,.1);overflow:hidden}
+.mapdot{position:absolute;width:12px;height:12px;border-radius:50%;background:#C2632E;box-shadow:0 0 0 5px rgba(194,99,46,.2);animation:a3dot 3.2s ease-in-out infinite alternate}
+@keyframes a3dot{0%{left:14%;top:66%}50%{left:50%;top:42%}100%{left:78%;top:26%}}
+.pin{position:absolute;right:14%;top:18%;width:9px;height:9px;border-radius:50% 50% 50% 0;background:#1F1710;transform:rotate(45deg)}
+.photos{display:flex;gap:8px;margin-top:9px}.photos i{flex:1;height:66px;border-radius:10px}
+.burst{position:absolute;top:120px;left:50%;z-index:9;pointer-events:none}
+.burst b{position:absolute;width:7px;height:7px;border-radius:1px;opacity:0}
+.burst.go b{animation:a3burst .9s ease-out forwards}
+@keyframes a3burst{0%{opacity:0;transform:translate(0,0) scale(.4)}18%{opacity:1}100%{opacity:0;transform:translate(var(--tx),var(--ty)) scale(1)}}
+@keyframes a3pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+.pulse{animation:a3pulse 1.7s ease-in-out infinite}
+.cta{background:#C2632E;color:#fff;font-weight:500;padding:10px 22px;border-radius:999px;font-size:14px;display:inline-block}
+.qrcard{background:#fff;border-radius:14px;padding:9px;display:inline-block;margin:14px auto 0;line-height:0}
+.qrcard svg{width:104px;height:104px;display:block}
+</style>
+</head>
+<body>
+<div class="scaler" id="scaler">
+  <div class="a3-stage">
+    <div class="a3-top"><div class="a3-bar"><div class="a3-fill" id="a3Fill"></div></div><div class="a3-ch" id="a3Ch">The problem</div></div>
+    <div id="a3Scenes"></div>
+  </div>
+</div>
+<script>
+(function(){
+  var WD='<svg viewBox="0 0 64 64" width="W" height="W" aria-hidden style="flex:0 0 auto"><rect x="6" y="6" width="52" height="52" rx="14" fill="#1F1710"/><rect x="9" y="9" width="46" height="46" rx="11" fill="none" stroke="#F6EFE6" stroke-width="1.5" opacity=".55"/><path d="M14 19L21 47L28 30L36 47L43 30Q47 22 50 19L50 50" stroke="#F6EFE6" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/><line x1="43" y1="22" x2="57" y2="22" stroke="#F6EFE6" stroke-width="4.5" stroke-linecap="round"/></svg>';
+  var WL='<svg viewBox="0 0 64 64" width="W" height="W" aria-hidden style="flex:0 0 auto"><rect x="6" y="6" width="52" height="52" rx="14" fill="#F6EFE6"/><rect x="9" y="9" width="46" height="46" rx="11" fill="none" stroke="#1F1710" stroke-width="1.5" opacity=".55"/><path d="M14 19L21 47L28 30L36 47L43 30Q47 22 50 19L50 50" stroke="#1F1710" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/><line x1="43" y1="22" x2="57" y2="22" stroke="#1F1710" stroke-width="4.5" stroke-linecap="round"/></svg>';
+  var QR='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h25v25H0z"/><path stroke="#1F1710" d="M0 0.5h7m1 0h2m1 0h1m1 0h2m3 0h7M0 1.5h1m5 0h1m1 0h2m1 0h1m2 0h1m3 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m1 0h1m1 0h1m2 0h2m3 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m3 0h2m1 0h1m1 0h2m1 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h2m2 0h3m3 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m4 0h4m3 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M9 7.5h5M0 8.5h1m2 0h9m3 0h3m2 0h1m1 0h3M0 9.5h1m1 0h3m5 0h1m1 0h4m3 0h5M0 10.5h3m1 0h1m1 0h1m1 0h2m3 0h1m1 0h2m2 0h1m1 0h1m2 0h1M2 11.5h1m1 0h2m1 0h1m3 0h1m3 0h2m2 0h1m1 0h4M1 12.5h1m4 0h3m1 0h2m3 0h1m2 0h1m5 0h1M0 13.5h1m2 0h2m2 0h1m4 0h1m2 0h3m2 0h1m2 0h1M0 14.5h3m1 0h1m1 0h5m4 0h2m1 0h1m1 0h5M0 15.5h1m2 0h1m1 0h1m1 0h2m3 0h1m1 0h1m4 0h1m1 0h2m1 0h1M0 16.5h1m3 0h1m1 0h2m3 0h3m1 0h6m1 0h2M8 17.5h4m3 0h2m3 0h1m1 0h2M0 18.5h7m1 0h3m1 0h3m1 0h1m1 0h1m1 0h1m3 0h1M0 19.5h1m5 0h1m1 0h2m1 0h1m1 0h1m1 0h2m3 0h1M0 20.5h1m1 0h3m1 0h1m1 0h4m1 0h1m1 0h6m2 0h2M0 21.5h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h7m4 0h2M0 22.5h1m1 0h3m1 0h1m2 0h1m1 0h1m1 0h1m1 0h3m2 0h5M0 23.5h1m5 0h1m4 0h3m3 0h1m1 0h2m1 0h3M0 24.5h7m1 0h1m1 0h4m2 0h1m4 0h1m2 0h1"/></svg>';
+  function wm(svg,s){return svg.replace(/W/g,s)}
+  function sb(){return '<div class="sb"><span>9:41</span><span><i class="bar"></i><i class="bar"></i><i class="bar"></i><i class="batt"></i></span></div>'}
+  function av(i,bg,fg){return '<span class="av" style="background:'+bg+';color:'+fg+'">'+i+'</span>'}
+  function phone(role,inner){return '<div class="ph '+role+'"><div class="ph-notch"></div><div class="ph-scr">'+sb()+'<div class="body">'+inner+'</div></div></div>'}
+  var burst='<div class="burst"><b style="--tx:-54px;--ty:-26px;background:#D9824A"></b><b style="--tx:50px;--ty:-36px;background:#5E7D63"></b><b style="--tx:-36px;--ty:38px;background:#ECC1A1"></b><b style="--tx:44px;--ty:42px;background:#C2632E"></b><b style="--tx:-62px;--ty:12px;background:#5E7D63"></b><b style="--tx:60px;--ty:4px;background:#D9824A"></b><b style="--tx:-14px;--ty:-54px;background:#ECC1A1"></b><b style="--tx:18px;--ty:-50px;background:#C2632E"></b><b style="--tx:-28px;--ty:56px;background:#D9824A"></b><b style="--tx:32px;--ty:54px;background:#5E7D63"></b></div>';
+  function screen(n){
+    switch(n){
+      case 'verify':return '<div class="ph-h jw-h2 rev">Get verified</div><div class="vrow rev"><span class="vt">✓</span> SA ID document</div><div class="vrow rev"><span class="vt">✓</span> Selfie / liveness video</div><div class="vrow rev"><span class="vt">✓</span> Proof of address</div><div class="vrow rev"><span class="vt">✓</span> Proof of skill</div><div class="grow"></div><div class="rev" style="display:flex;gap:6px"><span class="chip" style="background:#E7EFE5;color:#3F5A45">✓ Verified</span><span class="chip" style="background:#F7E6CE;color:#9A4E22">★ Gold · checked</span></div>';
+      case 'post':return '<div class="ph-h jw-h2 rev">Post a job</div><div class="rev" style="margin-top:8px;display:flex;gap:5px"><span class="chip sel">Gardening</span><span class="chip un">Cleaning</span><span class="chip un">Trades</span></div><div class="fld rev"><small>Job</small><div class="v">Lawn cut &amp; hedge trim</div></div><div class="fld rev"><small>Where</small><div class="v">Linden, Johannesburg</div></div><div class="fld rev"><small>Suggested price</small><div class="v jw-h2" style="color:#C2632E;font-size:18px">R 280</div></div><div class="grow"></div><div class="btn pulse rev">Post job</div>';
+      case 'notif':return '<div class="grow"></div><div class="pushcard rev">'+wm(WD,'30')+'<div><div style="font-size:11px;font-weight:500">New job near you</div><div style="font-size:10px;color:#8A7A6B">Lawn cut &amp; hedge trim · R280 · 2.1 km</div></div></div><div class="rev" style="text-align:center;font-size:11px;color:#8A7A6B;margin-top:10px">Tap to view</div><div class="grow"></div>';
+      case 'offer':return '<div class="ph-h jw-h2 rev" style="font-size:14px">Lawn cut &amp; hedge trim</div><div class="rev" style="font-size:10.5px;color:#8A7A6B;margin-top:2px">Offered R 280 · 2.1 km · Linden</div><div class="fld rev"><small>Your offer</small><div class="v jw-h2" style="color:#5E7D63;font-size:17px">R 350</div></div><div class="twobtn rev"><div class="btn o">Accept R280</div><div class="btn">Send offer</div></div><div class="grow"></div><div class="toast rev"><span style="font-size:13px">✓</span> Offer sent to employer</div>';
+      case 'offers':return '<div class="ph-h jw-h2 rev">3 offers in</div><div class="row hi rev"><div class="av" style="background:#ECC1A1;color:#7A3F1B">S</div><div><div class="nm">Sipho M. <span style="color:#4C6650;font-size:9px">· verified</span></div><div class="mt">★ 4.9 · 142 jobs</div></div><div style="margin-left:auto;text-align:right"><div class="jw-h2" style="font-size:13px">R 350</div><span class="chip sel" style="font-size:9px;padding:2px 8px">Accept</span></div></div><div class="row rev"><div class="av" style="background:#CFE0D0;color:#3F5A45">T</div><div><div class="nm">Themba D.</div><div class="mt">★ 4.7 · 61 jobs</div></div><span class="jp" style="margin-left:auto">R 300</span></div><div class="row rev"><div class="av" style="background:#E7D6C2;color:#7A3F1B">N</div><div><div class="nm">Nomsa K. <span style="color:#9A4E22;font-size:9px">· gold</span></div><div class="mt">★ 5.0 · 88 jobs</div></div><span class="jp" style="margin-left:auto">R 280</span></div><div class="grow"></div>';
+      case 'accept':return burst+'<div class="grow"></div><div class="rev" style="margin:0 auto;width:48px;height:48px;border-radius:50%;background:#E7EFE5;color:#3F5A45;display:flex;align-items:center;justify-content:center;font-size:26px">✓</div><div class="rev jw-h2" style="text-align:center;font-size:18px;margin-top:10px">You’re connected</div><div class="row rev" style="justify-content:center">'+av('S','#ECC1A1','#7A3F1B')+'<div><div class="nm">Sipho M.</div><div class="mt">★ 4.9 · verified</div></div></div><div class="twobtn rev"><div class="btn o">Message</div><div class="btn">Track live</div></div><div class="grow"></div>';
+      case 'chat':return '<div class="row rev" style="margin-top:0">'+av('S','#ECC1A1','#7A3F1B')+'<div class="nm">Sipho M.</div><span class="sos" style="margin-left:auto">● SOS</span></div><div class="rev" style="display:flex;flex-direction:column;gap:6px;margin-top:10px"><div class="bub l">On my way — about 10 min.</div><div class="bub r">Great, the gate’s open. Thanks!</div><div class="bub l">See you now.</div></div><div class="grow"></div><div class="rev" style="display:flex;align-items:center;gap:6px;background:#FBEAE6;color:#8C2E22;border-radius:10px;padding:7px 10px;font-size:10.5px;font-weight:500"><span>●</span> Emergency SOS active during the job</div>';
+      case 'track':return '<div class="ph-h jw-h2 rev">On the way · 8 min</div><div class="mapbox rev"><svg viewBox="0 0 200 300" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%"><polyline points="28,200 78,150 108,118 160,68" fill="none" stroke="#C2632E" stroke-width="3" stroke-dasharray="6 7" stroke-linecap="round" opacity=".65"/></svg><span class="mapdot"></span><span class="pin"></span></div><div class="rev" style="font-size:10.5px;color:#5A4A3C;margin-top:8px">Sipho is heading to Linden.</div>';
+      case 'progress':return '<div class="rev"><span class="chip" style="background:#F2E5D7;color:#9A4E22">In progress</span></div><div class="ph-h jw-h2 rev" style="margin-top:9px">Photo proof on completion</div><div class="photos rev"><i style="background:repeating-linear-gradient(135deg,#ECC1A1 0 8px,#CFE0D0 8px 16px)"></i><i style="background:repeating-linear-gradient(135deg,#CFE0D0 0 8px,#ECC1A1 8px 16px)"></i></div><div class="grow"></div><div class="toast rev"><span style="font-size:13px">✓</span> Work completed</div>';
+      case 'pay':return '<div class="row rev" style="justify-content:space-between"><div><div class="mt">Pay Sipho</div><div class="jw-h2" style="font-size:18px;color:#C2632E">R 350</div></div><span class="chip un">Cash / EFT</span></div><div class="grow"></div><div class="rev toast" style="background:#F2E5D7;color:#9A4E22">No middleman fees during launch.</div>';
+      case 'rate':return '<div class="ph-h jw-h2 rev">Rate your worker</div><div class="rev" style="margin-top:7px"><span class="star">★</span><span class="star" style="transition-delay:.12s">★</span><span class="star" style="transition-delay:.24s">★</span><span class="star" style="transition-delay:.36s">★</span><span class="star" style="transition-delay:.48s">★</span></div><div class="row rev" style="margin-top:10px">'+av('S','#ECC1A1','#7A3F1B')+'<div><div class="nm">Sipho M.</div><div class="mt">Now 143 jobs · ★ 4.9</div></div></div><div class="grow"></div><div class="rev" style="font-size:10.5px;color:#5A4A3C">Both sides rate. Reputation that travels.</div>';
+    }
+    return '';
+  }
+  function render(s){
+    if(s.t==='state')return '<div class="s-wrap"><div class="rev s-big jw-h2">'+s.big+'</div>'+(s.sub?'<div class="rev s-sub">'+s.sub+'</div>':'')+'</div>';
+    if(s.t==='brand')return '<div class="s-wrap"><div class="rev" style="display:flex;align-items:center;justify-content:center;gap:10px">'+wm(WL,'44')+'<span class="jw-h2" style="font-size:30px">Workit</span></div><div class="rev s-sub" style="opacity:1;font-size:16px">South Africa’s work marketplace.</div><div class="rev s-sub">Everyday jobs · verified people · fair prices.</div><div class="rev bead"></div></div>';
+    if(s.t==='pillars'){var rows=s.items.map(function(it){return '<div class="pil rev"><span class="pd"></span><div><div class="pl">'+it[0]+'</div><div class="pdesc">'+it[1]+'</div></div></div>'}).join('');return '<div style="max-width:268px;width:100%"><div class="rev jw-h2 pil-head">'+s.head+'</div>'+rows+'</div>'}
+    if(s.t==='phone')return '<div class="ph-wrap">'+phone(s.role,screen(s.screen))+'<div class="cap rev">'+s.cap+'</div></div>';
+    if(s.t==='close')return '<div class="s-wrap"><div class="rev" style="display:flex;align-items:center;justify-content:center;gap:10px">'+wm(WL,'36')+'<span class="jw-h2" style="font-size:23px">Workit</span></div><div class="rev qrcard">'+QR+'</div><div class="rev" style="font-size:13px;font-weight:500;margin-top:4px">Scan to visit workitsa.co.za</div><div class="rev cta pulse" style="margin-top:12px">Post a job →</div><div class="rev" style="font-size:10.5px;letter-spacing:.14em;margin-top:11px;opacity:.85">WORK IT · EARN IT · FREE DURING LAUNCH</div></div>';
+    return '';
+  }
+  var S=[
+    {ch:'The problem',bg:'bg-ink',d:5,t:'state',big:'Work needs doing.',sub:'Finding someone you can trust is the hard part.'},
+    {ch:'Meet Workit',bg:'bg-cream',d:4.5,t:'brand'},
+    {ch:'Get verified',bg:'bg-cream',d:6,t:'phone',role:'wrk',screen:'verify',cap:'Workers submit ID, a selfie video, address & skill — checked by a real person.'},
+    {ch:'Post a job',bg:'bg-cream',d:6,t:'phone',role:'emp',screen:'post',cap:'Describe it, add photos, set a fair price — under a minute.'},
+    {ch:'Get matched',bg:'bg-cream',d:4.5,t:'phone',role:'wrk',screen:'notif',cap:'Nearby verified workers get pinged instantly.'},
+    {ch:'Get matched',bg:'bg-cream',d:5.5,t:'phone',role:'wrk',screen:'offer',cap:'Accept your price — or send a counter-offer.'},
+    {ch:'Choose',bg:'bg-cream',d:5.5,t:'phone',role:'emp',screen:'offers',cap:'Compare ratings, badges and price.'},
+    {ch:'Choose',bg:'bg-cream',d:5.5,t:'phone',role:'emp',screen:'accept',fx:'burst',cap:'Accept the one you trust — you’re connected.'},
+    {ch:'Stay safe',bg:'bg-cream',d:6,t:'phone',role:'emp',screen:'chat',cap:'Chat in-app — SOS button active the whole job.'},
+    {ch:'Stay safe',bg:'bg-cream',d:5.5,t:'phone',role:'emp',screen:'track',cap:'Track them live, right to your door.'},
+    {ch:'Done & paid',bg:'bg-cream',d:5,t:'phone',role:'emp',screen:'progress',cap:'Photo proof when the job is done.'},
+    {ch:'Done & paid',bg:'bg-cream',d:5,t:'phone',role:'emp',screen:'pay',cap:'Pay cash or EFT — no fees during launch.'},
+    {ch:'Reputation',bg:'bg-cream',d:5.5,t:'phone',role:'emp',screen:'rate',cap:'Both sides rate — reputation that travels.'},
+    {ch:'Why Workit',bg:'bg-ink',d:7,t:'pillars',head:'Why Workit',items:[['Verified people','ID, face & references checked'],['Fair prices','Suggested local rates, you decide'],['Live safety','Tracking, SOS & trusted contact'],['Cash, no fees','Free to post and earn at launch'],['Two-way trust','Both sides rate every job']]},
+    {ch:'Workit',bg:'bg-ochre',d:4.5,t:'state',big:'From posted to paid — all in one place.'},
+    {ch:'Get started',bg:'bg-ink',d:9.5,t:'close'}
+  ];
+  var host=document.getElementById('a3Scenes'),fill=document.getElementById('a3Fill'),chEl=document.getElementById('a3Ch'),scaler=document.getElementById('scaler');
+  function fit(){var s=Math.min(window.innerHeight*0.94/604,window.innerWidth*0.94/340);scaler.style.transform='scale('+s+')';}
+  var nodes=S.map(function(s){
+    var d=document.createElement('div');d.className='a3-scene '+s.bg;d.innerHTML=render(s);
+    [].slice.call(d.querySelectorAll('.rev')).forEach(function(el,k){el.style.transitionDelay=(Math.min(k,9)*0.08)+'s'});
+    host.appendChild(d);return d;
+  });
+  var N=S.length,i=0,prev=null,z=1;
+  function go(){
+    var cur=nodes[i];
+    cur.style.zIndex=(++z);
+    cur.classList.add('on');
+    var b=cur.querySelector('.burst');if(b){b.classList.remove('go');if(S[i].fx==='burst'){void b.offsetWidth;b.classList.add('go');}}
+    chEl.textContent=S[i].ch;fill.style.width=((i+1)/N*100)+'%';
+    if(prev&&prev!==cur){var p=prev;setTimeout(function(){p.classList.remove('on')},750);}
+    prev=cur;
+    var d=S[i].d*1000;i=(i+1)%N;setTimeout(go,d);
+  }
+  fit();window.addEventListener('resize',fit);go();
+})();
+</script>
+</body>
+</html>

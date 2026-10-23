@@ -1,0 +1,90 @@
+<svg width="1200" height="628" viewBox="0 0 1200 628" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>Workit ad — a city map full of posted jobs and prices</title>
+  <desc>A stylised Johannesburg street map with parks and suburb names, scattered with ochre price-pin job markers and one open job card reading "I'd like someone to wash my car, Maboneng, suggested R198, View job".</desc>
+  <rect x="0" y="0" width="1200" height="628" fill="#ecefe8"/>
+
+  <g stroke="#b7d49a" fill="#d3e7bd">
+    <path d="M430 430 C470 410, 560 415, 580 470 C595 520, 540 565, 480 560 C420 555, 405 470, 430 430 Z"/>
+    <path d="M120 470 C160 455, 230 465, 240 510 C248 548, 200 575, 155 565 C115 556, 100 490, 120 470 Z"/>
+    <path d="M980 300 C1015 292, 1075 300, 1085 340 C1092 372, 1050 398, 1010 390 C975 383, 962 318, 980 300 Z"/>
+  </g>
+
+  <g fill="none" stroke="#e6c07a" stroke-linecap="round">
+    <path d="M-20 210 C300 160, 600 250, 900 175 C1050 138, 1160 200, 1220 200" stroke-width="16"/>
+    <path d="M250 -20 C300 200, 420 360, 520 660" stroke-width="16"/>
+  </g>
+  <g fill="none" stroke="#f7d488" stroke-linecap="round">
+    <path d="M-20 210 C300 160, 600 250, 900 175 C1050 138, 1160 200, 1220 200" stroke-width="11"/>
+    <path d="M250 -20 C300 200, 420 360, 520 660" stroke-width="11"/>
+  </g>
+
+  <g fill="none" stroke="#d7d2c5" stroke-linecap="round">
+    <path d="M-20 330 C250 305, 520 370, 770 335 C960 308, 1100 365, 1220 340" stroke-width="11"/>
+    <path d="M-20 480 C300 458, 600 510, 900 478 C1050 462, 1160 492, 1220 488" stroke-width="11"/>
+    <path d="M640 -20 C615 160, 690 330, 645 520 C625 600, 650 660, 650 660" stroke-width="9"/>
+    <path d="M880 -20 C900 160, 850 320, 930 470 C975 560, 935 660, 935 660" stroke-width="9"/>
+    <path d="M120 90 C320 170, 520 110, 820 200 C1010 256, 1150 205, 1220 235" stroke-width="9"/>
+  </g>
+  <g fill="none" stroke="#ffffff" stroke-linecap="round">
+    <path d="M-20 330 C250 305, 520 370, 770 335 C960 308, 1100 365, 1220 340" stroke-width="7"/>
+    <path d="M-20 480 C300 458, 600 510, 900 478 C1050 462, 1160 492, 1220 488" stroke-width="7"/>
+    <path d="M640 -20 C615 160, 690 330, 645 520 C625 600, 650 660, 650 660" stroke-width="5"/>
+    <path d="M880 -20 C900 160, 850 320, 930 470 C975 560, 935 660, 935 660" stroke-width="5"/>
+    <path d="M120 90 C320 170, 520 110, 820 200 C1010 256, 1150 205, 1220 235" stroke-width="5"/>
+  </g>
+  <g fill="none" stroke="#ffffff" stroke-width="3" opacity="0.9">
+    <path d="M700 380 H840"/><path d="M700 410 H840"/><path d="M700 440 H840"/>
+    <path d="M730 365 V455"/><path d="M770 365 V455"/><path d="M810 365 V455"/>
+    <path d="M180 360 H320"/><path d="M180 390 H320"/><path d="M215 345 V410"/><path d="M270 345 V410"/>
+  </g>
+
+  <g font-family="Arial, Helvetica, sans-serif" fill="#8c8676">
+    <text x="120" y="135" font-size="20">Soweto</text>
+    <text x="560" y="120" font-size="22">Johannesburg</text>
+    <text x="980" y="160" font-size="18">Germiston</text>
+    <text x="900" y="470" font-size="18">Alberton</text>
+    <text x="560" y="470" font-size="15">Mulbarton</text>
+    <text x="600" y="560" font-size="15">South View</text>
+    <text x="300" y="300" font-size="15">Mondeor</text>
+    <text x="150" y="430" font-size="15">Pimville</text>
+    <text x="1010" y="360" font-size="15">Glenvista</text>
+  </g>
+
+  <g font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700">
+    <g><rect x="118" y="150" width="62" height="32" rx="16" fill="#d97742"/><path d="M143 181 L155 181 L149 192 Z" fill="#d97742"/><text x="149" y="172" text-anchor="middle" fill="#ffffff">R350</text></g>
+    <g><rect x="238" y="416" width="62" height="32" rx="16" fill="#d97742"/><path d="M263 447 L275 447 L269 458 Z" fill="#d97742"/><text x="269" y="438" text-anchor="middle" fill="#ffffff">R150</text></g>
+    <g><rect x="170" y="290" width="62" height="32" rx="16" fill="#d97742"/><path d="M195 321 L207 321 L201 332 Z" fill="#d97742"/><text x="201" y="312" text-anchor="middle" fill="#ffffff">R220</text></g>
+    <g><rect x="455" y="470" width="62" height="32" rx="16" fill="#d97742"/><path d="M480 501 L492 501 L486 512 Z" fill="#d97742"/><text x="486" y="492" text-anchor="middle" fill="#ffffff">R280</text></g>
+    <g><rect x="560" y="150" width="62" height="32" rx="16" fill="#d97742"/><path d="M585 181 L597 181 L591 192 Z" fill="#d97742"/><text x="591" y="172" text-anchor="middle" fill="#ffffff">R300</text></g>
+    <g><rect x="720" y="250" width="62" height="32" rx="16" fill="#d97742"/><path d="M745 281 L757 281 L751 292 Z" fill="#d97742"/><text x="751" y="272" text-anchor="middle" fill="#ffffff">R260</text></g>
+    <g><rect x="790" y="420" width="62" height="32" rx="16" fill="#d97742"/><path d="M815 451 L827 451 L821 462 Z" fill="#d97742"/><text x="821" y="442" text-anchor="middle" fill="#ffffff">R450</text></g>
+    <g><rect x="905" y="200" width="62" height="32" rx="16" fill="#d97742"/><path d="M930 231 L942 231 L936 242 Z" fill="#d97742"/><text x="936" y="222" text-anchor="middle" fill="#ffffff">R250</text></g>
+    <g><rect x="1000" y="330" width="62" height="32" rx="16" fill="#d97742"/><path d="M1025 361 L1037 361 L1031 372 Z" fill="#d97742"/><text x="1031" y="352" text-anchor="middle" fill="#ffffff">R180</text></g>
+    <g><rect x="860" y="520" width="62" height="32" rx="16" fill="#d97742"/><path d="M885 551 L897 551 L891 562 Z" fill="#d97742"/><text x="891" y="542" text-anchor="middle" fill="#ffffff">R200</text></g>
+    <g><rect x="640" y="540" width="62" height="32" rx="16" fill="#d97742"/><path d="M665 571 L677 571 L671 582 Z" fill="#d97742"/><text x="671" y="562" text-anchor="middle" fill="#ffffff">R320</text></g>
+    <g><rect x="1060" y="470" width="62" height="32" rx="16" fill="#d97742"/><path d="M1085 501 L1097 501 L1091 512 Z" fill="#d97742"/><text x="1091" y="492" text-anchor="middle" fill="#ffffff">R500</text></g>
+    <g><rect x="340" y="540" width="62" height="32" rx="16" fill="#d97742"/><path d="M365 571 L377 571 L371 582 Z" fill="#d97742"/><text x="371" y="562" text-anchor="middle" fill="#ffffff">R120</text></g>
+    <g><rect x="980" y="80" width="62" height="32" rx="16" fill="#d97742"/><path d="M1005 111 L1017 111 L1011 122 Z" fill="#d97742"/><text x="1011" y="102" text-anchor="middle" fill="#ffffff">R400</text></g>
+    <g><rect x="730" y="90" width="62" height="32" rx="16" fill="#d97742"/><path d="M755 121 L767 121 L761 132 Z" fill="#d97742"/><text x="761" y="112" text-anchor="middle" fill="#ffffff">R230</text></g>
+  </g>
+
+  <g>
+    <rect x="333" y="203" width="320" height="132" rx="14" fill="#cfae8a" opacity="0.5"/>
+    <rect x="330" y="198" width="320" height="132" rx="14" fill="#ffffff"/>
+    <path d="M468 330 L492 330 L478 352 Z" fill="#ffffff"/>
+    <text x="352" y="238" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="700" fill="#2a1709">I&#8217;d like someone to wash my car</text>
+    <text x="352" y="268" font-family="Arial, Helvetica, sans-serif" font-size="16" fill="#8c8676">Maboneng</text>
+    <text x="352" y="296" font-family="Arial, Helvetica, sans-serif" font-size="16" fill="#2a1709">Suggested: <tspan font-weight="700">R198</tspan></text>
+    <text x="352" y="320" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" fill="#c25e2e">View job &#8594;</text>
+    <g><circle cx="478" cy="352" r="9" fill="#d97742"/><path d="M471 354 L485 354 L478 368 Z" fill="#d97742"/><circle cx="478" cy="352" r="3.5" fill="#ffffff"/></g>
+  </g>
+
+  <g>
+    <rect x="24" y="22" width="132" height="46" rx="23" fill="#ffffff" opacity="0.94"/>
+    <text x="90" y="53" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="26" font-weight="700" fill="#c25e2e">Workit</text>
+  </g>
+  <g>
+    <rect x="812" y="566" width="364" height="42" rx="21" fill="#2a1709" opacity="0.85"/>
+    <text x="994" y="593" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700" fill="#fbf4e8">Find work near you · workitsa.co.za</text>
+  </g>
+</svg>

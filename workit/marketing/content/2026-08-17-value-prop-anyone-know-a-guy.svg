@@ -1,0 +1,55 @@
+<svg width="1080" height="1080" viewBox="0 0 1080 1080" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>Workit &#8212; stop asking around, start with Workit</title>
+  <desc>Cream Workit social post: wordmark, a mock chat-bubble showing the familiar "anyone know a good gardener?" group message, headline "Stop asking around. Start with Workit.", three quick steps, trust line, workitsa.co.za call to action and trilingual greeting.</desc>
+  <defs>
+    <linearGradient id="bg1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#faf4ec"/>
+      <stop offset="1" stop-color="#f1e2cc"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="1080" height="1080" fill="url(#bg1)"/>
+
+  <text x="540" y="74" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" letter-spacing="4" fill="#d97742">WORKIT &#183; GAUTENG</text>
+  <text x="540" y="150" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="78" font-weight="700" fill="#1f1612">Workit</text>
+  <rect x="490" y="170" width="100" height="6" rx="3" fill="#d97742"/>
+
+  <!-- mock group-chat bubble -->
+  <g font-family="Arial, Helvetica, sans-serif">
+    <rect x="130" y="212" width="560" height="118" rx="24" fill="#ffffff" stroke="#e6d7c3" stroke-width="2"/>
+    <path d="M170 330 L170 366 L210 330 Z" fill="#ffffff" stroke="#e6d7c3" stroke-width="2"/>
+    <text x="160" y="248" font-size="17" font-weight="700" fill="#5d7a47">Suburb Moms &amp; Dads &#8226; 47 members</text>
+    <text x="160" y="284" font-size="24" fill="#1f1612">&#8220;Hi all, anyone know a good</text>
+    <text x="160" y="316" font-size="24" fill="#1f1612">gardener who's reliable? &#128557;&#8221;</text>
+  </g>
+
+  <text x="540" y="392" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="26" font-style="italic" fill="#5a4636">You&#8217;ve typed that message before.</text>
+
+  <text x="540" y="462" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="50" font-weight="700" fill="#1f1612">Stop asking around.</text>
+  <text x="540" y="518" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="50" font-weight="700" fill="#d97742">Start with Workit.</text>
+
+  <g font-family="Arial, Helvetica, sans-serif">
+    <g>
+      <rect x="72" y="574" width="936" height="96" rx="16" fill="#f0dcc2"/>
+      <circle cx="132" cy="622" r="26" fill="#d97742"/>
+      <text x="132" y="631" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="28" font-weight="700" fill="#faf4ec">1</text>
+      <text x="180" y="631" font-size="24" fill="#1f1612">Post the job &#8212; takes two minutes</text>
+    </g>
+    <g>
+      <rect x="72" y="682" width="936" height="96" rx="16" fill="#dee6d4"/>
+      <circle cx="132" cy="730" r="26" fill="#5d7a47"/>
+      <text x="132" y="739" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="28" font-weight="700" fill="#faf4ec">2</text>
+      <text x="180" y="739" font-size="24" fill="#1f1612">ID-verified workers nearby respond</text>
+    </g>
+    <g>
+      <rect x="72" y="790" width="936" height="96" rx="16" fill="#f0dcc2"/>
+      <circle cx="132" cy="838" r="26" fill="#b85a2a"/>
+      <text x="132" y="847" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="28" font-weight="700" fill="#faf4ec">3</text>
+      <text x="180" y="847" font-size="24" fill="#1f1612">Pay cash or EFT once it&#8217;s done</text>
+    </g>
+  </g>
+
+  <text x="540" y="936" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="22" fill="#5a4636">No card needed &#183; free during launch &#183; launching in Gauteng</text>
+
+  <rect x="230" y="964" width="620" height="70" rx="35" fill="#d97742"/>
+  <text x="540" y="1008" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#faf4ec">Skip the group chat &#183; workitsa.co.za</text>
+</svg>

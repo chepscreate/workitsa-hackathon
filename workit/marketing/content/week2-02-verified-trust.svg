@@ -1,0 +1,46 @@
+<svg width="1080" height="1080" viewBox="0 0 1080 1080" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>Workit &#8212; know exactly who you&#8217;re letting in</title>
+  <desc>Cream Workit social post about verification: headline, explanation of ID-verified workers and two-way ratings, a worker profile card mock with ID Verified badge, and a workitsa.co.za call to action.</desc>
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#faf4ec"/>
+      <stop offset="1" stop-color="#f1e2cc"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="1080" height="1080" fill="url(#bg2)"/>
+
+  <text x="72" y="76" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" letter-spacing="3.5" fill="#d97742">WORKIT &#183; GAUTENG</text>
+  <text x="72" y="148" font-family="Georgia, 'Times New Roman', serif" font-size="64" font-weight="700" fill="#1f1612">Workit</text>
+  <rect x="74" y="168" width="86" height="6" rx="3" fill="#d97742"/>
+
+  <rect x="756" y="60" width="252" height="44" rx="22" fill="#5d7a47" opacity="0.14"/>
+  <text x="882" y="88" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" letter-spacing="2" fill="#5d7a47">VERIFIED WORKERS</text>
+
+  <text x="72" y="288" font-family="Georgia, 'Times New Roman', serif" font-size="62" font-weight="700" fill="#1f1612">Know exactly who</text>
+  <text x="72" y="362" font-family="Georgia, 'Times New Roman', serif" font-size="62" font-weight="700" fill="#b85a2a">you&#8217;re letting in.</text>
+
+  <g font-family="Arial, Helvetica, sans-serif" font-size="28" fill="#5a4636">
+    <text x="72" y="428">Every worker on Workit is ID-verified before</text>
+    <text x="72" y="466">their first job &#8212; and after every job, employer</text>
+    <text x="72" y="504">and worker rate each other.</text>
+  </g>
+
+  <g>
+    <rect x="190" y="556" width="700" height="232" rx="24" fill="#fffcf7" stroke="#e5d5c0" stroke-width="2"/>
+    <circle cx="290" cy="652" r="54" fill="#dee6d4"/>
+    <circle cx="290" cy="636" r="20" fill="#5d7a47"/>
+    <path d="M254 700 C254 672 270 660 290 660 C310 660 326 672 326 700 Z" fill="#5d7a47"/>
+    <text x="372" y="628" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700" fill="#1f1612">Your worker</text>
+    <rect x="372" y="650" width="192" height="42" rx="21" fill="#5d7a47"/>
+    <path d="M390 671 l7 8 l13 -15" stroke="#faf4ec" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <text x="420" y="678" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" letter-spacing="1.5" fill="#faf4ec">ID VERIFIED</text>
+    <rect x="584" y="650" width="236" height="42" rx="21" fill="#f0dcc2"/>
+    <text x="702" y="677" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" letter-spacing="1.5" fill="#b85a2a">RATED BOTH WAYS</text>
+    <text x="372" y="736" font-family="Arial, Helvetica, sans-serif" font-size="19" fill="#5a4636">You see ratings from past jobs before you say yes.</text>
+  </g>
+
+  <rect x="245" y="856" width="590" height="70" rx="35" fill="#d97742"/>
+  <text x="540" y="900" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="700" fill="#faf4ec">Hire with confidence &#183; workitsa.co.za</text>
+
+  <text x="540" y="976" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="22" fill="#5a4636">Free during launch &#183; launching in Gauteng</text>
+</svg>

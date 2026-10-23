@@ -1,0 +1,19 @@
+User-agent: *
+Allow: /
+
+# Authenticated areas — not useful for search engines
+Disallow: /account
+Disallow: /admin
+Disallow: /verification
+Disallow: /post-a-job
+Disallow: /profile
+Disallow: /signin
+Disallow: /signup
+Disallow: /forgot-password
+Disallow: /u
+
+# Internal dev / setup pages
+Disallow: /setup
+Disallow: /sentry-test
+
+Sitemap: https://workitsa.co.za/sitemap.xml

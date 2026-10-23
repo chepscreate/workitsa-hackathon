@@ -1,0 +1,258 @@
+[
+  {
+    "businessName": "SP Cleaning Services",
+    "email": "contact@spcleaning.co.za",
+    "contactName": "Shelton Pogorelsky",
+    "suburb": "Sandton",
+    "category": "Cleaning",
+    "source": "https://spcleaning.co.za/"
+  },
+  {
+    "businessName": "CCM Cleaning",
+    "email": "ccmdash@ccmsandton.co.za",
+    "contactName": "",
+    "suburb": "Morningside, Sandton",
+    "category": "Cleaning",
+    "source": "https://ccmcleaning.co.za/contact/"
+  },
+  {
+    "businessName": "Duster Dollies",
+    "email": "info@dusterdollies.co.za",
+    "contactName": "",
+    "suburb": "Pierre van Ryneveld, Centurion",
+    "category": "Cleaning",
+    "source": "https://dusterdollies.co.za/cleaning-services/"
+  },
+  {
+    "businessName": "Clean and Go (Pty) Ltd",
+    "email": "info@cleanandgo.co.za",
+    "contactName": "",
+    "suburb": "Garsfontein, Pretoria",
+    "category": "Cleaning",
+    "source": "https://www.cleanandgo.co.za/contact-us"
+  },
+  {
+    "businessName": "Last Builders (Deeweb Pty Ltd)",
+    "email": "info@lastbuilders.com",
+    "contactName": "",
+    "suburb": "Lyndhurst, Johannesburg",
+    "category": "Garden & Landscaping",
+    "source": "https://lastbuilders.com/%F0%9F%8C%BF-garden-maintenance-services-for-municipalities-johannesburg-south-africa/"
+  },
+  {
+    "businessName": "Trinity Gardens (Trinity Maintenance Services)",
+    "email": "info@trinitygardens.co.za",
+    "contactName": "",
+    "suburb": "Johannesburg",
+    "category": "Garden & Landscaping",
+    "source": "https://www.trinitygardens.co.za/"
+  },
+  {
+    "businessName": "The Landscape",
+    "email": "info@thelandscape.co.za",
+    "contactName": "",
+    "suburb": "Modderfontein, Ekurhuleni",
+    "category": "Garden & Landscaping",
+    "source": "https://www.thelandscape.co.za/"
+  },
+  {
+    "businessName": "Chris Garden Services",
+    "email": "chris@gardenservicerandburg.co.za",
+    "contactName": "Chris",
+    "suburb": "Blairgowrie, Randburg",
+    "category": "Garden & Landscaping",
+    "source": "https://gardenservicerandburg.co.za/contact/"
+  },
+  {
+    "businessName": "Landscaping Solutions",
+    "email": "hello@landscapingsolutions.co.za",
+    "contactName": "",
+    "suburb": "Randburg",
+    "category": "Garden & Landscaping",
+    "source": "https://www.landscapingsolutions.co.za/contact/"
+  },
+  {
+    "businessName": "Gigi's Furniture Removals",
+    "email": "office@gigisremovals.co.za",
+    "contactName": "",
+    "suburb": "Pretoria",
+    "category": "Moving & Removals",
+    "source": "https://www.gigisremovals.co.za/furniture-removals-pretoria"
+  },
+  {
+    "businessName": "Zuki Movers",
+    "email": "info@zukimovers.co.za",
+    "contactName": "",
+    "suburb": "Randburg",
+    "category": "Moving & Removals",
+    "source": "https://sirelo.co.za/moving-company/randburg/zuki-movers/"
+  },
+  {
+    "businessName": "Seraphim Removals",
+    "email": "info@seraphimremovals.co.za",
+    "contactName": "",
+    "suburb": "Kya Sands, Randburg",
+    "category": "Moving & Removals",
+    "source": "https://www.seraphimremovals.co.za/"
+  },
+  {
+    "businessName": "JKJ Express",
+    "email": "csdsup@jkjexpress.co.za",
+    "contactName": "",
+    "suburb": "Pomona, Kempton Park",
+    "category": "Courier & Delivery",
+    "source": "https://jkjexpress.co.za/"
+  },
+  {
+    "businessName": "Worldwide Couriers",
+    "email": "info@worldwidecouriers.co.za",
+    "contactName": "Simon",
+    "suburb": "Spartan, Kempton Park",
+    "category": "Courier & Delivery",
+    "source": "https://www.worldwidecouriers.co.za/website/contact-us/"
+  },
+  {
+    "businessName": "UrgentGo Courier (Pty) Ltd",
+    "email": "support@urgentgocourier.co.za",
+    "contactName": "",
+    "suburb": "Florida, Roodepoort",
+    "category": "Courier & Delivery",
+    "source": "https://urgentgocourier.co.za/courier-centurion"
+  },
+  {
+    "businessName": "Flair Mobile Bars and Event Specialists",
+    "email": "info@flairbar.co.za",
+    "contactName": "",
+    "suburb": "Johannesburg",
+    "category": "Events Staffing",
+    "source": "https://flairbar.co.za/services-staff-hire/"
+  },
+  {
+    "businessName": "Forever Staffing Solutions",
+    "email": "bookings@foreverstaffing.co.za",
+    "contactName": "",
+    "suburb": "Johannesburg",
+    "category": "Events Staffing",
+    "source": "https://www.foreverstaffing.co.za/"
+  },
+  {
+    "businessName": "Linda Events Decor and Catering Services (LEDCS)",
+    "email": "info@lindaevents.co.za",
+    "contactName": "",
+    "suburb": "Wynberg, Sandton",
+    "category": "Events & Catering",
+    "source": "https://www.lindaevents.co.za/"
+  },
+  {
+    "businessName": "BarDeli Catering",
+    "email": "info@bardelicatering.co.za",
+    "contactName": "",
+    "suburb": "Westdene, Johannesburg",
+    "category": "Events & Catering",
+    "source": "https://bardelicatering.co.za/"
+  },
+  {
+    "businessName": "Club 26 Events & Catering Services",
+    "email": "info@club26.co.za",
+    "contactName": "",
+    "suburb": "Tembisa, Ekurhuleni",
+    "category": "Events & Catering",
+    "source": "https://www.facebook.com/p/Club-26-Events-Catering-Services-61565721561549/"
+  },
+  {
+    "businessName": "Building Contractors Roodepoort",
+    "email": "info@buildingcontractorsroodepoort.co.za",
+    "contactName": "",
+    "suburb": "Weltevredenpark, Roodepoort",
+    "category": "Building & Renovations",
+    "source": "https://buildingcontractorsroodepoort.co.za/"
+  },
+  {
+    "businessName": "Pentacon",
+    "email": "info@pentacon.co.za",
+    "contactName": "",
+    "suburb": "Clubview, Centurion",
+    "category": "Building & Renovations",
+    "source": "https://pentacon.co.za/"
+  },
+  {
+    "businessName": "Building Contractors Pretoria",
+    "email": "info@building-contractorspretoria.co.za",
+    "contactName": "",
+    "suburb": "Moreleta Park, Pretoria",
+    "category": "Building & Renovations",
+    "source": "https://building-contractorspretoria.co.za/"
+  },
+  {
+    "businessName": "PTA Builders",
+    "email": "info@ptabuilders.co.za",
+    "contactName": "",
+    "suburb": "Pretoria",
+    "category": "Building & Renovations",
+    "source": "https://ptabuilders.co.za/"
+  },
+  {
+    "businessName": "Amega Cleaning Service (Mobile Vehicle Valet)",
+    "email": "info@amegacleaning.co.za",
+    "contactName": "",
+    "suburb": "Centurion / East Rand (mobile)",
+    "category": "Car Wash & Valet",
+    "source": "https://www.amegacleaning.co.za/mobile-vehicle-valet-centurion/"
+  },
+  {
+    "businessName": "George Rennie & Co (Pty) Ltd",
+    "email": "info@georgerennie.co.za",
+    "contactName": "Gerry Keijer",
+    "suburb": "Farrarmere, Benoni",
+    "category": "Property Management",
+    "source": "https://www.georgerennie.co.za/"
+  },
+  {
+    "businessName": "Renprop (Property Management Division)",
+    "email": "propertymanagement@renprop.co.za",
+    "contactName": "",
+    "suburb": "Sandton / Johannesburg",
+    "category": "Property Management",
+    "source": "https://www.renprop.co.za/property-management/"
+  },
+  {
+    "businessName": "Big Tree Bed and Breakfast",
+    "email": "info@bigtreebb.com",
+    "contactName": "",
+    "suburb": "Glen Austin, Midrand",
+    "category": "Guesthouse & B&B",
+    "source": "https://www.bigtreebb.com/contact.html"
+  },
+  {
+    "businessName": "Midrand Guesthouse",
+    "email": "bookings@midrandguesthouse.com",
+    "contactName": "",
+    "suburb": "Noordwyk, Midrand",
+    "category": "Guesthouse & B&B",
+    "source": "https://midrandguesthouse.com/contact-us-2/"
+  },
+  {
+    "businessName": "Sunrock Guesthouse",
+    "email": "info@sunrock.co.za",
+    "contactName": "",
+    "suburb": "Kempton Park",
+    "category": "Guesthouse & B&B",
+    "source": "https://www.sunrock.co.za/"
+  },
+  {
+    "businessName": "Angelica Guest House",
+    "email": "info@angelicaguesthouse.co.za",
+    "contactName": "",
+    "suburb": "Libradene, Boksburg",
+    "category": "Guesthouse & B&B",
+    "source": "https://angelicaguesthouse.co.za/contact/"
+  },
+  {
+    "businessName": "Pimville Guest House",
+    "email": "pimvilleguesthouse@telkomsa.net",
+    "contactName": "",
+    "suburb": "Pimville, Soweto",
+    "category": "Guesthouse & B&B",
+    "source": "https://www.travelagewest.com/Hotels/Soweto-South-Africa/Pimville-Guest-House-p52829240"
+  }
+]

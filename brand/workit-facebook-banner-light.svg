@@ -1,0 +1,83 @@
+<svg width="1640" height="624" viewBox="0 0 1640 624" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>Workit Facebook cover banner (light)</title>
+  <desc>Bright cream-and-ink branded cover for Workit: the wordmark, the tagline "Work needs doing. Someone nearby is ready to do it.", a Sawubona / Dumela / Goeie dag greeting, a Launching in Gauteng badge, the workitsa.co.za address, and a map-pin hotspot motif.</desc>
+  <defs>
+    <linearGradient id="bgL" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fbf5ec"/>
+      <stop offset="0.55" stop-color="#f6e9d6"/>
+      <stop offset="1" stop-color="#efdcbf"/>
+    </linearGradient>
+    <radialGradient id="sunL" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#e89a4f" stop-opacity="0.45"/>
+      <stop offset="1" stop-color="#e89a4f" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect x="0" y="0" width="1640" height="624" fill="url(#bgL)"/>
+  <circle cx="1470" cy="120" r="330" fill="url(#sunL)"/>
+
+  <g stroke="#7a5734" stroke-width="1.5" opacity="0.2">
+    <line x1="1150" y1="240" x2="1330" y2="185"/>
+    <line x1="1330" y1="185" x2="1470" y2="300"/>
+    <line x1="1150" y1="240" x2="1250" y2="345"/>
+    <line x1="1470" y1="300" x2="1540" y2="205"/>
+    <line x1="1250" y1="345" x2="1410" y2="405"/>
+  </g>
+
+  <g fill="none" stroke="#d97742">
+    <circle cx="1150" cy="240" r="72" opacity="0.32" stroke-width="2"/>
+    <circle cx="1150" cy="240" r="104" opacity="0.18" stroke-width="2"/>
+    <circle cx="1150" cy="240" r="138" opacity="0.1" stroke-width="2"/>
+  </g>
+
+  <g>
+    <circle cx="1330" cy="185" r="24" fill="#6f8159"/>
+    <path d="M1315 191 L1345 191 L1330 222 Z" fill="#6f8159"/>
+    <circle cx="1330" cy="185" r="9" fill="#fbf4e8"/>
+  </g>
+  <g>
+    <circle cx="1470" cy="300" r="30" fill="#3a2414"/>
+    <path d="M1451 308 L1489 308 L1470 348 Z" fill="#3a2414"/>
+    <circle cx="1470" cy="300" r="11" fill="#f3e6cf"/>
+  </g>
+  <g>
+    <circle cx="1250" cy="345" r="22" fill="#b5462f"/>
+    <path d="M1236 350 L1264 350 L1250 379 Z" fill="#b5462f"/>
+    <circle cx="1250" cy="345" r="8" fill="#fbf4e8"/>
+  </g>
+  <g>
+    <circle cx="1540" cy="205" r="16" fill="#e0913f"/>
+    <path d="M1530 209 L1550 209 L1540 230 Z" fill="#e0913f"/>
+    <circle cx="1540" cy="205" r="6" fill="#fbf4e8"/>
+  </g>
+  <circle cx="1410" cy="405" r="9" fill="#b5462f" opacity="0.8"/>
+  <circle cx="1185" cy="150" r="7" fill="#d97742" opacity="0.85"/>
+  <g>
+    <circle cx="1150" cy="240" r="36" fill="#d97742"/>
+    <path d="M1127 248 L1173 248 L1150 296 Z" fill="#d97742"/>
+    <circle cx="1150" cy="240" r="14" fill="#fbf4e8"/>
+  </g>
+
+  <rect x="112" y="58" width="306" height="48" rx="24" fill="#d97742"/>
+  <text x="265" y="89" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" letter-spacing="0.5" fill="#321a0a">LAUNCHING IN GAUTENG</text>
+
+  <text x="1530" y="96" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700" fill="#a4491c">workitsa.co.za</text>
+
+  <text x="108" y="232" font-family="Georgia, 'Times New Roman', serif" font-size="132" font-weight="700" fill="#2a1709">Workit</text>
+  <rect x="116" y="258" width="132" height="7" rx="3.5" fill="#d97742"/>
+
+  <text x="112" y="332" font-family="Arial, Helvetica, sans-serif" font-size="46" font-weight="700" fill="#2a1709">Work needs doing.</text>
+  <text x="112" y="388" font-family="Arial, Helvetica, sans-serif" font-size="46" font-weight="400" fill="#6b4a2a">Someone nearby is ready to do it.</text>
+
+  <text x="112" y="442" font-family="Georgia, 'Times New Roman', serif" font-size="30" font-style="italic" fill="#b5642a">Sawubona · Dumela · Goeie dag</text>
+
+  <g font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700">
+    <text x="112" y="497" fill="#7a5a37">VERIFIED WORKERS</text>
+    <text x="372" y="497" fill="#c7a878">•</text>
+    <text x="398" y="497" fill="#7a5a37">CASH OR EFT ON COMPLETION</text>
+    <text x="760" y="497" fill="#c7a878">•</text>
+    <text x="786" y="497" fill="#7a5a37">FREE DURING LAUNCH</text>
+  </g>
+
+  <text x="1530" y="586" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="20" fill="#9c7c54">Gauteng gig-work marketplace · by Furthersky Solutions</text>
+</svg>

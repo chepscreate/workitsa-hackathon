@@ -1,0 +1,74 @@
+<svg width="1080" height="1080" viewBox="0 0 1080 1080" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>Workit &#8212; find work near you</title>
+  <desc>Cream Workit social post for workers: wordmark, headline "Work near you, waiting.", a mock phone list of nearby job categories (gardening, cleaning, deliveries), three quick steps to get picked, trust line, workitsa.co.za call to action and trilingual greeting.</desc>
+  <defs>
+    <linearGradient id="bg1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#faf4ec"/>
+      <stop offset="1" stop-color="#f1e2cc"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="1080" height="1080" fill="url(#bg1)"/>
+
+  <text x="540" y="74" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" letter-spacing="4" fill="#d97742">WORKIT &#183; GAUTENG</text>
+  <text x="540" y="150" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="78" font-weight="700" fill="#1f1612">Workit</text>
+  <rect x="490" y="170" width="100" height="6" rx="3" fill="#d97742"/>
+
+  <text x="540" y="240" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="52" font-weight="700" fill="#1f1612">Work near you,</text>
+  <text x="540" y="296" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="52" font-weight="700" fill="#d97742">waiting.</text>
+
+  <g font-family="Arial, Helvetica, sans-serif" font-size="24" fill="#5a4636" text-anchor="middle">
+    <text x="540" y="342">No CV, no waiting in line &#8212; just jobs close to home.</text>
+  </g>
+
+  <!-- mock phone job list -->
+  <g font-family="Arial, Helvetica, sans-serif">
+    <rect x="140" y="382" width="800" height="360" rx="24" fill="#ffffff" stroke="#e6d7c3" stroke-width="2"/>
+    <text x="176" y="426" font-size="18" font-weight="700" letter-spacing="2" fill="#5d7a47">JOBS NEAR YOU</text>
+
+    <g>
+      <rect x="164" y="448" width="752" height="86" rx="16" fill="#f0dcc2"/>
+      <circle cx="216" cy="491" r="26" fill="#d97742"/>
+      <text x="216" y="500" text-anchor="middle" font-size="24" fill="#faf4ec">&#127807;</text>
+      <text x="256" y="483" font-size="25" font-weight="700" fill="#1f1612">Gardening &#183; Midrand</text>
+      <text x="256" y="513" font-size="19" fill="#5a4636">Posted today &#183; 2.4 km away</text>
+      <rect x="792" y="470" width="92" height="42" rx="21" fill="#5d7a47"/>
+      <text x="838" y="497" text-anchor="middle" font-size="17" font-weight="700" fill="#faf4ec">Accept</text>
+    </g>
+
+    <g>
+      <rect x="164" y="546" width="752" height="86" rx="16" fill="#dee6d4"/>
+      <circle cx="216" cy="589" r="26" fill="#5d7a47"/>
+      <text x="216" y="598" text-anchor="middle" font-size="24" fill="#faf4ec">&#129529;</text>
+      <text x="256" y="581" font-size="25" font-weight="700" fill="#1f1612">Cleaning &#183; Alexandra</text>
+      <text x="256" y="611" font-size="19" fill="#5a4636">Posted today &#183; 1.1 km away</text>
+      <rect x="792" y="568" width="92" height="42" rx="21" fill="#d97742"/>
+      <text x="838" y="595" text-anchor="middle" font-size="17" font-weight="700" fill="#faf4ec">Accept</text>
+    </g>
+
+    <g>
+      <rect x="164" y="644" width="752" height="86" rx="16" fill="#f0dcc2"/>
+      <circle cx="216" cy="687" r="26" fill="#b85a2a"/>
+      <text x="216" y="696" text-anchor="middle" font-size="24" fill="#faf4ec">&#128667;</text>
+      <text x="256" y="679" font-size="25" font-weight="700" fill="#1f1612">Deliveries &#183; Soweto</text>
+      <text x="256" y="709" font-size="19" fill="#5a4636">Posted today &#183; 3.8 km away</text>
+      <rect x="792" y="666" width="92" height="42" rx="21" fill="#5d7a47"/>
+      <text x="838" y="693" text-anchor="middle" font-size="17" font-weight="700" fill="#faf4ec">Accept</text>
+    </g>
+  </g>
+
+  <g font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700" fill="#1f1612">
+    <rect x="86" y="770" width="270" height="50" rx="25" fill="#f0dcc2"/>
+    <text x="221" y="801" text-anchor="middle">Browse jobs nearby</text>
+    <rect x="368" y="770" width="290" height="50" rx="25" fill="#dee6d4"/>
+    <text x="513" y="801" text-anchor="middle">Accept or counter the price</text>
+    <rect x="670" y="770" width="324" height="50" rx="25" fill="#f0dcc2"/>
+    <text x="832" y="801" text-anchor="middle">Get paid when it&#8217;s done</text>
+  </g>
+
+  <text x="540" y="872" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="23" fill="#5a4636">ID-verified both ways &#183; free during launch &#183; launching in Gauteng</text>
+
+  <rect x="270" y="908" width="540" height="70" rx="35" fill="#d97742"/>
+  <text x="540" y="952" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="700" fill="#faf4ec">Find work today &#183; workitsa.co.za</text>
+
+  <text x="540" y="1030" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="26" font-style="italic" fill="#5d7a47">Sawubona &#183; Dumela &#183; Goeie dag</text>
+</svg>

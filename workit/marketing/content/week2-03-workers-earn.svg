@@ -1,0 +1,39 @@
+<svg width="1080" height="1080" viewBox="0 0 1080 1080" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>Workit &#8212; your skills, your prices, keep 100%</title>
+  <desc>Cream Workit social post for workers: headline "Your skills. Your prices.", a large 100% figure with "of what you earn is yours", chips for choosing jobs and setting prices, and a workitsa.co.za call to action.</desc>
+  <defs>
+    <linearGradient id="bg3" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#faf4ec"/>
+      <stop offset="1" stop-color="#f1e2cc"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="1080" height="1080" fill="url(#bg3)"/>
+
+  <text x="540" y="74" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" letter-spacing="4" fill="#d97742">WORKIT &#183; GAUTENG</text>
+  <text x="540" y="150" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="78" font-weight="700" fill="#1f1612">Workit</text>
+  <rect x="490" y="170" width="100" height="6" rx="3" fill="#d97742"/>
+
+  <text x="540" y="252" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="54" font-weight="700" fill="#1f1612">Your skills. Your prices.</text>
+  <g font-family="Arial, Helvetica, sans-serif" font-size="26" fill="#5a4636" text-anchor="middle">
+    <text x="540" y="306">See jobs near you. Accept the offer &#8212;</text>
+    <text x="540" y="342">or counter with the price that works for you.</text>
+  </g>
+
+  <text x="540" y="552" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="170" font-weight="700" fill="#d97742">100%</text>
+  <text x="540" y="606" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700" fill="#1f1612">of what you earn is yours</text>
+  <text x="540" y="646" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="22" fill="#5a4636">No commission. Free during launch.</text>
+
+  <g font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700" fill="#1f1612">
+    <rect x="209" y="700" width="210" height="50" rx="25" fill="#f0dcc2"/>
+    <text x="314" y="731" text-anchor="middle">Choose your jobs</text>
+    <rect x="435" y="700" width="190" height="50" rx="25" fill="#dee6d4"/>
+    <text x="530" y="731" text-anchor="middle">Set your price</text>
+    <rect x="641" y="700" width="230" height="50" rx="25" fill="#f0dcc2"/>
+    <text x="756" y="731" text-anchor="middle">Work close to home</text>
+  </g>
+
+  <rect x="290" y="806" width="500" height="70" rx="35" fill="#d97742"/>
+  <text x="540" y="850" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="700" fill="#faf4ec">Start earning &#183; workitsa.co.za</text>
+
+  <text x="540" y="940" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="26" font-style="italic" fill="#5d7a47">Sawubona &#183; Dumela &#183; Goeie dag</text>
+</svg>

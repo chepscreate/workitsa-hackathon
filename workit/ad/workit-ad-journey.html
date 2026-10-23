@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Workit — job journey ad (silent)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Manrope:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--font-serif:'Fraunces',Georgia,'Times New Roman',serif;--font-sans:'Manrope',system-ui,-apple-system,'Segoe UI',sans-serif}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%}
+body{background:radial-gradient(120% 90% at 50% 16%,#2a2017 0%,#140d08 70%);display:flex;align-items:center;justify-content:center;overflow:hidden;font-family:var(--font-sans)}
+.scaler{transform-origin:center center}
+.jw-stage{position:relative;width:340px;height:628px;border-radius:30px;background:#EFE5D6;border:1px solid rgba(31,23,16,.22);color:#1F1710;display:flex;flex-direction:column;align-items:center;padding:14px 0 14px;box-shadow:0 30px 80px rgba(0,0,0,.45)}
+.jw-role{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:500;padding:4px 12px;border-radius:999px;margin-bottom:10px}
+.jw-role .rd{width:7px;height:7px;border-radius:50%;background:currentColor}
+.jw-role.emp{background:#F2E5D7;color:#9A4E22}.jw-role.wrk{background:#E7EFE5;color:#3F5A45}.jw-role.hide{opacity:0}
+.jw-role.in{animation:jwcap .5s ease both}
+.jw-steps{display:flex;justify-content:space-between;width:280px;position:relative;margin-bottom:12px}
+.jw-steps:before{content:"";position:absolute;left:8px;right:8px;top:5px;height:2px;background:rgba(31,23,16,.14)}
+.jw-step{position:relative;display:flex;flex-direction:column;align-items:center;gap:5px;z-index:1;flex:1}
+.jw-step b{width:11px;height:11px;border-radius:50%;background:#D8CCBC;transition:background .4s,transform .4s}
+.jw-step span{font-size:9px;color:#8A7A6B;font-weight:500}
+.jw-step.on b{background:#C2632E;transform:scale(1.12)}.jw-step.on span{color:#1F1710}
+.jw-phone{width:250px;height:452px;border-radius:32px;background:#211910;padding:9px;position:relative;box-shadow:0 0 0 0 rgba(0,0,0,0);transition:box-shadow .4s}
+.jw-phone.emp{box-shadow:0 0 0 3px rgba(194,99,46,.3)}.jw-phone.wrk{box-shadow:0 0 0 3px rgba(94,125,99,.34)}
+.jw-notch{position:absolute;top:9px;left:50%;transform:translateX(-50%);width:74px;height:16px;background:#211910;border-radius:0 0 12px 12px;z-index:7}
+.jw-screen{position:relative;width:232px;height:434px;border-radius:24px;overflow:hidden;background:#F8F2E9}
+.jw-sb{position:absolute;top:0;left:0;right:0;height:24px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font-size:11px;font-weight:500;z-index:5}
+.bar{display:inline-block;width:3px;height:8px;background:#1F1710;border-radius:1px;margin-left:2px;vertical-align:middle}
+.batt{display:inline-block;width:15px;height:9px;border:1px solid #1F1710;border-radius:2px;margin-left:5px;vertical-align:middle}
+.jw-railwrap{position:absolute;top:24px;left:0;right:0;bottom:0;overflow:hidden}
+.jw-rail{display:flex;height:100%;transition:transform .55s cubic-bezier(.22,.61,.36,1)}
+.jw-panel{flex:0 0 232px;width:232px;height:100%;padding:14px 15px;display:flex;flex-direction:column;overflow:hidden}
+.jw-rev{opacity:0;transform:translateY(12px);transition:opacity .5s ease,transform .5s ease}
+.jw-panel.active .jw-rev{opacity:1;transform:none}
+.sent2{opacity:0;transform:translateY(8px);transition:opacity .45s,transform .45s}
+.jw-panel.show-sent .sent2{opacity:1;transform:none}
+.jw-h2{font-family:var(--font-serif);letter-spacing:-.01em}
+.jw-fld{background:#FFFDF9;border:.5px solid rgba(31,23,16,.13);border-radius:11px;padding:8px 11px;margin-top:8px}
+.jw-fld small{display:block;font-size:10px;color:#8A7A6B;margin-bottom:1px}.jw-fld .v{font-size:13px}
+.jw-chip{display:inline-block;font-size:11px;font-weight:500;padding:4px 10px;border-radius:999px}
+.sel{background:#C2632E;color:#fff}.un{background:#EADFCE;color:#7A6A59}
+.jw-btn{background:#C2632E;color:#fff;font-weight:500;font-size:13px;text-align:center;padding:10px;border-radius:11px}
+.jw-btn.o{background:transparent;color:#1F1710;border:.5px solid rgba(31,23,16,.28)}
+.jw-row{display:flex;align-items:center;gap:9px;background:#FFFDF9;border:.5px solid rgba(31,23,16,.12);border-radius:12px;padding:8px 9px;margin-top:8px;transition:border-color .3s,background .3s}
+.jw-row.hi{border-color:#C2632E;background:#FBEEE4}
+.jw-av{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:500;font-family:var(--font-serif);font-size:14px;flex:0 0 auto}
+.star{color:#D9CDBF;font-size:21px;transition:color .35s}.jw-panel.active .star{color:#D9824A}
+.jw-bub{max-width:80%;padding:7px 11px;border-radius:14px;font-size:12px;line-height:1.32}
+.jw-bub.l{background:#EADFCE;color:#3A2E22;align-self:flex-start;border-bottom-left-radius:4px}
+.jw-bub.r{background:#C2632E;color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+.jw-sos{background:#B23A2B;color:#fff;font-size:10px;font-weight:500;padding:5px 10px;border-radius:999px;letter-spacing:.04em}
+.jw-notif{position:absolute;top:30px;left:10px;right:10px;background:#FFFDF9;border:.5px solid rgba(31,23,16,.14);border-radius:14px;padding:9px 11px;display:flex;gap:9px;align-items:center;z-index:8;opacity:0;transform:translateY(-130%);transition:opacity .45s,transform .5s cubic-bezier(.22,.61,.36,1);box-shadow:0 8px 20px rgba(31,23,16,.12)}
+.jw-notif.show{opacity:1;transform:translateY(0)}
+.jw-burst{position:absolute;top:150px;left:116px;z-index:9;pointer-events:none}
+.jw-burst b{position:absolute;width:7px;height:7px;border-radius:1px;opacity:0}
+.jw-burst.go b{animation:jwburst .9s ease-out forwards}
+@keyframes jwburst{0%{opacity:0;transform:translate(0,0) scale(.4)}18%{opacity:1}100%{opacity:0;transform:translate(var(--tx),var(--ty)) scale(1)}}
+.jw-cap{width:284px;min-height:34px;text-align:center;font-size:13.5px;color:#5A4A3C;margin-top:12px;line-height:1.35}
+.jw-cap.in{animation:jwcap .5s ease both}
+@keyframes jwcap{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@keyframes jwpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+@keyframes jwdot{0%{left:14%;top:66%}50%{left:50%;top:42%}100%{left:78%;top:26%}}
+.jw-mapdot{position:absolute;width:13px;height:13px;border-radius:50%;background:#C2632E;box-shadow:0 0 0 5px rgba(194,99,46,.2);animation:jwdot 3.2s ease-in-out infinite alternate}
+.jw-bead{height:6px;border-radius:4px;background:repeating-linear-gradient(90deg,#D9824A 0 12px,#1F1710 12px 19px,#5E7D63 19px 31px,#ECC1A1 31px 38px)}
+</style>
+</head>
+<body>
+<div class="scaler" id="scaler">
+  <div class="jw-stage">
+    <div class="jw-role emp in" id="jwRole"><i class="rd"></i><span id="jwRoleT">Employer’s phone</span></div>
+    <div class="jw-steps" id="jwSteps">
+      <div class="jw-step"><b></b><span>Post</span></div>
+      <div class="jw-step"><b></b><span>Offer</span></div>
+      <div class="jw-step"><b></b><span>Accept</span></div>
+      <div class="jw-step"><b></b><span>Track</span></div>
+      <div class="jw-step"><b></b><span>Done</span></div>
+    </div>
+    <div class="jw-phone emp" id="jwPhone">
+      <div class="jw-notch"></div>
+      <div class="jw-screen">
+        <div class="jw-sb"><span>9:41</span><span><i class="bar"></i><i class="bar"></i><i class="bar"></i><i class="batt"></i></span></div>
+        <div class="jw-railwrap">
+          <div class="jw-rail" id="jwRail">
+
+            <div class="jw-panel active">
+              <div class="jw-rev jw-h2" style="font-size:16px">Post a job</div>
+              <div class="jw-rev" style="margin-top:9px;display:flex;gap:6px"><span class="jw-chip sel">Gardening</span><span class="jw-chip un">Cleaning</span><span class="jw-chip un">Trades</span></div>
+              <div class="jw-rev jw-fld" style="transition-delay:.1s"><small>Job</small><div class="v">Lawn cut &amp; hedge trim</div></div>
+              <div class="jw-rev jw-fld" style="transition-delay:.18s"><small>Where</small><div class="v">Linden, Johannesburg</div></div>
+              <div class="jw-rev jw-fld" style="transition-delay:.26s"><small>Suggested price</small><div class="v jw-h2" style="font-size:18px;color:#C2632E">R 280</div></div>
+              <div style="flex:1"></div>
+              <div class="jw-rev jw-btn" style="transition-delay:.34s;animation:jwpulse 1.7s ease-in-out infinite">Post job</div>
+            </div>
+
+            <div class="jw-panel">
+              <div class="jw-rev jw-h2" style="font-size:15px">Lawn cut &amp; hedge trim</div>
+              <div class="jw-rev" style="font-size:11px;color:#8A7A6B;margin-top:2px">Offered R 280 · 2.1 km · Linden</div>
+              <div class="jw-rev jw-fld" style="margin-top:11px;transition-delay:.1s"><small>Your offer</small><div class="v jw-h2" style="font-size:18px;color:#5E7D63">R 350</div></div>
+              <div class="jw-rev" style="display:flex;gap:8px;margin-top:9px;transition-delay:.18s"><div class="jw-btn o" style="flex:1">Accept R280</div><div class="jw-btn" style="flex:1">Send offer</div></div>
+              <div style="flex:1"></div>
+              <div class="sent2" style="display:flex;align-items:center;gap:7px;background:#E7EFE5;color:#3F5A45;border-radius:11px;padding:9px 11px;font-size:12px;font-weight:500"><span style="font-size:15px">✓</span> Offer sent to employer</div>
+            </div>
+
+            <div class="jw-panel">
+              <div class="jw-rev jw-h2" style="font-size:16px">3 offers in</div>
+              <div class="jw-rev jw-row" id="jwSipho" style="transition-delay:.08s">
+                <div class="jw-av" style="background:#ECC1A1;color:#7A3F1B">S</div>
+                <div style="min-width:0"><div style="font-size:12.5px;font-weight:500">Sipho M. <span style="color:#4C6650;font-size:10px">· verified</span></div><div style="font-size:10.5px;color:#8A7A6B"><span style="color:#D9824A">★</span> 4.9 · 142 jobs</div></div>
+                <div style="margin-left:auto;text-align:right"><div class="jw-h2" style="font-size:14px">R 350</div><span class="jw-chip sel" id="jwAccBtn" style="font-size:10px;padding:3px 9px">Accept</span></div>
+              </div>
+              <div class="jw-rev jw-row" style="transition-delay:.18s">
+                <div class="jw-av" style="background:#CFE0D0;color:#3F5A45">T</div>
+                <div style="min-width:0"><div style="font-size:12.5px;font-weight:500">Themba D.</div><div style="font-size:10.5px;color:#8A7A6B"><span style="color:#D9824A">★</span> 4.7 · 61 jobs</div></div>
+                <div style="margin-left:auto" class="jw-h2">R 300</div>
+              </div>
+              <div class="jw-rev jw-row" style="transition-delay:.28s">
+                <div class="jw-av" style="background:#E7D6C2;color:#7A3F1B">N</div>
+                <div style="min-width:0"><div style="font-size:12.5px;font-weight:500">Nomsa K. <span style="color:#9A4E22;font-size:10px">· gold</span></div><div style="font-size:10.5px;color:#8A7A6B"><span style="color:#D9824A">★</span> 5.0 · 88 jobs</div></div>
+                <div style="margin-left:auto" class="jw-h2">R 280</div>
+              </div>
+            </div>
+
+            <div class="jw-panel" style="justify-content:center;align-items:center;text-align:center">
+              <div class="jw-rev" style="width:52px;height:52px;border-radius:50%;background:#E7EFE5;color:#3F5A45;display:flex;align-items:center;justify-content:center;font-size:28px">✓</div>
+              <div class="jw-rev jw-h2" style="font-size:19px;margin-top:12px;transition-delay:.1s">You're connected</div>
+              <div class="jw-rev jw-row" style="width:100%;justify-content:center;transition-delay:.2s">
+                <div class="jw-av" style="background:#ECC1A1;color:#7A3F1B">S</div>
+                <div style="text-align:left"><div style="font-size:12.5px;font-weight:500">Sipho M.</div><div style="font-size:10.5px;color:#8A7A6B"><span style="color:#D9824A">★</span> 4.9 · verified</div></div>
+              </div>
+              <div class="jw-rev" style="display:flex;gap:8px;width:100%;margin-top:10px;transition-delay:.3s"><div class="jw-btn o" style="flex:1">Message</div><div class="jw-btn" style="flex:1">Track live</div></div>
+            </div>
+
+            <div class="jw-panel">
+              <div class="jw-rev jw-row" style="margin-top:0;justify-content:flex-start">
+                <div class="jw-av" style="background:#ECC1A1;color:#7A3F1B;width:28px;height:28px;font-size:13px">S</div>
+                <div style="font-size:13px;font-weight:500">Sipho M.</div>
+                <span class="jw-sos" style="margin-left:auto">● SOS</span>
+              </div>
+              <div class="jw-rev" style="display:flex;flex-direction:column;gap:7px;margin-top:12px;transition-delay:.12s">
+                <div class="jw-bub l">On my way — about 10 min.</div>
+                <div class="jw-bub r">Great, the gate’s open. Thanks!</div>
+                <div class="jw-bub l">See you now.</div>
+              </div>
+              <div style="flex:1"></div>
+              <div class="jw-rev" style="display:flex;align-items:center;gap:7px;background:#FBEAE6;color:#8C2E22;border-radius:11px;padding:8px 11px;font-size:11px;font-weight:500;transition-delay:.3s"><span style="font-size:13px">●</span> Emergency SOS active during the job</div>
+            </div>
+
+            <div class="jw-panel">
+              <div class="jw-rev jw-h2" style="font-size:15px">On the way · 8 min</div>
+              <div class="jw-rev" style="position:relative;flex:1;margin-top:10px;border-radius:14px;background:#ECE2D2;border:.5px solid rgba(31,23,16,.1);overflow:hidden;transition-delay:.1s">
+                <svg viewBox="0 0 210 300" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%"><polyline points="30,200 80,150 110,120 165,70" fill="none" stroke="#C2632E" stroke-width="3" stroke-dasharray="6 7" stroke-linecap="round" opacity=".65"/></svg>
+                <span class="jw-mapdot"></span>
+                <span style="position:absolute;right:14%;top:18%;width:10px;height:10px;border-radius:50% 50% 50% 0;background:#1F1710;transform:rotate(45deg)"></span>
+              </div>
+              <div class="jw-rev" style="font-size:11.5px;color:#5A4A3C;margin-top:9px;transition-delay:.2s">Sipho is heading to Linden.</div>
+            </div>
+
+            <div class="jw-panel">
+              <div class="jw-rev"><span class="jw-chip" style="background:#F2E5D7;color:#9A4E22">In progress</span></div>
+              <div class="jw-rev jw-h2" style="font-size:15px;margin-top:10px;transition-delay:.08s">Photo proof on completion</div>
+              <div class="jw-rev" style="display:flex;gap:9px;margin-top:10px;transition-delay:.18s">
+                <div style="flex:1;height:78px;border-radius:11px;background:repeating-linear-gradient(135deg,#ECC1A1 0 9px,#CFE0D0 9px 18px)"></div>
+                <div style="flex:1;height:78px;border-radius:11px;background:repeating-linear-gradient(135deg,#CFE0D0 0 9px,#ECC1A1 9px 18px)"></div>
+              </div>
+              <div style="flex:1"></div>
+              <div class="jw-rev" style="transition-delay:.4s;display:flex;align-items:center;gap:7px;background:#E7EFE5;color:#3F5A45;border-radius:11px;padding:9px 11px;font-size:12.5px;font-weight:500"><span style="font-size:15px">✓</span> Work completed</div>
+            </div>
+
+            <div class="jw-panel">
+              <div class="jw-rev jw-row" style="justify-content:space-between"><div><div style="font-size:11px;color:#8A7A6B">Pay Sipho</div><div class="jw-h2" style="font-size:18px;color:#C2632E">R 350</div></div><span class="jw-chip un">Cash / EFT</span></div>
+              <div class="jw-rev jw-h2" style="font-size:15px;margin-top:14px;transition-delay:.12s">Rate your worker</div>
+              <div class="jw-rev" style="margin-top:6px;transition-delay:.2s"><span class="star">★</span><span class="star" style="transition-delay:.12s">★</span><span class="star" style="transition-delay:.24s">★</span><span class="star" style="transition-delay:.36s">★</span><span class="star" style="transition-delay:.48s">★</span></div>
+              <div style="flex:1"></div>
+              <div class="jw-rev" style="font-size:11.5px;color:#5A4A3C;transition-delay:.3s">Both sides rate every job. Trust builds.</div>
+            </div>
+
+            <div class="jw-panel" style="background:#1F1710;color:#F6EFE6;justify-content:center;align-items:center;text-align:center;gap:13px;margin:-14px -15px;padding:14px 15px">
+              <div class="jw-rev" style="display:flex;align-items:center;gap:9px">
+                <svg viewBox="0 0 64 64" width="38" height="38" aria-hidden><rect x="6" y="6" width="52" height="52" rx="14" fill="#F6EFE6"/><rect x="9" y="9" width="46" height="46" rx="11" fill="none" stroke="#1F1710" stroke-width="1.5" opacity=".55"/><path d="M 14 19 L 21 47 L 28 30 L 36 47 L 43 30 Q 47 22, 50 19 L 50 50" stroke="#1F1710" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/><line x1="43" y1="22" x2="57" y2="22" stroke="#1F1710" stroke-width="4.5" stroke-linecap="round"/></svg>
+                <span class="jw-h2" style="font-size:24px;color:#F6EFE6">Workit</span>
+              </div>
+              <p class="jw-rev" style="margin:0;font-size:13.5px;color:#CDBBA8;transition-delay:.12s">From posted to paid — one place.</p>
+              <div class="jw-rev" style="transition-delay:.24s;animation:jwpulse 1.7s ease-in-out infinite;background:#C2632E;color:#fff;font-weight:500;padding:10px 20px;border-radius:999px;font-size:14px">Post a job →</div>
+              <div class="jw-rev jw-bead" style="width:104px;transition-delay:.36s"></div>
+              <div class="jw-rev" style="font-size:11px;letter-spacing:.16em;color:#CDBBA8;transition-delay:.42s">WORK IT · EARN IT</div>
+              <div class="jw-rev" style="font-size:12px;color:#ECC1A1;transition-delay:.5s">workitsa.co.za</div>
+            </div>
+
+          </div>
+        </div>
+        <div class="jw-notif" id="jwNotif">
+          <svg viewBox="0 0 64 64" width="30" height="30" aria-hidden style="flex:0 0 auto"><rect x="6" y="6" width="52" height="52" rx="14" fill="#1F1710"/><rect x="9" y="9" width="46" height="46" rx="11" fill="none" stroke="#F6EFE6" stroke-width="1.5" opacity=".55"/><path d="M 14 19 L 21 47 L 28 30 L 36 47 L 43 30 Q 47 22, 50 19 L 50 50" stroke="#F6EFE6" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/><line x1="43" y1="22" x2="57" y2="22" stroke="#F6EFE6" stroke-width="4.5" stroke-linecap="round"/></svg>
+          <div style="min-width:0"><div style="font-size:11.5px;font-weight:500">New job near you</div><div style="font-size:10.5px;color:#8A7A6B">Lawn cut &amp; hedge trim · R280 · 2.1 km</div></div>
+        </div>
+        <div class="jw-burst" id="jwBurst">
+          <b style="--tx:-58px;--ty:-30px;background:#D9824A"></b><b style="--tx:54px;--ty:-40px;background:#5E7D63"></b><b style="--tx:-40px;--ty:40px;background:#ECC1A1"></b><b style="--tx:46px;--ty:46px;background:#C2632E"></b><b style="--tx:-66px;--ty:14px;background:#5E7D63"></b><b style="--tx:64px;--ty:6px;background:#D9824A"></b><b style="--tx:-16px;--ty:-58px;background:#ECC1A1"></b><b style="--tx:20px;--ty:-54px;background:#C2632E"></b><b style="--tx:-30px;--ty:60px;background:#D9824A"></b><b style="--tx:34px;--ty:58px;background:#5E7D63"></b><b style="--tx:-72px;--ty:-12px;background:#C2632E"></b><b style="--tx:70px;--ty:-22px;background:#ECC1A1"></b>
+        </div>
+      </div>
+    </div>
+    <div class="jw-cap in" id="jwCap">Post what needs doing — in under a minute.</div>
+  </div>
+</div>
+<script>
+(function(){
+  var rail=document.getElementById('jwRail');
+  var scaler=document.getElementById('scaler');
+  var panels=[].slice.call(rail.children);
+  var steps=[].slice.call(document.querySelectorAll('#jwSteps .jw-step'));
+  var cap=document.getElementById('jwCap'),notif=document.getElementById('jwNotif'),burst=document.getElementById('jwBurst');
+  var role=document.getElementById('jwRole'),roleT=document.getElementById('jwRoleT'),phone=document.getElementById('jwPhone');
+  var sipho=document.getElementById('jwSipho'),accBtn=document.getElementById('jwAccBtn');
+  var SW=panels[0].getBoundingClientRect().width;
+  function fit(){var s=Math.min(window.innerHeight*0.94/628,window.innerWidth*0.94/340);scaler.style.transform='scale('+s+')';}
+  var seq=[
+    {s:0,st:0,r:'emp',c:'Post what needs doing — in under a minute.'},
+    {s:1,st:1,r:'wrk',c:'Nearby verified workers get pinged instantly.',notif:1},
+    {s:1,st:1,r:'wrk',c:'A worker accepts your price — or counters.',sent:1},
+    {s:2,st:1,r:'emp',c:'Compare workers: ratings, badges, prices.'},
+    {s:2,st:2,r:'emp',c:'Accept the one you trust.',accept:1},
+    {s:3,st:2,r:'emp',c:'Booked. Numbers shared — just you two.'},
+    {s:4,st:2,r:'emp',c:'Chat in-app — with an SOS button the whole time.'},
+    {s:5,st:3,r:'emp',c:'Track them live, right to your door.'},
+    {s:6,st:4,r:'emp',c:'Photo proof when the job is done.'},
+    {s:7,st:4,r:'emp',c:'Pay cash or EFT — then rate each other.'},
+    {s:8,st:4,r:'',c:''}
+  ];
+  var dur=[3000,3000,4000,3200,3000,3200,4000,3600,3400,3600,3700];var i=0;
+  function apply(t){
+    rail.style.transform='translateX('+(-t.s*SW)+'px)';
+    panels.forEach(function(p,k){p.classList.toggle('active',k===t.s)});
+    steps.forEach(function(e,k){e.classList.toggle('on',k<=t.st)});
+    notif.classList.toggle('show',t.notif===1);
+    panels[1].classList.toggle('show-sent',t.sent===1);
+    if(t.r){roleT.textContent=t.r==='emp'?'Employer’s phone':'Worker’s phone';role.classList.remove('in','emp','wrk','hide');role.classList.add(t.r);void role.offsetWidth;role.classList.add('in');phone.className='jw-phone '+t.r;}
+    else{role.classList.remove('emp','wrk','in');role.classList.add('hide');phone.className='jw-phone';}
+    if(t.accept){sipho.classList.add('hi');accBtn.textContent='Accepted ✓';burst.classList.remove('go');void burst.offsetWidth;burst.classList.add('go');}
+    if(t.c!==''){cap.classList.remove('in');void cap.offsetWidth;cap.textContent=t.c;cap.classList.add('in');}
+  }
+  function loop(){apply(seq[i]);var d=dur[i];i++;if(i>=seq.length){i=0;sipho.classList.remove('hi');accBtn.textContent='Accept';}setTimeout(loop,d);}
+  fit();window.addEventListener('resize',fit);loop();
+})();
+</script>
+</body>
+</html>

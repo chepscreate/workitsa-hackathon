@@ -1,0 +1,21 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>Workit profile logo mark</title>
+  <desc>Square Workit profile mark: a cream serif W monogram over the workit wordmark on a warm clay background, with a thin cream ring — sized for a circular social profile picture.</desc>
+  <defs>
+    <radialGradient id="clay" cx="0.5" cy="0.42" r="0.7">
+      <stop offset="0" stop-color="#cf6a34"/>
+      <stop offset="1" stop-color="#9c4520"/>
+    </radialGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.4" r="0.5">
+      <stop offset="0" stop-color="#f4ad5e" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#f4ad5e" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect x="0" y="0" width="512" height="512" fill="url(#clay)"/>
+  <circle cx="256" cy="210" r="200" fill="url(#glow)"/>
+  <circle cx="256" cy="256" r="216" fill="none" stroke="#fbf4e8" stroke-width="6" opacity="0.28"/>
+
+  <text x="256" y="318" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="280" font-weight="700" fill="#fbf4e8">W</text>
+  <text x="256" y="404" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="62" font-weight="700" letter-spacing="2" fill="#f3e0c4">workit</text>
+</svg>

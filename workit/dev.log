@@ -1,0 +1,12 @@
+﻿
+> workit@0.1.0 dev
+> node scripts/gen-firebase-messaging-sw.mjs && next dev
+
+[gen-firebase-messaging-sw] Wrote C:\Users\tshep\Projects 26\WorkitEarnit\workit\public\firebase-messaging-sw.js
+▲ Next.js 16.2.6 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.0.208:3000
+- Environments: .env.local
+✓ Ready in 1772ms
+
+✓ Finished writing to filesystem cache in 19.6s

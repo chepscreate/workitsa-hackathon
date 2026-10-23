@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Workit — silent promo ad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Manrope:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--sans:'Manrope',system-ui,-apple-system,'Segoe UI',sans-serif;--serif:'Fraunces',Georgia,'Times New Roman',serif}
+  *{box-sizing:border-box;margin:0}
+  html,body{height:100%}
+  body{background:radial-gradient(120% 90% at 50% 18%,#2a2017 0%,#140d08 70%);display:flex;align-items:center;justify-content:center;font-family:var(--sans);overflow:hidden}
+  .scaler{transform-origin:center center}
+  .wk-stage{position:relative;width:340px;height:605px;border-radius:30px;overflow:hidden;background:#F6EFE6;border:1px solid rgba(31,23,16,.25);color:#1F1710;box-shadow:0 30px 80px rgba(0,0,0,.45)}
+  .wk-prog{position:absolute;top:14px;left:16px;right:16px;display:flex;gap:5px;z-index:6}
+  .wk-prog i{flex:1;height:3px;border-radius:2px;background:rgba(31,23,16,.15)}
+  .wk-prog i.on{background:#C2632E}
+  .wk-scene{position:absolute;inset:0;display:flex;flex-direction:column;padding:36px 22px 24px;opacity:0;transform:translateY(10px);transition:opacity .6s ease,transform .6s ease}
+  .wk-scene.on{opacity:1;transform:none}
+  .wk-rev{opacity:0;transform:translateY(13px);transition:opacity .55s ease,transform .55s ease}
+  .wk-scene.on .wk-rev{opacity:1;transform:none}
+  .wk-bead{height:7px;border-radius:4px;background:repeating-linear-gradient(90deg,#D9824A 0 14px,#1F1710 14px 22px,#5E7D63 22px 36px,#ECC1A1 36px 44px)}
+  .wk-card{background:#FFFDF9;border:.5px solid rgba(31,23,16,.13);border-radius:16px;padding:15px}
+  .wk-chip{display:inline-block;font-size:12px;font-weight:500;padding:5px 11px;border-radius:999px}
+  .wk-h{font-family:var(--serif);letter-spacing:-.01em}
+  .wk-n{font-family:var(--serif);font-size:38px;line-height:1;color:#C2632E}
+  .wk-av{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:500;font-family:var(--serif);font-size:16px;flex:0 0 auto}
+  .wk-pill{display:inline-flex;align-items:center;gap:6px;background:#C2632E;color:#fff;font-weight:500;padding:12px 22px;border-radius:999px;font-size:15px}
+  .wk-dchip{font-size:12px;font-weight:500;padding:6px 12px;border-radius:999px;background:rgba(246,239,230,.1);color:#ECC1A1;border:.5px solid rgba(236,193,161,.3)}
+  @keyframes wkpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+  @keyframes wkdot{0%{left:12%;top:64%}50%{left:50%;top:40%}100%{left:80%;top:28%}}
+  .wk-dot{position:absolute;width:14px;height:14px;border-radius:50%;background:#C2632E;box-shadow:0 0 0 5px rgba(194,99,46,.2);animation:wkdot 3.4s ease-in-out infinite alternate}
+</style>
+</head>
+<body>
+<div class="scaler" id="scaler">
+  <div class="wk-stage" id="wkStage">
+    <div class="wk-prog" id="wkProg"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+
+    <div class="wk-scene on" style="justify-content:center;align-items:center;text-align:center;gap:13px">
+      <div class="wk-rev" style="display:flex;align-items:center;gap:10px">
+        <div style="width:42px;height:42px;border-radius:12px;background:#1F1710;color:#F6EFE6;display:flex;align-items:center;justify-content:center;font-weight:500;font-family:var(--serif);font-size:20px">W</div>
+        <span class="wk-h" style="font-size:27px">Workit</span>
+      </div>
+      <span class="wk-rev wk-chip" style="background:#E7EFE5;color:#3F5A45;transition-delay:.1s">Launching in Gauteng</span>
+      <h3 class="wk-rev wk-h" style="font-size:31px;line-height:1.07;margin:6px 6px 0;transition-delay:.22s">Work needs doing.</h3>
+      <p class="wk-rev" style="font-size:16px;color:#5A4A3C;margin:0 8px;transition-delay:.34s">Someone nearby is ready to do it.</p>
+      <div class="wk-rev wk-bead" style="width:118px;margin-top:8px;transition-delay:.46s"></div>
+    </div>
+
+    <div class="wk-scene">
+      <span class="wk-rev wk-chip" style="background:#F2E5D7;color:#9A4E22;align-self:flex-start">Post a job</span>
+      <div class="wk-rev wk-card" style="margin-top:15px;transition-delay:.12s">
+        <div style="font-size:12px;color:#8A7A6B">Gardening · 2.1 km away</div>
+        <div class="wk-h" style="font-size:19px;margin-top:5px;line-height:1.2">Lawn cut &amp; hedge trim</div>
+        <div style="font-size:13px;color:#5A4A3C;margin-top:4px">Saturday morning · Linden, JHB</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;border-top:.5px solid rgba(31,23,16,.1);margin-top:12px;padding-top:10px">
+          <span style="font-size:12px;color:#8A7A6B">Offered</span><span class="wk-h" style="font-size:22px;color:#C2632E">R 280</span>
+        </div>
+      </div>
+      <div style="flex:1"></div>
+      <div class="wk-rev" style="display:flex;align-items:flex-end;gap:13px;transition-delay:.3s">
+        <span class="wk-n">1</span>
+        <div><div class="wk-h" style="font-size:18px">Post what needs doing</div><div style="font-size:13px;color:#5A4A3C">Takes under a minute.</div></div>
+      </div>
+    </div>
+
+    <div class="wk-scene">
+      <span class="wk-rev wk-chip" style="background:#E7EFE5;color:#3F5A45;align-self:flex-start">Workers respond</span>
+      <div class="wk-rev wk-card" style="margin-top:14px;display:flex;align-items:center;gap:11px;transition-delay:.12s">
+        <div class="wk-av" style="background:#ECC1A1;color:#7A3F1B">S</div>
+        <div style="min-width:0">
+          <div style="font-size:14px;font-weight:500">Sipho M. <span style="color:#4C6650;font-size:12px">· verified</span></div>
+          <div style="font-size:12px;color:#8A7A6B"><span style="color:#D9824A">★</span> 4.9 · 142 jobs</div>
+        </div>
+        <span class="wk-chip" style="margin-left:auto;background:#1F1710;color:#F6EFE6">Accept R280</span>
+      </div>
+      <div class="wk-rev wk-card" style="margin-top:10px;display:flex;align-items:center;gap:11px;transition-delay:.26s">
+        <div class="wk-av" style="background:#CFE0D0;color:#3F5A45">N</div>
+        <div style="min-width:0">
+          <div style="font-size:14px;font-weight:500">Nomsa K. <span style="color:#9A4E22;font-size:12px">· gold</span></div>
+          <div style="font-size:12px;color:#8A7A6B">Counter-offer</div>
+        </div>
+        <span class="wk-h" style="margin-left:auto;font-size:18px;color:#5E7D63">R 450</span>
+      </div>
+      <div style="flex:1"></div>
+      <div class="wk-rev" style="display:flex;align-items:flex-end;gap:13px;transition-delay:.42s">
+        <span class="wk-n">2</span>
+        <div><div class="wk-h" style="font-size:18px">Verified workers nearby</div><div style="font-size:13px;color:#5A4A3C">Accept the price, or counter.</div></div>
+      </div>
+    </div>
+
+    <div class="wk-scene">
+      <span class="wk-rev wk-chip" style="background:#F2E5D7;color:#9A4E22;align-self:flex-start">On the way</span>
+      <div class="wk-rev" style="position:relative;margin-top:14px;height:152px;border-radius:16px;background:#ECE2D2;border:.5px solid rgba(31,23,16,.12);overflow:hidden;transition-delay:.12s">
+        <svg viewBox="0 0 300 150" style="position:absolute;inset:0;width:100%;height:100%"><polyline points="36,96 120,72 168,60 244,42" fill="none" stroke="#C2632E" stroke-width="3" stroke-dasharray="6 7" stroke-linecap="round" opacity=".7"/></svg>
+        <span class="wk-dot"></span>
+        <span style="position:absolute;left:10px;top:9px;font-size:11px;font-weight:500;color:#5A4A3C;background:rgba(246,239,230,.85);padding:3px 8px;border-radius:8px">Live tracking</span>
+      </div>
+      <div class="wk-rev wk-card" style="margin-top:11px;display:flex;align-items:center;gap:11px;transition-delay:.26s">
+        <div style="width:40px;height:40px;border-radius:10px;background:repeating-linear-gradient(135deg,#ECC1A1 0 8px,#CFE0D0 8px 16px);flex:0 0 auto"></div>
+        <div style="font-size:13px;color:#5A4A3C;line-height:1.3">Photo proof on completion</div>
+        <span style="margin-left:auto;color:#4C6650;font-size:20px">✓</span>
+      </div>
+      <div style="flex:1"></div>
+      <div class="wk-rev" style="display:flex;align-items:flex-end;gap:13px;transition-delay:.4s">
+        <span class="wk-n">3</span>
+        <div><div class="wk-h" style="font-size:18px">Track live · pay cash</div><div style="font-size:13px;color:#5A4A3C">Then rate each other.</div></div>
+      </div>
+    </div>
+
+    <div class="wk-scene" style="background:#1F1710;color:#F6EFE6;justify-content:center;align-items:center;text-align:center;gap:15px">
+      <div class="wk-rev" style="font-size:30px;letter-spacing:4px;color:#ECC1A1">★★★★★</div>
+      <h3 class="wk-rev wk-h" style="font-size:25px;margin:0 10px;color:#F6EFE6;transition-delay:.12s">Trust, both ways.</h3>
+      <div class="wk-rev" style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:0 14px;transition-delay:.26s">
+        <span class="wk-dchip">ID verified</span><span class="wk-dchip">Live tracking</span><span class="wk-dchip">SOS button</span><span class="wk-dchip">Photo proof</span>
+      </div>
+      <div class="wk-rev wk-bead" style="width:118px;margin-top:6px;transition-delay:.4s"></div>
+    </div>
+
+    <div class="wk-scene" style="background:#1F1710;color:#F6EFE6;justify-content:center;align-items:center;text-align:center;gap:16px">
+      <div class="wk-rev" style="display:flex;align-items:center;gap:10px">
+        <div style="width:42px;height:42px;border-radius:12px;background:#F6EFE6;color:#1F1710;display:flex;align-items:center;justify-content:center;font-weight:500;font-family:var(--serif);font-size:20px">W</div>
+        <span class="wk-h" style="font-size:27px;color:#F6EFE6">Workit</span>
+      </div>
+      <p class="wk-rev" style="color:#CDBBA8;font-size:15px;margin:0;transition-delay:.12s">South Africa’s work marketplace</p>
+      <div class="wk-rev wk-pill" style="transition-delay:.26s;animation:wkpulse 1.7s ease-in-out infinite">Post a job →</div>
+      <div class="wk-rev" style="font-size:14px;color:#ECC1A1;transition-delay:.4s">workitsa.co.za · Free during launch</div>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  var stage=document.getElementById('wkStage');
+  var scaler=document.getElementById('scaler');
+  var scenes=[].slice.call(stage.querySelectorAll('.wk-scene'));
+  var segs=[].slice.call(document.querySelectorAll('#wkProg i'));
+  var dur=[3400,4200,4600,4600,3400,3800];var i=0;
+  function fit(){var s=Math.min(window.innerHeight*0.94/605,window.innerWidth*0.94/340);scaler.style.transform='scale('+s+')';}
+  function show(n){scenes.forEach(function(s,k){s.classList.toggle('on',k===n)});segs.forEach(function(g,k){g.classList.toggle('on',k<=n)});}
+  function loop(){show(i);var d=dur[i];i=(i+1)%scenes.length;setTimeout(loop,d);}
+  fit();window.addEventListener('resize',fit);
+  show(0);setTimeout(loop,dur[0]);
+})();
+</script>
+</body>
+</html>

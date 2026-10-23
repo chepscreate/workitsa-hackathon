@@ -1,0 +1,62 @@
+{
+  "name": "Workit — Find work. Get work done.",
+  "short_name": "Workit",
+  "description": "South Africa's people-first work marketplace. Post a job or find work nearby — gardening, cleaning, trades, deliveries and more.",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "lang": "en-ZA",
+  "dir": "ltr",
+  "categories": ["business", "productivity", "lifestyle"],
+  "background_color": "#faf4ec",
+  "theme_color": "#1f1612",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-192-maskable.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon-512-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Find work",
+      "short_name": "Find work",
+      "description": "Browse open jobs near you",
+      "url": "/find-work",
+      "icons": [{ "src": "/icon-192-maskable.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" }]
+    },
+    {
+      "name": "Post a job",
+      "short_name": "Post a job",
+      "description": "Hire a verified worker nearby",
+      "url": "/post-a-job",
+      "icons": [{ "src": "/icon-192-maskable.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" }]
+    },
+    {
+      "name": "My account",
+      "short_name": "Account",
+      "description": "Your jobs, offers and profile",
+      "url": "/account",
+      "icons": [{ "src": "/icon-192-maskable.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" }]
+    }
+  ]
+}

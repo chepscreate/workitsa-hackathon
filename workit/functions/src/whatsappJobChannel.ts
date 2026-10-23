@@ -1,0 +1,746 @@
+/**
+ * WhatsApp Job Channel — low-data access to work over WhatsApp.
+ *
+ * Runs on the SAME Meta app / number as Jarvis + support (Meta allows only one
+ * webhook callback URL per number, and that URL already points at jarvisWhatsApp).
+ * So instead of a second webhook we expose `handleWhatsAppJobReply`, which
+ * jarvisWhatsApp calls from its non-owner branch BEFORE the support fallback:
+ *   - a known opted-in worker sending a job command → handled here
+ *   - anyone/anything else → returns false, Jarvis routes it to support unchanged
+ * The owner → Jarvis path and the public → support path are never touched.
+ *
+ * Two halves:
+ *   1. onJobVisibleWhatsAppAlert — Firestore trigger. When a job becomes
+ *      publicly visible, alert opted-in, verified, matching workers (same
+ *      category + area logic as jobAlerts.ts). Delivery:
+ *        - worker messaged us in the last 24h (open session) → FREE-TEXT alert
+ *          with full job detail (no template needed, free)
+ *        - otherwise (cold) → the approved `job_alert` TEMPLATE
+ *      So the demo works even before the template is approved, as long as the
+ *      worker has texted the number once.
+ *   2. handleWhatsAppJobReply — maps a worker's message:
+ *        "JOBS" / "WORK"        → list open jobs near them, numbered 1..5
+ *        a number "1".."5"      → offer on that listed job
+ *        "1" / "ACCEPT"         → offer on the last single job we alerted them
+ *        "START"                → mark their assigned job in_progress
+ *        "DONE"                 → mark their assigned job completed
+ *        "STOP"                 → opt out of WhatsApp job alerts
+ *      Any inbound from a known worker opens their 24h free-text window.
+ *      Mutating replies are idempotent on message ID (waJobInbox/{id}).
+ *
+ * Analytics: a WhatsApp offer writes a normal offer, START/DONE patch the job
+ * exactly like the in-app flow — so onOfferCreatedPush / email / rating counters
+ * and the funnel fire through the normal path. Offers carry source:"whatsapp".
+ *
+ * POPIA: messages carry only job title, category, suburb/city and budget — never
+ * ID numbers, exact addresses or customer phone numbers.
+ */
+import { onDocumentWritten, onDocumentUpdated } from "firebase-functions/v2/firestore";
+import { logger } from "firebase-functions";
+import { defineSecret } from "firebase-functions/params";
+import { getFirestore, FieldValue } from "firebase-admin/firestore";
+import { upsertWorkRecord } from "./workRecord";
+
+// Shared with jarvisWhatsApp — defineSecret is keyed by name, so these resolve
+// to the same secrets/number Jarvis already uses.
+const WHATSAPP_TOKEN = defineSecret("WHATSAPP_TOKEN");
+const WHATSAPP_PHONE_NUMBER_ID = defineSecret("WHATSAPP_PHONE_NUMBER_ID");
+
+const GRAPH_VERSION = "v21.0";
+/** Approved template name (see the ops doc for the exact submitted copy). */
+const JOB_ALERT_TEMPLATE = "job_alert";
+const TEMPLATE_LANG = "en";
+
+// --- Matching (mirrors jobAlerts.ts) ---
+const RADIUS_KM = 25;
+const MAX_RECIPIENTS = 50;
+const ALERT_SETTLE_MS = 45_000;
+/** WhatsApp "customer service window": a business may send free-form text for
+ *  24h after the user's last inbound message. Outside it, templates only. */
+const SESSION_WINDOW_MS = 24 * 60 * 60 * 1000;
+/** How many jobs a "JOBS" pull lists. */
+const JOBS_LIST_LIMIT = 5;
+
+const ACCEPT = /^(?:accept|yes|y|yebo|ok|okay)\b/i;
+const START = /^(?:start|started|on site|onsite)\b/i;
+const DONE = /^(?:done|finished|finish|complete|completed)\b/i;
+const STOP = /^(?:stop|cancel|unsubscribe|opt ?out)\b/i;
+const JOBS = /^(?:jobs|work|list)\b/i;
+const AVAILABLE = /^(?:available|avail|ready|online|i'?m available)\b/i;
+const SOS = /^(?:sos|help\s*me|emergency|danger|unsafe|i'?m (?:not safe|in danger))\b/i;
+const REPORT = /^report\b/i;
+/** OFFER 400 / OFFER R400 / OFFER "400" → counter at a custom price.
+ *  Separator class tolerates spaces, straight and curly quotes (phones add them). */
+const OFFER = /^offer[\s"'“”‘’]+(?:r\s*)?(\d{2,6})\b/i;
+/** A bare "1", or "1 400" / 1 "400" → pick job #1 (optionally counter R400). */
+const NUMBER = /^([1-9])(?:[\s"'“”‘’]+(?:r\s*)?(\d{2,6}))?\b/i;
+const isJobKeyword = (t: string) =>
+  ACCEPT.test(t) || START.test(t) || DONE.test(t) || STOP.test(t) || JOBS.test(t)
+  || AVAILABLE.test(t) || SOS.test(t) || REPORT.test(t) || OFFER.test(t) || NUMBER.test(t);
+
+type JobDoc = {
+  title?: string;
+  status?: string;
+  moderationStatus?: string;
+  employerId?: string;
+  employerName?: string;
+  category?: string;
+  suggestedPrice?: number;
+  agreedPrice?: number;
+  suburb?: string;
+  city?: string;
+  province?: string;
+  lat?: number;
+  lng?: number;
+  urgent?: boolean;
+  assignedWorkerId?: string;
+  assignedWorkerIds?: string[];
+};
+
+const APP_URL = "https://workitsa.co.za";
+
+type WorkerDoc = {
+  uid: string;
+  role?: string;
+  accountStatus?: string;
+  displayName?: string;
+  photoURL?: string | null;
+  ratingAvg?: number;
+  ratingCount?: number;
+  backgroundVerified?: boolean;
+  verificationStatus?: string;
+  categories?: string[];
+  approxLat?: number;
+  approxLng?: number;
+  city?: string;
+  province?: string;
+  blockedUserIds?: string[];
+  whatsappJobOptIn?: boolean;
+  whatsappNumber?: string;
+};
+
+type ThreadDoc = {
+  workerUid?: string;
+  lastJobId?: string;
+  lastJobTitle?: string;
+  lastInboundAt?: number;
+  lastList?: string[];
+};
+
+const onlyDigits = (s: string) => (s ?? "").replace(/\D/g, "");
+
+/** Normalise any SA number to WhatsApp digits form (27XXXXXXXXX). */
+function toWa(raw: string | undefined): string {
+  const d = onlyDigits(raw ?? "");
+  if (!d) return "";
+  if (d.startsWith("27")) return d;
+  if (d.startsWith("0")) return "27" + d.slice(1);
+  if (d.length === 9) return "27" + d;
+  return d;
+}
+
+const norm = (s?: string) => (s ?? "").trim().toLowerCase();
+const where = (j: JobDoc) => [j.suburb, j.city].filter(Boolean).join(", ") || j.province || "nearby";
+
+function haversineKm(lat1: number, lng1: number, lat2: number, lng2: number): number {
+  const R = 6371;
+  const toRad = (d: number) => (d * Math.PI) / 180;
+  const dLat = toRad(lat2 - lat1);
+  const dLng = toRad(lng2 - lng1);
+  const a =
+    Math.sin(dLat / 2) ** 2
+    + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLng / 2) ** 2;
+  return 2 * R * Math.asin(Math.sqrt(a));
+}
+
+const isVisible = (j: JobDoc | undefined | null): boolean =>
+  !!j && j.status === "open" && !j.moderationStatus;
+
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+// ---------- Meta Cloud API send (production number, shared with Jarvis) ----------
+
+async function metaSend(payload: Record<string, unknown>): Promise<void> {
+  const phoneId = WHATSAPP_PHONE_NUMBER_ID.value();
+  const res = await fetch(`https://graph.facebook.com/${GRAPH_VERSION}/${phoneId}/messages`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${WHATSAPP_TOKEN.value()}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ messaging_product: "whatsapp", ...payload }),
+  });
+  if (!res.ok) {
+    logger.error("wa job: send failed", { status: res.status, body: await res.text() });
+  }
+}
+
+/** Free-form text — only valid inside the 24h session window. */
+const sendText = (to: string, body: string) =>
+  metaSend({ to, type: "text", text: { body: body.slice(0, 4096) } });
+
+/** Business-initiated template send (cold job alert). `params` fills {{1}}..{{3}}. */
+const sendTemplate = (to: string, name: string, params: string[]) =>
+  metaSend({
+    to,
+    type: "template",
+    template: {
+      name,
+      language: { code: TEMPLATE_LANG },
+      components: [{ type: "body", parameters: params.map((text) => ({ type: "text", text })) }],
+    },
+  });
+
+/** Copy of the job_alert body for the free-text (in-window) path. */
+const alertText = (title: string, area: string, price: string) =>
+  `🛠️ New job near you on Workit: *${title}* in ${area} — pay ${price}.\n`
+  + "Reply *1* to send an offer, or *STOP* to opt out.";
+
+// =====================================================================
+// 1) Outbound: alert opted-in workers when a job becomes visible
+// =====================================================================
+
+export const onJobVisibleWhatsAppAlert = onDocumentWritten(
+  {
+    document: "jobs/{jobId}",
+    secrets: [WHATSAPP_TOKEN, WHATSAPP_PHONE_NUMBER_ID],
+    timeoutSeconds: 120,
+  },
+  async (event) => {
+    const jobId = event.params.jobId;
+    const before = event.data?.before.exists ? (event.data.before.data() as JobDoc) : null;
+    let after = event.data?.after.exists ? (event.data.after.data() as JobDoc) : null;
+
+    if (!isVisible(after) || isVisible(before)) return;
+
+    const db = getFirestore();
+
+    if (!before) {
+      await sleep(ALERT_SETTLE_MS);
+      const snap = await db.doc(`jobs/${jobId}`).get();
+      after = snap.exists ? (snap.data() as JobDoc) : null;
+      if (!isVisible(after)) return;
+    }
+
+    const job = after!;
+    if (!job.employerId) return;
+
+    const [workersSnap, employerSnap] = await Promise.all([
+      db.collection("users").where("role", "==", "worker").get(),
+      db.doc(`users/${job.employerId}`).get(),
+    ]);
+    const employerBlocked: string[] = (employerSnap.data()?.blockedUserIds as string[]) ?? [];
+
+    const jobCity = norm(job.city);
+    const jobProvince = norm(job.province);
+    const hasCoords = typeof job.lat === "number" && typeof job.lng === "number";
+
+    const recipients: Array<{ wa: string; uid: string; distanceKm: number | null }> = [];
+    workersSnap.forEach((d) => {
+      const w = { ...(d.data() as WorkerDoc), uid: d.id };
+      if (!w.whatsappJobOptIn) return;
+      const wa = toWa(w.whatsappNumber);
+      if (!wa) return;
+      if ((w.accountStatus ?? "approved") !== "approved") return;
+      if (w.uid === job.employerId) return;
+      if (employerBlocked.includes(w.uid)) return;
+      if ((w.blockedUserIds ?? []).includes(job.employerId!)) return;
+      if (w.categories && w.categories.length > 0 && job.category && !w.categories.includes(job.category)) return;
+
+      const workerHasCoords = typeof w.approxLat === "number" && typeof w.approxLng === "number";
+      if (hasCoords && workerHasCoords) {
+        const km = haversineKm(job.lat!, job.lng!, w.approxLat!, w.approxLng!);
+        if (km <= RADIUS_KM) recipients.push({ wa, uid: w.uid, distanceKm: km });
+        return;
+      }
+      if (jobCity && norm(w.city) === jobCity) {
+        recipients.push({ wa, uid: w.uid, distanceKm: null });
+        return;
+      }
+      if (!workerHasCoords && !norm(w.city) && jobProvince && norm(w.province) === jobProvince) {
+        recipients.push({ wa, uid: w.uid, distanceKm: null });
+      }
+    });
+
+    recipients.sort((a, b) => (a.distanceKm ?? RADIUS_KM + 1) - (b.distanceKm ?? RADIUS_KM + 1));
+    const chosen = recipients.slice(0, MAX_RECIPIENTS);
+    if (chosen.length === 0) {
+      logger.info("wa job: no opted-in matching workers", { jobId });
+      return;
+    }
+
+    const area = where(job);
+    const price = `R${job.suggestedPrice ?? "—"}`;
+    const title = (job.title ?? "A job").slice(0, 60);
+
+    const now = Date.now();
+    let freeText = 0;
+    let template = 0;
+    const results = await Promise.allSettled(
+      chosen.map(async (r) => {
+        // In-window workers get a free-text alert (full detail, no template);
+        // cold workers get the approved template.
+        const threadSnap = await db.doc(`waJobThreads/${r.wa}`).get();
+        const lastInboundAt = Number((threadSnap.data() as ThreadDoc | undefined)?.lastInboundAt ?? 0);
+        const inWindow = now - lastInboundAt < SESSION_WINDOW_MS;
+        if (inWindow) {
+          await sendText(r.wa, alertText(title, area, price));
+          freeText++;
+        } else {
+          await sendTemplate(r.wa, JOB_ALERT_TEMPLATE, [title, area, price]);
+          template++;
+        }
+        await db.doc(`waJobThreads/${r.wa}`).set(
+          { workerUid: r.uid, lastJobId: jobId, lastJobTitle: title, lastJobPrice: job.suggestedPrice ?? null, lastJobAt: now },
+          { merge: true },
+        );
+      }),
+    );
+    const failed = results.filter((x) => x.status === "rejected").length;
+    logger.info("wa job: dispatched alert", { jobId, sent: chosen.length, freeText, template, failed });
+  },
+);
+
+// =====================================================================
+// 2) Inbound: handle a worker's message (called by jarvisWhatsApp)
+// =====================================================================
+
+async function createWhatsAppOffer(
+  jobId: string,
+  worker: WorkerDoc,
+  priceOverride?: number,
+): Promise<"ok" | "gone" | "dupe"> {
+  const db = getFirestore();
+  const jobSnap = await db.doc(`jobs/${jobId}`).get();
+  const job = jobSnap.exists ? (jobSnap.data() as JobDoc) : null;
+  if (!isVisible(job)) return "gone";
+
+  const existing = await db
+    .collection(`jobs/${jobId}/offers`)
+    .where("workerId", "==", worker.uid)
+    .where("status", "==", "pending")
+    .limit(1)
+    .get();
+  if (!existing.empty) return "dupe";
+
+  const counter = typeof priceOverride === "number" && priceOverride > 0;
+  const now = Date.now();
+  await db.collection(`jobs/${jobId}/offers`).add({
+    jobId,
+    workerId: worker.uid,
+    workerName: worker.displayName ?? "A worker",
+    workerPhotoURL: worker.photoURL ?? null,
+    workerRatingAvg: worker.ratingAvg ?? null,
+    workerRatingCount: worker.ratingCount ?? 0,
+    backgroundVerified: worker.backgroundVerified ?? false,
+    workerVerified: worker.verificationStatus === "approved",
+    price: counter ? priceOverride : (job!.suggestedPrice ?? 0),
+    message: counter ? `Counter-offer via WhatsApp (R${priceOverride})` : "Accepted via WhatsApp",
+    status: "pending",
+    source: "whatsapp",
+    createdAt: now,
+  });
+  await db.doc(`jobs/${jobId}`).set(
+    { lastOfferAt: now, offerCount: FieldValue.increment(1), updatedAt: now },
+    { merge: true },
+  );
+  return "ok";
+}
+
+async function findAssignedJob(workerUid: string, wantStatuses: string[]): Promise<{ id: string; job: JobDoc } | null> {
+  const db = getFirestore();
+  const snap = await db.collection("jobs").where("assignedWorkerId", "==", workerUid).get();
+  let pick: { id: string; job: JobDoc } | null = null;
+  snap.forEach((d) => {
+    const j = d.data() as JobDoc;
+    if (wantStatuses.includes(j.status ?? "")) pick = { id: d.id, job: j };
+  });
+  return pick;
+}
+
+/** Open jobs that match a worker (reverse of the alert matching), nearest first. */
+async function openJobsForWorker(worker: WorkerDoc): Promise<Array<{ id: string; job: JobDoc }>> {
+  const db = getFirestore();
+  const snap = await db.collection("jobs").where("status", "==", "open").get();
+  const wHasCoords = typeof worker.approxLat === "number" && typeof worker.approxLng === "number";
+  const wCity = norm(worker.city);
+  const wProv = norm(worker.province);
+  const out: Array<{ id: string; job: JobDoc; d: number | null }> = [];
+  snap.forEach((doc) => {
+    const j = doc.data() as JobDoc;
+    if (j.moderationStatus) return;
+    if (j.employerId === worker.uid) return;
+    if (worker.categories && worker.categories.length > 0 && j.category && !worker.categories.includes(j.category)) return;
+    const jHas = typeof j.lat === "number" && typeof j.lng === "number";
+    if (wHasCoords && jHas) {
+      const km = haversineKm(worker.approxLat!, worker.approxLng!, j.lat!, j.lng!);
+      if (km <= RADIUS_KM) out.push({ id: doc.id, job: j, d: km });
+      return;
+    }
+    if (wCity && norm(j.city) === wCity) {
+      out.push({ id: doc.id, job: j, d: null });
+      return;
+    }
+    if (!jHas && wProv && norm(j.province) === wProv) out.push({ id: doc.id, job: j, d: null });
+  });
+  out.sort((a, b) => (a.d ?? RADIUS_KM + 1) - (b.d ?? RADIUS_KM + 1));
+  return out.slice(0, JOBS_LIST_LIMIT).map(({ id, job }) => ({ id, job }));
+}
+
+async function lookupWorkerByWa(wa: string): Promise<WorkerDoc | null> {
+  const db = getFirestore();
+  const snap = await db.collection("users").where("whatsappNumber", "==", wa).limit(1).get();
+  if (snap.empty) return null;
+  const d = snap.docs[0];
+  return { ...(d.data() as WorkerDoc), uid: d.id };
+}
+
+/**
+ * Try to handle an inbound WhatsApp message as a worker job command.
+ * Returns true if handled here (Jarvis stops); false if it's not a job
+ * interaction and should fall through to the normal support handler.
+ *
+ * `send(to, body)` is jarvisWhatsApp's own sender. Wrapped by the caller so a
+ * throw can never break the support path.
+ */
+export async function handleWhatsAppJobReply(args: {
+  messageId: string;
+  fromRaw: string;
+  fromDigits: string;
+  text: string;
+  location?: { lat: number; lng: number };
+  send: (to: string, body: string) => Promise<void>;
+}): Promise<boolean> {
+  const { messageId, fromRaw, fromDigits, text, location, send } = args;
+  // A shared-location message OR a job keyword both need a worker lookup; any
+  // other free text falls through to support.
+  if (!location && !isJobKeyword(text)) return false;
+
+  const wa = toWa(fromDigits);
+  const worker = await lookupWorkerByWa(wa);
+  if (!worker) return false; // unknown sender → support handles it
+
+  const db = getFirestore();
+  const threadRef = db.doc(`waJobThreads/${wa}`);
+
+  // Idempotency: a re-delivered message must run once.
+  if (messageId) {
+    try {
+      await db.doc(`waJobInbox/${messageId}`).create({ at: Date.now() });
+    } catch {
+      return true; // already processed this exact message
+    }
+  }
+
+  // Any inbound from a known worker opens their 24h free-text window.
+  await threadRef.set({ workerUid: worker.uid, lastInboundAt: Date.now() }, { merge: true });
+
+  // --- Shared location: a safety check-in on the active job ---
+  if (location) {
+    const now = Date.now();
+    const found = await findAssignedJob(worker.uid, ["assigned", "in_progress"]);
+    if (found) {
+      const patch: Record<string, unknown> = {
+        lastCheckIn: { lat: location.lat, lng: location.lng, at: now },
+        updatedAt: now,
+      };
+      // If an SOS is active without coordinates yet, attach them (does NOT
+      // re-fire the alert — the emergency timestamp is unchanged).
+      const emg = (found.job as { emergency?: { status?: string; lat?: number; at?: number } }).emergency;
+      if (emg && emg.status === "active" && emg.lat == null) {
+        patch.emergency = { ...emg, lat: location.lat, lng: location.lng };
+      }
+      await db.doc(`jobs/${found.id}`).set(patch, { merge: true });
+      await send(fromRaw, "📍 Location received — thank you. It's saved to your job for safety.");
+    } else {
+      await send(fromRaw, "📍 Thanks for sharing your location. (No active job to attach it to right now.)");
+    }
+    return true;
+  }
+
+  // --- STOP ---
+  if (STOP.test(text)) {
+    await db.doc(`users/${worker.uid}`).set(
+      { whatsappJobOptIn: false, whatsappOptOutAt: Date.now() },
+      { merge: true },
+    );
+    await send(fromRaw, "You've been opted out of WhatsApp job alerts. 👋 Switch them back on anytime in your Workit account.");
+    return true;
+  }
+
+  // --- SOS / emergency (checked early — safety first) ---
+  if (SOS.test(text)) {
+    const found = await findAssignedJob(worker.uid, ["assigned", "in_progress"]);
+    const now = Date.now();
+    if (found) {
+      await db.doc(`jobs/${found.id}`).set(
+        {
+          emergency: {
+            triggeredBy: worker.uid,
+            triggeredByName: worker.displayName ?? "A worker",
+            triggeredByRole: "worker",
+            at: now,
+            status: "active",
+          },
+          emergencyTriggeredAt: now,
+          updatedAt: now,
+        },
+        { merge: true },
+      );
+    }
+    await send(
+      fromRaw,
+      "🚨 *SOS received.* If you are in danger, call *SAPS 10111* right now.\n\n"
+        + "Our safety team has been alerted. Share your location (tap 📎 → Location → Send) so we can find you fast.",
+    );
+    return true;
+  }
+
+  // --- REPORT: file a report for the admin safety team ---
+  if (REPORT.test(text)) {
+    const desc = text.replace(/^report\s*:?\s*/i, "").trim() || "(no detail given)";
+    const found = await findAssignedJob(worker.uid, ["assigned", "in_progress", "completed", "confirmed"]);
+    const thread = (await threadRef.get()).data() as ThreadDoc | undefined;
+    const targetId = found?.id ?? thread?.lastJobId ?? "unknown";
+    await db.collection("reports").add({
+      reporterId: worker.uid,
+      reporterName: worker.displayName ?? "A worker",
+      targetType: "job",
+      targetId,
+      reason: "other",
+      description: desc,
+      status: "open",
+      source: "whatsapp",
+      createdAt: Date.now(),
+    });
+    await send(
+      fromRaw,
+      "Thank you — your report has been sent to our team and we'll look into it. "
+        + "If this is an emergency, reply *SOS* or call *SAPS 10111*.",
+    );
+    return true;
+  }
+
+  // --- AVAILABLE: flag available-now (ranks higher + more alerts) ---
+  if (AVAILABLE.test(text)) {
+    await db.doc(`users/${worker.uid}`).set(
+      { availableNow: true, availableNowAt: Date.now() },
+      { merge: true },
+    );
+    await send(
+      fromRaw,
+      "✅ You're marked *available now* for the next 8 hours — employers see you first. "
+        + "Text *JOBS* to browse work nearby.",
+    );
+    return true;
+  }
+
+  // --- JOBS / WORK: list open jobs near the worker ---
+  if (JOBS.test(text)) {
+    const jobs = await openJobsForWorker(worker);
+    if (jobs.length === 0) {
+      await send(fromRaw, "No open jobs match your area right now. We'll WhatsApp you as soon as one is posted. 👍");
+      return true;
+    }
+    const lines = jobs.map(
+      (x, i) => `*${i + 1}.* ${(x.job.title ?? "Job").slice(0, 40)} — ${where(x.job)} — R${x.job.suggestedPrice ?? "—"}`,
+    );
+    await threadRef.set({ lastList: jobs.map((x) => x.id), lastListAt: Date.now() }, { merge: true });
+    await send(
+      fromRaw,
+      `🛠️ *Open jobs near you:*\n\n${lines.join("\n")}\n\nReply the number to offer (e.g. *1*), or a number and price to counter (e.g. *1 400*), or *STOP* to opt out.`,
+    );
+    return true;
+  }
+
+  // --- OFFER <price>: counter-offer on the last job we showed this worker ---
+  const om = text.match(OFFER);
+  if (om) {
+    const price = parseInt(om[1], 10);
+    const thread = (await threadRef.get()).data() as ThreadDoc | undefined;
+    const jobId = thread?.lastJobId ?? (Array.isArray(thread?.lastList) ? thread!.lastList[0] : undefined);
+    if (!jobId) {
+      await send(fromRaw, "Text *JOBS* to see work first, then reply e.g. *OFFER 400* to propose your price.");
+      return true;
+    }
+    const outcome = await createWhatsAppOffer(jobId, worker, price);
+    await send(
+      fromRaw,
+      outcome === "ok"
+        ? `✅ Your offer of *R${price}* has been sent. The employer will be notified — you'll hear back if they accept.`
+        : outcome === "dupe"
+          ? "You've already sent an offer on that job. 👍"
+          : "Sorry, that job has just been taken or closed. Text *JOBS* to see what else is open.",
+    );
+    return true;
+  }
+
+  // --- START ---
+  if (START.test(text)) {
+    const found = await findAssignedJob(worker.uid, ["assigned"]);
+    if (!found) {
+      await send(fromRaw, "No job of yours is ready to start right now.");
+    } else {
+      await db.doc(`jobs/${found.id}`).set({ status: "in_progress", updatedAt: Date.now() }, { merge: true });
+      await send(
+        fromRaw,
+        `👍 Marked "${found.job.title ?? "your job"}" as started. Reply *DONE* when you've finished.\n\n`
+          + "🛡️ For your safety: share your location (tap 📎 → Location → Send), and reply *SOS* any time if you feel unsafe.",
+      );
+    }
+    return true;
+  }
+
+  // --- DONE ---
+  if (DONE.test(text)) {
+    const found = await findAssignedJob(worker.uid, ["in_progress", "assigned"]);
+    if (!found) {
+      await send(fromRaw, "No active job of yours to mark done.");
+    } else {
+      const now = Date.now();
+      await db.doc(`jobs/${found.id}`).set({ status: "completed", completedAt: now, updatedAt: now }, { merge: true });
+      await send(fromRaw, `🎉 Marked "${found.job.title ?? "your job"}" as done. The employer will confirm and you can both rate each other.`);
+    }
+    return true;
+  }
+
+  // --- A number (pick from the last JOBS list), optionally with a price
+  //     ("1 400" → offer R400 on job 1), or ACCEPT/1 (the last single alert) ---
+  const m = text.match(NUMBER);
+  const n = m ? parseInt(m[1], 10) : ACCEPT.test(text) ? 1 : null;
+  if (n != null) {
+    const inlinePrice = m && m[2] ? parseInt(m[2], 10) : undefined;
+    const thread = (await threadRef.get()).data() as ThreadDoc | undefined;
+    let jobId: string | undefined;
+    let jobTitle: string | undefined;
+    if (thread?.lastList && Array.isArray(thread.lastList) && n >= 1 && n <= thread.lastList.length) {
+      jobId = thread.lastList[n - 1];
+    } else if (thread?.lastJobId && (n === 1 || ACCEPT.test(text))) {
+      jobId = thread.lastJobId;
+      jobTitle = thread.lastJobTitle;
+    }
+    if (!jobId) {
+      await send(fromRaw, "No job with that number right now. Text *JOBS* to see open jobs near you.");
+      return true;
+    }
+    const outcome = await createWhatsAppOffer(jobId, worker, inlinePrice);
+    const priceLine = inlinePrice ? ` of *R${inlinePrice}*` : "";
+    await send(
+      fromRaw,
+      outcome === "ok"
+        ? `✅ Offer${priceLine} sent${jobTitle ? ` for "${jobTitle}"` : ""}. The employer will be notified — you'll hear back if they accept.`
+        : outcome === "dupe"
+          ? "You've already sent an offer on that job. 👍"
+          : "Sorry, that job has just been taken or closed. Text *JOBS* to see what else is open.",
+    );
+    return true;
+  }
+
+  return false;
+}
+
+// =====================================================================
+// 3) Proof-of-work: when a job is confirmed, WhatsApp the worker their
+//    refreshed, shareable Work Record link (employment → work readiness).
+// =====================================================================
+
+export const onJobConfirmedWhatsAppRecord = onDocumentUpdated(
+  {
+    document: "jobs/{jobId}",
+    secrets: [WHATSAPP_TOKEN, WHATSAPP_PHONE_NUMBER_ID],
+    timeoutSeconds: 120,
+  },
+  async (event) => {
+    const before = event.data?.before.data() as JobDoc | undefined;
+    const after = event.data?.after.data() as JobDoc | undefined;
+    if (!before || !after) return;
+    // Only on the transition into "confirmed".
+    if (before.status === "confirmed" || after.status !== "confirmed") return;
+
+    const uids = new Set<string>();
+    if (after.assignedWorkerId) uids.add(after.assignedWorkerId);
+    (after.assignedWorkerIds ?? []).forEach((u) => u && uids.add(u));
+    if (uids.size === 0) return;
+
+    const db = getFirestore();
+    for (const uid of uids) {
+      try {
+        const u = (await db.doc(`users/${uid}`).get()).data() as WorkerDoc | undefined;
+        // Respect consent: only workers who opted into WhatsApp from us.
+        if (!u?.whatsappJobOptIn) continue;
+        const wa = toWa(u.whatsappNumber);
+        if (!wa) continue;
+        // Only inside the 24h free-text window — no templates for this follow-up.
+        const t = (await db.doc(`waJobThreads/${wa}`).get()).data() as ThreadDoc | undefined;
+        if (Date.now() - Number(t?.lastInboundAt ?? 0) >= SESSION_WINDOW_MS) continue;
+
+        const { token, totalJobs } = await upsertWorkRecord(uid);
+        await sendText(
+          wa,
+          `🎉 Nice work on *${(after.title ?? "your job").slice(0, 50)}*! That's *${totalJobs}* confirmed `
+            + `job${totalJobs === 1 ? "" : "s"} on Workit.\n\nHere's your *Work Record* — your proof of work to `
+            + `share with landlords, lenders or employers:\n${APP_URL}/record?t=${token}`,
+        );
+        logger.info("wa proof-of-work sent", { uid, totalJobs });
+      } catch (err) {
+        logger.error("wa proof-of-work failed", { uid, err: String(err) });
+      }
+    }
+  },
+);
+
+// =====================================================================
+// 4) Offer resolved: WhatsApp the worker when the employer accepts or
+//    rejects their offer (an app-less worker never sees the in-app push).
+// =====================================================================
+
+type OfferDoc = { status?: string; workerId?: string; price?: number };
+
+export const onOfferResolvedWhatsApp = onDocumentUpdated(
+  {
+    document: "jobs/{jobId}/offers/{offerId}",
+    secrets: [WHATSAPP_TOKEN, WHATSAPP_PHONE_NUMBER_ID],
+    timeoutSeconds: 60,
+  },
+  async (event) => {
+    const before = event.data?.before.data() as OfferDoc | undefined;
+    const after = event.data?.after.data() as OfferDoc | undefined;
+    if (!before || !after) return;
+    // Only on the transition out of "pending" into a decision.
+    if (before.status !== "pending") return;
+    if (after.status !== "accepted" && after.status !== "rejected") return;
+    const workerId = after.workerId;
+    if (!workerId) return;
+
+    try {
+      const db = getFirestore();
+      const u = (await db.doc(`users/${workerId}`).get()).data() as WorkerDoc | undefined;
+      if (!u?.whatsappJobOptIn) return; // not a WhatsApp worker → in-app push covers them
+      const wa = toWa(u.whatsappNumber);
+      if (!wa) return;
+      // Free-text only (inside the 24h window). Cold sends would need a template.
+      const t = (await db.doc(`waJobThreads/${wa}`).get()).data() as ThreadDoc | undefined;
+      if (Date.now() - Number(t?.lastInboundAt ?? 0) >= SESSION_WINDOW_MS) return;
+
+      const job = (await db.doc(`jobs/${event.params.jobId}`).get()).data() as JobDoc | undefined;
+      const title = (job?.title ?? "the job").slice(0, 50);
+      const priceStr = typeof after.price === "number" ? ` of *R${after.price}*` : "";
+
+      if (after.status === "accepted") {
+        await sendText(
+          wa,
+          `🎉 *Great news!* Your offer${priceStr} for "${title}" was *accepted*.\n\n`
+            + "Reply *START* when you're on site and *DONE* when you finish. Reply *SOS* any time if you feel unsafe.",
+        );
+      } else {
+        await sendText(
+          wa,
+          `Your offer for "${title}" wasn't accepted this time. Don't worry — text *JOBS* to see other work near you. 👍`,
+        );
+      }
+      logger.info("wa offer-resolved sent", { workerId, status: after.status });
+    } catch (err) {
+      logger.error("wa offer-resolved failed", { workerId, err: String(err) });
+    }
+  },
+);

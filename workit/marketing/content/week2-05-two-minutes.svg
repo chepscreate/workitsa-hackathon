@@ -1,0 +1,44 @@
+<svg width="1080" height="1080" viewBox="0 0 1080 1080" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>Workit &#8212; post a job in two minutes</title>
+  <desc>Cream Workit social post showing a simple job-post form mock (what you need, where, your offer) with a Post job button, plus a workitsa.co.za call to action and trilingual greeting.</desc>
+  <defs>
+    <linearGradient id="bg5" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#faf4ec"/>
+      <stop offset="1" stop-color="#f1e2cc"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="1080" height="1080" fill="url(#bg5)"/>
+
+  <text x="540" y="74" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" letter-spacing="4" fill="#d97742">WORKIT &#183; GAUTENG</text>
+  <text x="540" y="150" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="78" font-weight="700" fill="#1f1612">Workit</text>
+  <rect x="490" y="170" width="100" height="6" rx="3" fill="#d97742"/>
+
+  <text x="540" y="250" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="52" font-weight="700" fill="#1f1612">Post a job in two minutes.</text>
+  <text x="540" y="302" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="25" fill="#5a4636">Tell us what you need &#8212; verified workers nearby send offers.</text>
+
+  <g>
+    <rect x="240" y="336" width="600" height="456" rx="24" fill="#fffcf7" stroke="#e5d5c0" stroke-width="2"/>
+
+    <text x="284" y="394" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700" letter-spacing="1.5" fill="#b85a2a">WHAT DO YOU NEED?</text>
+    <rect x="284" y="406" width="512" height="52" rx="12" fill="#faf4ec" stroke="#e5d5c0" stroke-width="1.5"/>
+    <text x="304" y="440" font-family="Arial, Helvetica, sans-serif" font-size="21" fill="#1f1612">Garden tidy-up, Saturday morning</text>
+
+    <text x="284" y="498" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700" letter-spacing="1.5" fill="#b85a2a">WHERE?</text>
+    <rect x="284" y="510" width="512" height="52" rx="12" fill="#faf4ec" stroke="#e5d5c0" stroke-width="1.5"/>
+    <text x="304" y="544" font-family="Arial, Helvetica, sans-serif" font-size="21" fill="#1f1612">Your suburb, Gauteng</text>
+
+    <text x="284" y="602" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700" letter-spacing="1.5" fill="#b85a2a">YOUR OFFER</text>
+    <rect x="284" y="614" width="512" height="52" rx="12" fill="#faf4ec" stroke="#e5d5c0" stroke-width="1.5"/>
+    <text x="304" y="648" font-family="Arial, Helvetica, sans-serif" font-size="21" fill="#1f1612">R 350</text>
+
+    <rect x="284" y="706" width="512" height="56" rx="28" fill="#d97742"/>
+    <text x="540" y="742" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" fill="#faf4ec">Post job</text>
+  </g>
+
+  <text x="540" y="838" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="23" fill="#5a4636">Free during launch &#183; you choose who does the job</text>
+
+  <rect x="285" y="872" width="510" height="66" rx="33" fill="#d97742"/>
+  <text x="540" y="914" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#faf4ec">Try it tonight &#183; workitsa.co.za</text>
+
+  <text x="540" y="1000" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="24" font-style="italic" fill="#5d7a47">Sawubona &#183; Dumela &#183; Goeie dag</text>
+</svg>

@@ -1,0 +1,68 @@
+<svg width="1080" height="1080" viewBox="0 0 1080 1080" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>Workit &#8212; the SOS button, one tap away</title>
+  <desc>Cream Workit social post: wordmark, a mock active-job app screen showing "Painting the garden fence" in progress with a prominent SOS button, headline "If something feels off, one tap gets you help.", three safety-toolkit feature rows (ID-verified workers, doorstep start code, SOS button), trust line, and workitsa.co.za call to action.</desc>
+  <defs>
+    <linearGradient id="bg1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#faf4ec"/>
+      <stop offset="1" stop-color="#f1e2cc"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="1080" height="1080" fill="url(#bg1)"/>
+
+  <text x="540" y="74" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" letter-spacing="4" fill="#d97742">WORKIT &#183; GAUTENG</text>
+  <text x="540" y="150" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="78" font-weight="700" fill="#1f1612">Workit</text>
+  <rect x="490" y="170" width="100" height="6" rx="3" fill="#d97742"/>
+
+  <!-- mock active-job app screen -->
+  <g font-family="Arial, Helvetica, sans-serif">
+    <rect x="110" y="188" width="860" height="210" rx="24" fill="#ffffff" stroke="#e6d7c3" stroke-width="2"/>
+    <text x="140" y="222" font-size="15" font-weight="700" letter-spacing="2" fill="#5d7a47">ACTIVE JOB</text>
+    <text x="140" y="260" font-family="Georgia, 'Times New Roman', serif" font-size="30" font-weight="700" fill="#1f1612">Painting the garden fence</text>
+    <text x="140" y="294" font-size="19" fill="#5a4636">with Thabo M. &#183; ID-verified &#183; today 14:20</text>
+    <rect x="140" y="314" width="520" height="12" rx="6" fill="#f0dcc2"/>
+    <rect x="140" y="314" width="340" height="12" rx="6" fill="#5d7a47"/>
+    <text x="140" y="346" font-size="15" fill="#9a8873">Job in progress</text>
+
+    <!-- SOS button with pulse ring -->
+    <circle cx="890" cy="293" r="76" fill="none" stroke="#a93226" stroke-width="6" opacity="0.25"/>
+    <circle cx="890" cy="293" r="60" fill="#a93226"/>
+    <text x="890" y="302" text-anchor="middle" font-size="26" font-weight="700" letter-spacing="1" fill="#faf4ec">SOS</text>
+  </g>
+
+  <text x="540" y="440" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="26" font-style="italic" fill="#5a4636">It&#8217;s there for the moments you hope you never need it.</text>
+
+  <text x="540" y="500" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="46" font-weight="700" fill="#1f1612">If something feels off,</text>
+  <text x="540" y="554" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="46" font-weight="700" fill="#d97742">one tap gets you help.</text>
+
+  <g font-family="Arial, Helvetica, sans-serif">
+    <g>
+      <rect x="72" y="592" width="936" height="96" rx="18" fill="#f0dcc2"/>
+      <g transform="translate(132,640)">
+        <circle r="26" fill="#d97742"/>
+        <path d="M-9,0 L-3,7 L10,-9" stroke="#faf4ec" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+      <text x="180" y="649" font-size="24" fill="#1f1612">ID-verified workers on both sides</text>
+    </g>
+    <g>
+      <rect x="72" y="706" width="936" height="96" rx="18" fill="#dee6d4"/>
+      <g transform="translate(132,754)">
+        <circle r="26" fill="#5d7a47"/>
+        <path d="M-9,0 L-3,7 L10,-9" stroke="#faf4ec" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+      <text x="180" y="763" font-size="24" fill="#1f1612">Doorstep start code, so you know it&#8217;s them</text>
+    </g>
+    <g>
+      <rect x="72" y="820" width="936" height="96" rx="18" fill="#f4dede"/>
+      <g transform="translate(132,868)">
+        <circle r="26" fill="#a93226"/>
+        <path d="M-9,0 L-3,7 L10,-9" stroke="#faf4ec" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+      <text x="180" y="877" font-size="24" fill="#1f1612">SOS button on every job, one tap away</text>
+    </g>
+  </g>
+
+  <text x="540" y="956" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="22" fill="#5a4636">No card needed &#183; free during launch &#183; launching in Gauteng</text>
+
+  <rect x="220" y="984" width="640" height="70" rx="35" fill="#d97742"/>
+  <text x="540" y="1028" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" fill="#faf4ec">Safety built in &#183; workitsa.co.za</text>
+</svg>

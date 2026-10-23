@@ -1,0 +1,92 @@
+<svg width="1080" height="1080" viewBox="0 0 1080 1080" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>Workit ad — everyday jobs across Gauteng</title>
+  <desc>A glowing heat map of Gauteng peppered with job pins from Pretoria in the north to Vereeniging in the south, under the Workit wordmark, with the line "Everyday jobs, all over Gauteng" and a get-started call to action.</desc>
+  <defs>
+    <linearGradient id="adbg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1b0f07"/>
+      <stop offset="1" stop-color="#2c180c"/>
+    </linearGradient>
+    <radialGradient id="hot" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#ffd271" stop-opacity="0.95"/>
+      <stop offset="0.35" stop-color="#f4892f" stop-opacity="0.6"/>
+      <stop offset="1" stop-color="#f4892f" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="warm" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#ef7a33" stop-opacity="0.6"/>
+      <stop offset="1" stop-color="#ef7a33" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="red" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#d6402a" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#d6402a" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect x="0" y="0" width="1080" height="1080" fill="url(#adbg)"/>
+  <g stroke="#ffffff" stroke-width="1" opacity="0.04">
+    <line x1="180" y1="220" x2="180" y2="830"/>
+    <line x1="360" y1="220" x2="360" y2="830"/>
+    <line x1="540" y1="220" x2="540" y2="830"/>
+    <line x1="720" y1="220" x2="720" y2="830"/>
+    <line x1="900" y1="220" x2="900" y2="830"/>
+    <line x1="180" y1="300" x2="900" y2="300"/>
+    <line x1="180" y1="450" x2="900" y2="450"/>
+    <line x1="180" y1="600" x2="900" y2="600"/>
+    <line x1="180" y1="750" x2="900" y2="750"/>
+  </g>
+
+  <text x="540" y="94" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" letter-spacing="3" fill="#e0a866">GIG-WORK MARKETPLACE · GAUTENG</text>
+  <text x="540" y="170" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="82" font-weight="700" fill="#fbf4e8">Workit</text>
+  <rect x="488" y="190" width="104" height="6" rx="3" fill="#ea9748"/>
+
+  <path d="M320 350 C380 285, 560 270, 670 300 C800 335, 870 420, 845 520 C825 610, 800 700, 700 760 C600 815, 455 815, 375 755 C285 690, 250 575, 262 480 C270 415, 285 380, 320 350 Z" fill="#251609" stroke="#7a4220" stroke-width="2.5"/>
+
+  <g>
+    <circle cx="555" cy="545" r="190" fill="url(#hot)"/>
+    <circle cx="555" cy="545" r="120" fill="url(#hot)"/>
+    <circle cx="610" cy="400" r="140" fill="url(#hot)"/>
+    <circle cx="610" cy="400" r="90" fill="url(#hot)"/>
+    <circle cx="715" cy="570" r="130" fill="url(#warm)"/>
+    <circle cx="415" cy="610" r="130" fill="url(#warm)"/>
+    <circle cx="340" cy="490" r="95" fill="url(#red)"/>
+    <circle cx="560" cy="720" r="100" fill="url(#warm)"/>
+    <circle cx="480" cy="450" r="60" fill="url(#red)"/>
+    <circle cx="660" cy="470" r="60" fill="url(#warm)"/>
+    <circle cx="470" cy="680" r="55" fill="url(#red)"/>
+    <circle cx="650" cy="665" r="60" fill="url(#warm)"/>
+    <circle cx="520" cy="330" r="55" fill="url(#red)"/>
+    <circle cx="765" cy="505" r="50" fill="url(#red)"/>
+  </g>
+
+  <g>
+    <g><circle cx="560" cy="545" r="15" fill="#fbf4e8"/><path d="M551 549 L569 549 L560 568 Z" fill="#fbf4e8"/><circle cx="560" cy="545" r="6" fill="#c25e2e"/></g>
+    <g><circle cx="610" cy="400" r="13" fill="#ea9748"/><path d="M602 403 L618 403 L610 420 Z" fill="#ea9748"/><circle cx="610" cy="400" r="5" fill="#fbf4e8"/></g>
+    <g><circle cx="715" cy="565" r="12" fill="#fbf4e8"/><path d="M708 568 L722 568 L715 584 Z" fill="#fbf4e8"/><circle cx="715" cy="565" r="5" fill="#6f8159"/></g>
+    <g><circle cx="415" cy="605" r="12" fill="#fbf4e8"/><path d="M408 608 L422 608 L415 624 Z" fill="#fbf4e8"/><circle cx="415" cy="605" r="5" fill="#c25e2e"/></g>
+    <g><circle cx="345" cy="490" r="10" fill="#93a574"/><path d="M339 492 L351 492 L345 505 Z" fill="#93a574"/><circle cx="345" cy="490" r="4" fill="#20140d"/></g>
+    <g><circle cx="560" cy="715" r="11" fill="#ea9748"/><path d="M553 718 L567 718 L560 732 Z" fill="#ea9748"/><circle cx="560" cy="715" r="4.5" fill="#fbf4e8"/></g>
+    <g><circle cx="480" cy="450" r="9" fill="#fbf4e8"/><path d="M475 452 L485 452 L480 464 Z" fill="#fbf4e8"/><circle cx="480" cy="450" r="3.6" fill="#c25e2e"/></g>
+    <g><circle cx="665" cy="470" r="10" fill="#c75f37"/><path d="M659 472 L671 472 L665 485 Z" fill="#c75f37"/><circle cx="665" cy="470" r="4" fill="#fbf4e8"/></g>
+    <g><circle cx="470" cy="680" r="9" fill="#fbf4e8"/><path d="M465 682 L475 682 L470 694 Z" fill="#fbf4e8"/><circle cx="470" cy="680" r="3.6" fill="#6f8159"/></g>
+    <g><circle cx="650" cy="665" r="10" fill="#fbf4e8"/><path d="M644 667 L656 667 L650 680 Z" fill="#fbf4e8"/><circle cx="650" cy="665" r="4" fill="#c25e2e"/></g>
+    <g><circle cx="520" cy="345" r="9" fill="#ea9748"/><path d="M515 347 L525 347 L520 359 Z" fill="#ea9748"/><circle cx="520" cy="345" r="3.6" fill="#fbf4e8"/></g>
+    <g><circle cx="760" cy="505" r="9" fill="#fbf4e8"/><path d="M755 507 L765 507 L760 519 Z" fill="#fbf4e8"/><circle cx="760" cy="505" r="3.6" fill="#c25e2e"/></g>
+    <g><circle cx="430" cy="540" r="9" fill="#c75f37"/><path d="M425 542 L435 542 L430 554 Z" fill="#c75f37"/><circle cx="430" cy="540" r="3.6" fill="#fbf4e8"/></g>
+  </g>
+
+  <g font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700">
+    <text x="633" y="407" fill="#1a0e06" opacity="0.85">Pretoria</text>
+    <text x="632" y="406" fill="#f6ead7">Pretoria</text>
+    <text x="560" y="600" text-anchor="middle" fill="#1a0e06" opacity="0.85">Johannesburg</text>
+    <text x="559" y="599" text-anchor="middle" fill="#f6ead7">Johannesburg</text>
+    <text x="736" y="571" fill="#1a0e06" opacity="0.85">Ekurhuleni</text>
+    <text x="735" y="570" fill="#f6ead7">Ekurhuleni</text>
+    <text x="578" y="746" fill="#1a0e06" opacity="0.85">Vereeniging</text>
+    <text x="577" y="745" fill="#f6ead7">Vereeniging</text>
+  </g>
+
+  <text x="540" y="905" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="48" font-weight="700" fill="#fbf4e8">Everyday jobs, all over Gauteng.</text>
+  <text x="540" y="950" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="400" fill="#e9cfae">Verified workers near you · paid on completion · free during launch</text>
+
+  <rect x="328" y="980" width="424" height="64" rx="32" fill="#ea9748"/>
+  <text x="540" y="1021" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="700" fill="#2a1709">Get started  ·  workitsa.co.za</text>
+</svg>

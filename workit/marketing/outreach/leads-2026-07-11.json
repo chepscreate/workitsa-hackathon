@@ -1,0 +1,402 @@
+[
+  {
+    "businessName": "CF Panelbeaters",
+    "email": "info@cfpanelbeaters.co.za",
+    "contactName": "",
+    "suburb": "Benoni",
+    "category": "Panel Beaters",
+    "source": "https://cfpanelbeaters.co.za/"
+  },
+  {
+    "businessName": "Garden World",
+    "email": "magriet@gardenworld.co.za",
+    "contactName": "Magriet",
+    "suburb": "Muldersdrift",
+    "category": "Nursery & Garden Centre",
+    "source": "https://givingmore.co.za/garden-world"
+  },
+  {
+    "businessName": "Ezy Panel Beaters",
+    "email": "caroline@ezypanelbeaters.co.za",
+    "contactName": "Caroline",
+    "suburb": "Wadeville, Germiston",
+    "category": "Panel Beaters",
+    "source": "https://ezypanelbeaters.co.za/contact-us/"
+  },
+  {
+    "businessName": "Andres Panel & Paint",
+    "email": "darren@andrespb.co.za",
+    "contactName": "Darren",
+    "suburb": "Germiston South",
+    "category": "Panel Beaters",
+    "source": "https://www.looking4spares.co.za/directory/panelbeaters-and-spray-painting-/gauteng/germiston-/andres-panel-a-paint"
+  },
+  {
+    "businessName": "Dino's Auto Body Repairs & Panelbeaters",
+    "email": "reception@dinosauto.co.za",
+    "contactName": "",
+    "suburb": "Elandsfontein, Germiston",
+    "category": "Panel Beaters",
+    "source": "https://dinosauto.co.za/"
+  },
+  {
+    "businessName": "Shanavia Panel & Spray",
+    "email": "info@shanavia.co.za",
+    "contactName": "",
+    "suburb": "Wadeville, Germiston",
+    "category": "Panel Beaters",
+    "source": "https://shanavia.co.za/"
+  },
+  {
+    "businessName": "Summer Place Wedding & Conference Venue",
+    "email": "info@summerplacevenue.co.za",
+    "contactName": "",
+    "suburb": "Bartlett, Boksburg",
+    "category": "Events Venue",
+    "source": "https://www.summerps.co.za/"
+  },
+  {
+    "businessName": "What The Fit 4 Gym",
+    "email": "fitness@whatthefit4gym.co.za",
+    "contactName": "",
+    "suburb": "Magaliessig, Fourways",
+    "category": "Gym & Fitness",
+    "source": "https://whatthefit4gym.co.za/contact-us/"
+  },
+  {
+    "businessName": "CrossFit Rising Oak",
+    "email": "info@crossfitrisingoak.co.za",
+    "contactName": "",
+    "suburb": "Broadacres, Fourways",
+    "category": "Gym & Fitness",
+    "source": "https://www.crossfitrisingoak.co.za/"
+  },
+  {
+    "businessName": "MovementX Bedfordview",
+    "email": "bedfordview@movementx.co.za",
+    "contactName": "",
+    "suburb": "Bedfordview",
+    "category": "Gym & Fitness",
+    "source": "https://www.movementx.co.za/"
+  },
+  {
+    "businessName": "Planet Fitness Bedfordview",
+    "email": "cgm.bedford@planetfitness.co.za",
+    "contactName": "",
+    "suburb": "Bedfordview",
+    "category": "Gym & Fitness",
+    "source": "https://www.planetfitness.co.za/gyms/bedfordview-megaclub/"
+  },
+  {
+    "businessName": "Bell Street B & B",
+    "email": "contact@bellstreetbb.co.za",
+    "contactName": "",
+    "suburb": "Noordheuwel Ext 4, Krugersdorp",
+    "category": "Guesthouse & B&B",
+    "source": "https://www.bellstreetbb.co.za/"
+  },
+  {
+    "businessName": "The Cleaning Specialists (Johannesburg City / Hillbrow)",
+    "email": "lclaassen@lantic.net",
+    "contactName": "Liesl Claassen",
+    "suburb": "Hillbrow, Johannesburg CBD",
+    "category": "Cleaning",
+    "source": "https://www.thespecialists.co.za/cleaning-services-south-africa/find-a-branch/gauteng/johannesburg-city/"
+  },
+  {
+    "businessName": "Animal Worx Pest Control",
+    "email": "info@animalworx.co.za",
+    "contactName": "",
+    "suburb": "Benoni",
+    "category": "Pest Control",
+    "source": "https://animalworx.co.za/pest-control-benoni/"
+  },
+  {
+    "businessName": "KFRCOOL Appliance Repair",
+    "email": "info@kfrcool.co.za",
+    "contactName": "",
+    "suburb": "Kempton Park",
+    "category": "Appliance Repair",
+    "source": "https://www.kfrcool.co.za/appliance-repair-kempton-park/"
+  },
+  {
+    "businessName": "Appliances Repair",
+    "email": "service@appliancesrepair.co.za",
+    "contactName": "",
+    "suburb": "Kempton Park / Edenvale",
+    "category": "Appliance Repair",
+    "source": "https://appliancesrepair.co.za/kemptonpark-appliance-repairs/"
+  },
+  {
+    "businessName": "JHB Removals",
+    "email": "info@jhbremovals.co.za",
+    "contactName": "",
+    "suburb": "Nywerheid Street, Johannesburg",
+    "category": "Moving & Removals",
+    "source": "https://www.jhbremovals.co.za/contact/"
+  },
+  {
+    "businessName": "The Cleaning Specialists (Randburg)",
+    "email": "enquiries@cleaningspecialists.co.za",
+    "contactName": "",
+    "suburb": "Ferndale, Randburg",
+    "category": "Cleaning",
+    "source": "https://www.thespecialists.co.za/cleaning-services-south-africa/find-a-branch/gauteng/randburg/"
+  },
+  {
+    "businessName": "Random Harvest Indigenous Nursery",
+    "email": "info@rhn.co.za",
+    "contactName": "",
+    "suburb": "Muldersdrift",
+    "category": "Nursery & Garden Centre",
+    "source": "https://www.lifeisagarden.co.za/random-harvest-indigenous-nursery/"
+  },
+  {
+    "businessName": "Easy Collect & Drop (ECD)",
+    "email": "info@easycollectanddrop.com",
+    "contactName": "",
+    "suburb": "Johannesburg (serves Springs & Nigel)",
+    "category": "Courier & Delivery",
+    "source": "https://www.easycollectanddrop.com/contact-us/"
+  },
+  {
+    "businessName": "West Rand Reaction Unit",
+    "email": "guarding@westrandreaction.co.za",
+    "contactName": "",
+    "suburb": "Weltevredenpark, Roodepoort",
+    "category": "Security",
+    "source": "https://westrandreaction.co.za/"
+  },
+  {
+    "businessName": "La-Nuel Guest Lodge",
+    "email": "info@lanuel.co.za",
+    "contactName": "",
+    "suburb": "Boksburg North",
+    "category": "Guesthouse & B&B",
+    "source": "https://lanuel.co.za/contact-us/"
+  },
+  {
+    "businessName": "Sunward Park Guesthouse",
+    "email": "info@sunwardhouse.co.za",
+    "contactName": "",
+    "suburb": "Sunward Park, Boksburg",
+    "category": "Guesthouse & B&B",
+    "source": "https://afriquegroup.co.za/sunward-park-guesthouse-contact-details/"
+  },
+  {
+    "businessName": "SASS Security",
+    "email": "info@sasssecurity.co.za",
+    "contactName": "",
+    "suburb": "Oakmoor Ext 7, Tembisa",
+    "category": "Security",
+    "source": "https://www.sasssecurity.co.za/"
+  },
+  {
+    "businessName": "Pretoria Cleaning Services",
+    "email": "info@pretoriacleaningservices.co.za",
+    "contactName": "",
+    "suburb": "Die Wilgers, Pretoria (serves Mamelodi)",
+    "category": "Cleaning",
+    "source": "https://pretoriacleaningservices.co.za/"
+  },
+  {
+    "businessName": "Trafalgar Property Management (Midrand)",
+    "email": "shauns@trafalgar.co.za",
+    "contactName": "Shaun S",
+    "suburb": "Jukskei View Ext 53, Midrand",
+    "category": "Property Management",
+    "source": "https://www.trafalgar.co.za/contact-us"
+  },
+  {
+    "businessName": "ECRU Building Projects",
+    "email": "info@ecruprojects.co.za",
+    "contactName": "",
+    "suburb": "Boksburg",
+    "category": "Building & Renovations",
+    "source": "https://www.ecruprojects.co.za/"
+  },
+  {
+    "businessName": "Protective Force",
+    "email": "eugene@protectiveforce.co.za",
+    "contactName": "Eugene",
+    "suburb": "Brackenhurst, Alberton",
+    "category": "Security",
+    "source": "https://www.protectiveforce.co.za/"
+  },
+  {
+    "businessName": "Norma and Co",
+    "email": "genevieve@norma-vilma.co.za",
+    "contactName": "Genevieve",
+    "suburb": "Blackheath, Randburg",
+    "category": "Events & Catering",
+    "source": "https://normaandco.co.za"
+  },
+  {
+    "businessName": "Special Care Logistics (SCLX)",
+    "email": "admin@sclx.co.za",
+    "contactName": "",
+    "suburb": "Midrand",
+    "category": "Courier & Delivery",
+    "source": "https://www.sclx.co.za/"
+  },
+  {
+    "businessName": "Autowash (Midrand)",
+    "email": "info@autowash.co.za",
+    "contactName": "",
+    "suburb": "Halfway Gardens, Midrand",
+    "category": "Car Wash & Valet",
+    "source": "http://autowash.co.za/services/midrand/"
+  },
+  {
+    "businessName": "Newline Painters & Roof Leak Repairs",
+    "email": "info@newlinepainters.co.za",
+    "contactName": "",
+    "suburb": "Randburg",
+    "category": "Painting & Waterproofing",
+    "source": "https://www.newlinepainters.co.za/contact-us/"
+  },
+  {
+    "businessName": "Building Contractor Kempton Park",
+    "email": "info@buildingcontractorkemptonpark.co.za",
+    "contactName": "",
+    "suburb": "Pomona AH, Kempton Park",
+    "category": "Building & Renovations",
+    "source": "https://buildingcontractorkemptonpark.co.za/contact/"
+  },
+  {
+    "businessName": "JTC Construction",
+    "email": "info@jtc-construction.co.za",
+    "contactName": "",
+    "suburb": "Glen Marais, Kempton Park",
+    "category": "Building & Renovations",
+    "source": "http://jtcconstruction.co.za/contact.html"
+  },
+  {
+    "businessName": "MD Security Systems",
+    "email": "info@mdsecuritysystems.co.za",
+    "contactName": "",
+    "suburb": "Kagiso, Krugersdorp",
+    "category": "Security",
+    "source": "https://mdsecuritysystems.co.za/contact-us/"
+  },
+  {
+    "businessName": "JMP Security Solutions",
+    "email": "info@jmpsolutions.co.za",
+    "contactName": "",
+    "suburb": "Rant En Dal, Krugersdorp",
+    "category": "Security",
+    "source": "https://www.jmpsolutions.co.za/"
+  },
+  {
+    "businessName": "Planet Fitness Krugersdorp",
+    "email": "cgm.krugersdorp@planetfitness.co.za",
+    "contactName": "",
+    "suburb": "Krugersdorp",
+    "category": "Gym & Fitness",
+    "source": "https://www.planetfitness.co.za/stores/krugersdorp/"
+  },
+  {
+    "businessName": "Planet Fitness Boksburg",
+    "email": "cgm.boksburg@planetfitness.co.za",
+    "contactName": "",
+    "suburb": "Boksburg",
+    "category": "Gym & Fitness",
+    "source": "https://www.planetfitness.co.za/gyms/boksburg/"
+  },
+  {
+    "businessName": "Pressed In Time (Bromhof)",
+    "email": "bromhof@pressedintime-laundry.co.za",
+    "contactName": "",
+    "suburb": "Bromhof, Randburg",
+    "category": "Laundry & Dry Cleaning",
+    "source": "https://pressedintime-laundry.co.za/contact-us/"
+  },
+  {
+    "businessName": "Sandalwood Guest House",
+    "email": "info@sandalwoodguest.co.za",
+    "contactName": "",
+    "suburb": "Selection Park, Springs",
+    "category": "Guesthouse & B&B",
+    "source": "https://www.sandalwoodguesthouse.co.za/"
+  },
+  {
+    "businessName": "Pest Control Specialists (Midrand)",
+    "email": "midrand@pestcontrolspecialists.co.za",
+    "contactName": "Lee Kandhan",
+    "suburb": "Midrand",
+    "category": "Pest Control",
+    "source": "https://www.pestcontrolspecialists.co.za/"
+  },
+  {
+    "businessName": "Avianto",
+    "email": "info@avianto.co.za",
+    "contactName": "",
+    "suburb": "Muldersdrift, Krugersdorp",
+    "category": "Events Venue",
+    "source": "https://www.avianto.co.za/contacts/"
+  },
+  {
+    "businessName": "The Humble Boys Removals",
+    "email": "info@thehumbleboysremovals.co.za",
+    "contactName": "",
+    "suburb": "Randburg / Fourways / Midrand",
+    "category": "Moving & Removals",
+    "source": "https://www.thehumbleboysremovals.co.za/"
+  },
+  {
+    "businessName": "Lizzy Bee Catering & Equipment Party Hire",
+    "email": "admin@cateringequipmenthirealberton.co.za",
+    "contactName": "",
+    "suburb": "Florentia, Alberton",
+    "category": "Events & Catering",
+    "source": "https://cateringequipmenthirealberton.co.za/contact-us/"
+  },
+  {
+    "businessName": "Heckers Garden Centre",
+    "email": "info@heckers.co.za",
+    "contactName": "",
+    "suburb": "Westwood AH, Boksburg",
+    "category": "Nursery & Garden Centre",
+    "source": "https://www.lifeisagarden.co.za/hecker-garden-centre-boksburg-gauteng/"
+  },
+  {
+    "businessName": "Three Leaves Nursery",
+    "email": "sales@threeleavesnursery.co.za",
+    "contactName": "",
+    "suburb": "General Alberts Park, Alberton",
+    "category": "Nursery & Garden Centre",
+    "source": "https://www.threeleavesnursery.co.za/"
+  },
+  {
+    "businessName": "AARK Guest Lodge",
+    "email": "info@aark.co.za",
+    "contactName": "",
+    "suburb": "Vanderbijlpark",
+    "category": "Guesthouse & B&B",
+    "source": "https://aarkguestlodge.co.za/contact-us/"
+  },
+  {
+    "businessName": "Movers Katlehong (Moving Companies SA)",
+    "email": "info@moving-companies-sa.co.za",
+    "contactName": "",
+    "suburb": "Main Road, Katlehong",
+    "category": "Moving & Removals",
+    "source": "https://moving-companies-sa.co.za/movers-katlehong/"
+  },
+  {
+    "businessName": "Kobo's Catering, Events & Projects CC",
+    "email": "kobomaphuti@gmail.com",
+    "contactName": "Kobo Maphuti",
+    "suburb": "Block AA, Soshanguve",
+    "category": "Events & Catering",
+    "source": "https://www.facebook.com/Koboscateringprojectscc/"
+  },
+  {
+    "businessName": "Ekurhuleni Security Services",
+    "email": "aldrintin@gmail.com",
+    "contactName": "",
+    "suburb": "Springs CBD (serves Katlehong & Ekurhuleni)",
+    "category": "Security",
+    "source": "https://ekurhulenisecurity.co.za/company-profile"
+  }
+]
