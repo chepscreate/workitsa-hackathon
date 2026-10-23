@@ -86,13 +86,17 @@ const OFFERS = /^(?:offers?|my offers?|pending)\b/i;
 const EMP_ACCEPT = /^(?:accept|hire)\b\s*(\d+)?/i;
 /** DECLINE / DECLINE 1 / REJECT 2 / PASS → decline offer #n (or the only one). */
 const EMP_DECLINE = /^(?:decline|reject|deny|pass)\b\s*(\d+)?/i;
+/** HELP / MENU / a greeting → show the role-aware list of commands, so someone
+ *  who doesn't know what to text sees their options. SOS's "help me" is matched
+ *  earlier in the worker flow, so safety still wins. */
+const MENU = /^(?:menu|help|options|commands|hi+|hey+|hello+|howzit)\b/i;
 
 const isEmployerSideRole = (r?: string) => r === "employer" || r === "business";
 
 const isJobKeyword = (t: string) =>
   ACCEPT.test(t) || START.test(t) || DONE.test(t) || STOP.test(t) || JOBS.test(t)
   || AVAILABLE.test(t) || SOS.test(t) || REPORT.test(t) || OFFER.test(t) || NUMBER.test(t)
-  || OFFERS.test(t) || EMP_DECLINE.test(t);
+  || OFFERS.test(t) || EMP_DECLINE.test(t) || MENU.test(t);
 
 type JobDoc = {
   title?: string;
@@ -212,7 +216,26 @@ const sendTemplate = (to: string, name: string, params: string[]) =>
 /** Copy of the job_alert body for the free-text (in-window) path. */
 const alertText = (title: string, area: string, price: string) =>
   `🛠️ New job near you on Workit: *${title}* in ${area} — pay ${price}.\n`
-  + "Reply *1* to send an offer, or *STOP* to opt out.";
+  + "Reply *1* to send an offer, *HELP* for options, or *STOP* to opt out.";
+
+/** What a worker can text — shown on HELP / MENU / a greeting. */
+const WORKER_MENU =
+  "👋 *Here's what you can text me:*\n\n"
+  + "• *JOBS* — see open jobs near you\n"
+  + "• a number like *1* — offer on that job (or *1 400* to name your price)\n"
+  + "• *AVAILABLE* — show you're available now\n"
+  + "• *START* / *DONE* — when you begin / finish a job\n"
+  + "• *REPORT …* — tell us about a problem\n"
+  + "• *SOS* — emergency, we alert our safety team\n"
+  + "• *STOP* — stop job alerts";
+
+/** What an employer can text — shown on HELP / MENU / a greeting. */
+const EMPLOYER_MENU =
+  "👋 *Here's what you can text me:*\n\n"
+  + "• *OFFERS* — see the offers on your jobs\n"
+  + "• *ACCEPT 1* — hire the worker in offer #1\n"
+  + "• *DECLINE 1* — pass on offer #1\n"
+  + "• *STOP* — stop WhatsApp alerts";
 
 // =====================================================================
 // 1) Outbound: alert opted-in workers when a job becomes visible
@@ -512,6 +535,12 @@ async function handleEmployerReply(args: {
   const { fromRaw, text, employer, threadRef, send } = args;
   const db = getFirestore();
 
+  // --- HELP / MENU: show the employer what they can text ---
+  if (MENU.test(text)) {
+    await send(fromRaw, EMPLOYER_MENU);
+    return true;
+  }
+
   // --- OFFERS: list pending offers, numbered, and remember the list ---
   if (OFFERS.test(text)) {
     const list = await listEmployerPendingOffers(employer.uid);
@@ -690,6 +719,13 @@ export async function handleWhatsAppJobReply(args: {
       "🚨 *SOS received.* If you are in danger, call *SAPS 10111* right now.\n\n"
         + "Our safety team has been alerted. Share your location (tap 📎 → Location → Send) so we can find you fast.",
     );
+    return true;
+  }
+
+  // --- HELP / MENU: show the worker what they can text (after SOS, so
+  //     "help me" still reaches the safety path above). ---
+  if (MENU.test(text)) {
+    await send(fromRaw, WORKER_MENU);
     return true;
   }
 

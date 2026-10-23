@@ -1,5 +1,17 @@
 # Workit — Changelog
 
+## 2026-10-23 (WhatsApp — HELP / MENU command)
+
+### Added — self-serve command menu
+So a user who doesn't know what to text gets their options, `handleWhatsAppJobReply`
+now recognises **`HELP` / `MENU` / `options` / a greeting (`hi`, `hello`, `hey`,
+`howzit`)** and replies with a role-aware list of commands — the worker menu
+(JOBS / number to offer / AVAILABLE / START / DONE / REPORT / SOS / STOP) or the
+employer menu (OFFERS / ACCEPT n / DECLINE n / STOP). Works as a free-text reply
+inside the 24h window — no Meta template approval needed. SOS's "help me" is still
+matched first, so safety wins. Job alerts now also mention "*HELP* for options".
+tsc clean; `jarvisWhatsApp` deployed.
+
 ## 2026-10-23 (WhatsApp — employers accept/decline offers over WhatsApp)
 
 ### Added — employer side of the WhatsApp loop
