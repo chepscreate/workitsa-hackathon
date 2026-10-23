@@ -1,5 +1,29 @@
 # Workit — Changelog
 
+## 2026-10-23 (WhatsApp — app-less worker onboarding)
+
+### Added — register as a worker entirely over WhatsApp (no app, no data)
+A jobseeker who has never used Workit can now join over WhatsApp. An unknown
+number texting an opening word (`hi`, `work`, `join`, `jobs`, `start`…) enters a
+short guided flow — **name → area → work types (numbered) → POPIA consent** —
+and on `YES` a worker record is created and they immediately start receiving job
+alerts. In [whatsappJobChannel.ts](workit/functions/src/whatsappJobChannel.ts):
+- **`handleOnboarding`** — a state machine stored in `waOnboarding/{number}`
+  (idempotent per messageId; `STOP` cancels any time). Runs when
+  `lookupWorkerByWa` finds no user; non-onboarding messages from strangers still
+  fall through to support unchanged.
+- **`createWhatsAppWorker`** — writes `users/wa_<number>` (role worker, account
+  `approved` so matching works at once, `verificationStatus:"none"` so employers
+  still see them as unverified until they finish ID verification on the web;
+  categories mapped to the canonical `CATEGORIES`; area distance-matched via a
+  Gauteng suburb→coords map, else city/province). Opens their 24h window and
+  nudges them to verify for the trusted badge.
+- Entry of `handleWhatsAppJobReply` restructured: lookup first, then onboarding
+  for unknown numbers, then the existing known-user command flow.
+
+This is the lowest-friction possible on-ramp to work — the core of the Youth
+Employment & Work Readiness challenge. tsc clean; `jarvisWhatsApp` deployed.
+
 ## 2026-10-23 (WhatsApp — HELP / MENU command)
 
 ### Added — self-serve command menu

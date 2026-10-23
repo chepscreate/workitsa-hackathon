@@ -615,6 +615,220 @@ async function handleEmployerReply(args: {
   return false; // not an employer command → let support handle it
 }
 
+// =====================================================================
+// 2b) WhatsApp-only onboarding — a jobseeker with no app registers as a
+//     worker over WhatsApp and immediately starts receiving job alerts.
+// =====================================================================
+
+/** A stranger's opening message that starts onboarding. Anything else from an
+ *  unknown number falls through to the public support handler. */
+const JOIN = /^(?:hi+|hello+|hey+|howzit|molo|sawubona|yebo|work|join|jobs?|start|register|sign\s*up|looking for work|i want work)\b/i;
+
+/** Work types offered during onboarding → canonical category ids
+ *  (src/lib/types.ts CATEGORIES). A short, youth-friendly subset. */
+const ONB_CATS: Array<[string, string]> = [
+  ["home-garden", "Home & garden (cleaning, gardening)"],
+  ["trades", "Trades (plumbing, electrical, painting)"],
+  ["driving-delivery", "Driving & delivery"],
+  ["moving-errands", "Moving & errands"],
+  ["care", "Childcare & elderly care"],
+  ["beauty-wellness", "Beauty & wellness"],
+  ["events-catering", "Events & catering"],
+  ["tutoring-education", "Tutoring & lessons"],
+  ["construction-labour", "Construction & general labour"],
+];
+
+const CATS_PROMPT =
+  "What kind of work do you do? Reply with the *number(s)* that apply (e.g. *1 3*):\n\n"
+  + ONB_CATS.map((c, i) => `*${i + 1}.* ${c[1]}`).join("\n");
+
+/** Approx coordinates for common Gauteng areas, so an onboarded worker is
+ *  distance-matched like any other. Unknown areas fall back to city/province. */
+const GAUTENG_COORDS: Record<string, { lat: number; lng: number }> = {
+  alberton: { lat: -26.2672, lng: 28.1221 },
+  johannesburg: { lat: -26.2041, lng: 28.0473 },
+  joburg: { lat: -26.2041, lng: 28.0473 },
+  jhb: { lat: -26.2041, lng: 28.0473 },
+  soweto: { lat: -26.2678, lng: 27.8585 },
+  sandton: { lat: -26.1076, lng: 28.0567 },
+  pretoria: { lat: -25.7479, lng: 28.2293 },
+  centurion: { lat: -25.8603, lng: 28.1894 },
+  midrand: { lat: -25.9992, lng: 28.1263 },
+  benoni: { lat: -26.1885, lng: 28.3207 },
+  boksburg: { lat: -26.2121, lng: 28.262 },
+  germiston: { lat: -26.2178, lng: 28.1699 },
+  randburg: { lat: -26.0936, lng: 27.9947 },
+  roodepoort: { lat: -26.1625, lng: 27.8725 },
+  vereeniging: { lat: -26.6731, lng: 27.9261 },
+  vanderbijlpark: { lat: -26.7, lng: 27.8333 },
+  kemptonpark: { lat: -26.1, lng: 28.23 },
+  tembisa: { lat: -25.9966, lng: 28.2294 },
+  katlehong: { lat: -26.3333, lng: 28.15 },
+  springs: { lat: -26.2546, lng: 28.4426 },
+};
+
+const areaKey = (s: string) => (s ?? "").toLowerCase().replace(/[^a-z]/g, "");
+const ONB_CANCEL = /^(?:stop|cancel|quit|exit)\b/i;
+const ONB_YES = /^(?:yes|y|yebo|agree|i agree|ok|okay|sure|yep)\b/i;
+
+/** Create an app-less worker from onboarding answers. Keyed by number so a
+ *  re-onboard is idempotent; account "approved" so matching works immediately,
+ *  but verificationStatus "none" so employers still see them as unverified
+ *  until they finish ID verification on the web. */
+async function createWhatsAppWorker(
+  wa: string,
+  name: string,
+  area: string,
+  categories: string[],
+): Promise<string> {
+  const db = getFirestore();
+  const now = Date.now();
+  const coords = GAUTENG_COORDS[areaKey(area)];
+  const uid = `wa_${wa}`;
+  await db.doc(`users/${uid}`).set(
+    {
+      role: "worker",
+      displayName: name,
+      accountStatus: "approved",
+      verificationStatus: "none",
+      backgroundVerified: false,
+      categories,
+      suburb: area,
+      city: area,
+      province: "Gauteng",
+      ...(coords ? { approxLat: coords.lat, approxLng: coords.lng } : {}),
+      whatsappJobOptIn: true,
+      whatsappNumber: wa,
+      whatsappConsentAt: now,
+      availableNow: true,
+      availableNowAt: now,
+      ratingAvg: null,
+      ratingCount: 0,
+      source: "whatsapp_onboarding",
+      createdAt: now,
+      updatedAt: now,
+    },
+    { merge: true },
+  );
+  return uid;
+}
+
+type OnbDoc = { step?: string; name?: string; area?: string; categories?: string[] };
+
+/**
+ * Drive the onboarding state machine for an unknown number. Returns true if the
+ * message was handled (Jarvis stops), false to fall through to support. State
+ * lives in waOnboarding/{wa}; each message is idempotent on messageId.
+ */
+async function handleOnboarding(args: {
+  messageId: string;
+  wa: string;
+  fromRaw: string;
+  text: string;
+  send: (to: string, body: string) => Promise<void>;
+}): Promise<boolean> {
+  const { messageId, wa, fromRaw, send } = args;
+  const text = args.text.trim();
+  const db = getFirestore();
+  const onbRef = db.doc(`waOnboarding/${wa}`);
+  const sess = (await onbRef.get()).data() as OnbDoc | undefined;
+
+  // Not onboarding yet: only an opening/join message starts it.
+  if (!sess) {
+    if (!JOIN.test(text)) return false; // a real support enquiry → support
+    if (messageId) {
+      try { await db.doc(`waJobInbox/${messageId}`).create({ at: Date.now() }); }
+      catch { return true; }
+    }
+    await onbRef.set({ step: "name", startedAt: Date.now(), updatedAt: Date.now() });
+    await send(
+      fromRaw,
+      "👋 *Welcome to Workit!* Find everyday work near you — *no app, no data needed*, all on WhatsApp.\n\n"
+        + "Let's get you started. First, what's your *name*?\n\n_(Reply STOP any time to cancel.)_",
+    );
+    return true;
+  }
+
+  // In onboarding — idempotency per message.
+  if (messageId) {
+    try { await db.doc(`waJobInbox/${messageId}`).create({ at: Date.now() }); }
+    catch { return true; }
+  }
+
+  if (ONB_CANCEL.test(text)) {
+    await onbRef.delete();
+    await send(fromRaw, "No problem — stopped. Text *HI* any time to join Workit and find work. 👋");
+    return true;
+  }
+
+  const step = sess.step;
+
+  if (step === "name") {
+    if (text.replace(/[^a-zA-Z]/g, "").length < 2) {
+      await send(fromRaw, "Please reply with your name (e.g. *Thabo Mokoena*).");
+      return true;
+    }
+    const name = text.slice(0, 60);
+    await onbRef.set({ name, step: "area", updatedAt: Date.now() }, { merge: true });
+    await send(fromRaw, `Thanks, *${name}*! 👋\n\nWhich *area* are you in? (e.g. Alberton, Soweto, Sandton)`);
+    return true;
+  }
+
+  if (step === "area") {
+    if (text.replace(/[^a-zA-Z]/g, "").length < 2) {
+      await send(fromRaw, "Please reply with your area (e.g. *Alberton*).");
+      return true;
+    }
+    await onbRef.set({ area: text.slice(0, 60), step: "cats", updatedAt: Date.now() }, { merge: true });
+    await send(fromRaw, CATS_PROMPT);
+    return true;
+  }
+
+  if (step === "cats") {
+    const nums = Array.from(new Set((text.match(/\d+/g) ?? []).map((n) => parseInt(n, 10))))
+      .filter((n) => n >= 1 && n <= ONB_CATS.length);
+    if (nums.length === 0) {
+      await send(fromRaw, "Reply with the *number(s)* that match your work, e.g. *1 3*.\n\n" + CATS_PROMPT);
+      return true;
+    }
+    const cats = nums.map((n) => ONB_CATS[n - 1][0]);
+    const labels = nums.map((n) => ONB_CATS[n - 1][1]).join(", ");
+    await onbRef.set({ categories: cats, step: "consent", updatedAt: Date.now() }, { merge: true });
+    await send(
+      fromRaw,
+      `Great — *${labels}*.\n\nLast step: do you agree to receive job alerts on WhatsApp and for Workit to process your details to match you with work (POPIA)?\n\nReply *YES* to join, or *STOP* to cancel.`,
+    );
+    return true;
+  }
+
+  if (step === "consent") {
+    if (!ONB_YES.test(text)) {
+      await send(fromRaw, "Reply *YES* to join Workit and start getting job alerts near you, or *STOP* to cancel.");
+      return true;
+    }
+    const name = sess.name ?? "there";
+    const area = sess.area ?? "your area";
+    const uid = await createWhatsAppWorker(wa, name, area, sess.categories ?? []);
+    await onbRef.delete();
+    // Open their 24h window so the welcome + an immediate JOBS reply is free-text.
+    await db.doc(`waJobThreads/${wa}`).set({ workerUid: uid, lastInboundAt: Date.now() }, { merge: true });
+    await send(
+      fromRaw,
+      `🎉 You're in, *${name}* — welcome to *Workit*!\n\n`
+        + `We'll WhatsApp you when a job near *${area}* matches your skills.\n\n`
+        + "• Text *JOBS* to see open jobs now\n"
+        + "• Text *AVAILABLE* to show you're ready to work\n"
+        + "• Text *HELP* any time for options\n\n"
+        + "✅ *Next:* finish your free verification at workitsa.co.za — the verified badge means employers trust you and you get hired faster.",
+    );
+    return true;
+  }
+
+  // Unknown/legacy step — reset gracefully.
+  await onbRef.delete();
+  return false;
+}
+
 /**
  * Try to handle an inbound WhatsApp message as a worker job command.
  * Returns true if handled here (Jarvis stops); false if it's not a job
@@ -632,15 +846,21 @@ export async function handleWhatsAppJobReply(args: {
   send: (to: string, body: string) => Promise<void>;
 }): Promise<boolean> {
   const { messageId, fromRaw, fromDigits, text, location, send } = args;
-  // A shared-location message OR a job keyword both need a worker lookup; any
+
+  const wa = toWa(fromDigits);
+  const db = getFirestore();
+  const worker = await lookupWorkerByWa(wa);
+
+  // Unknown number → WhatsApp-only worker onboarding. If it isn't an onboarding
+  // message, handleOnboarding returns false and Jarvis routes it to support.
+  if (!worker) {
+    return handleOnboarding({ messageId, wa, fromRaw, text, send });
+  }
+
+  // Known user: only a shared location or a recognised command is ours; any
   // other free text falls through to support.
   if (!location && !isJobKeyword(text)) return false;
 
-  const wa = toWa(fromDigits);
-  const worker = await lookupWorkerByWa(wa);
-  if (!worker) return false; // unknown sender → support handles it
-
-  const db = getFirestore();
   const threadRef = db.doc(`waJobThreads/${wa}`);
 
   // Idempotency: a re-delivered message must run once.
