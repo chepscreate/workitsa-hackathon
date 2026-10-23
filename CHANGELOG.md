@@ -1,5 +1,16 @@
 # Workit — Changelog
 
+## 2026-10-24 (WhatsApp — cold notifications via approved templates)
+
+### Added — offer_accepted template wiring
+`onOfferResolvedWhatsApp` now sends the approved `offer_accepted` template to the
+worker when their offer is accepted **outside** the 24h window (previously
+cold-skipped); in-window still uses free text, and cold rejections are still
+skipped. Pairs with the already-wired `offer_received` (cold employer notice).
+Both templates (`offer_received`, `offer_accepted`, Utility, en) submitted to
+Meta for approval; cold sends start working once approved. tsc clean;
+`onOfferResolvedWhatsApp` deployed.
+
 ## 2026-10-23 (WhatsApp onboarding — respect account approval + verification)
 
 ### Fixed — onboarded workers are no longer auto-approved

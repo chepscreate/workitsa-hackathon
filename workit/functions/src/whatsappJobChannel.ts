@@ -52,6 +52,8 @@ const JOB_ALERT_TEMPLATE = "job_alert";
 /** Cold "new offer" notice to an employer. ⚠ Submit + get approved before cold
  *  sends work; in-window (employer texted us in 24h) uses free text instead. */
 const OFFER_RECEIVED_TEMPLATE = "offer_received";
+/** Cold "offer accepted" notice to a worker (same approval caveat). */
+const OFFER_ACCEPTED_TEMPLATE = "offer_accepted";
 const TEMPLATE_LANG = "en";
 
 // --- Matching (mirrors jobAlerts.ts) ---
@@ -1197,11 +1199,21 @@ export const onOfferResolvedWhatsApp = onDocumentUpdated(
       if (!wa) return;
       // Free-text only (inside the 24h window). Cold sends would need a template.
       const t = (await db.doc(`waJobThreads/${wa}`).get()).data() as ThreadDoc | undefined;
-      if (Date.now() - Number(t?.lastInboundAt ?? 0) >= SESSION_WINDOW_MS) return;
-
       const job = (await db.doc(`jobs/${event.params.jobId}`).get()).data() as JobDoc | undefined;
       const title = (job?.title ?? "the job").slice(0, 50);
       const priceStr = typeof after.price === "number" ? ` of *R${after.price}*` : "";
+
+      const inWindow = Date.now() - Number(t?.lastInboundAt ?? 0) < SESSION_WINDOW_MS;
+      if (!inWindow) {
+        // Cold (no open 24h window): free text isn't allowed, so send the
+        // approved template for the important case — accepted. A cold rejection
+        // notice is skipped; the worker sees it when they next text us / open the app.
+        if (after.status === "accepted") {
+          await sendTemplate(wa, OFFER_ACCEPTED_TEMPLATE, [title]);
+          logger.info("wa offer-accepted template sent (cold)", { workerId });
+        }
+        return;
+      }
 
       if (after.status === "accepted") {
         await sendText(
