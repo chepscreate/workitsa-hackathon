@@ -689,7 +689,11 @@ async function createWhatsAppWorker(
     {
       role: "worker",
       displayName: name,
-      accountStatus: "approved",
+      // Pending, NOT approved — onboarded workers go through the same account
+      // approval + verification pipeline as app signups (admin greenlights in
+      // the Account approvals queue). Until approved they get no job alerts and
+      // can't apply; see the approval gate in handleWhatsAppJobReply.
+      accountStatus: "pending",
       verificationStatus: "none",
       backgroundVerified: false,
       categories,
@@ -700,8 +704,7 @@ async function createWhatsAppWorker(
       whatsappJobOptIn: true,
       whatsappNumber: wa,
       whatsappConsentAt: now,
-      availableNow: true,
-      availableNowAt: now,
+      availableNow: false,
       ratingAvg: null,
       ratingCount: 0,
       source: "whatsapp_onboarding",
@@ -814,12 +817,11 @@ async function handleOnboarding(args: {
     await db.doc(`waJobThreads/${wa}`).set({ workerUid: uid, lastInboundAt: Date.now() }, { merge: true });
     await send(
       fromRaw,
-      `🎉 You're in, *${name}* — welcome to *Workit*!\n\n`
-        + `We'll WhatsApp you when a job near *${area}* matches your skills.\n\n`
-        + "• Text *JOBS* to see open jobs now\n"
-        + "• Text *AVAILABLE* to show you're ready to work\n"
+      `🎉 Thanks, *${name}* — you're registered with *Workit*!\n\n`
+        + `Your profile is now being *reviewed* (usually quick). Once it's approved, we'll WhatsApp you jobs near *${area}* that match your skills and you'll be able to apply.\n\n`
+        + "• Text *JOBS* to browse open work nearby now\n"
         + "• Text *HELP* any time for options\n\n"
-        + "✅ *Next:* finish your free verification at workitsa.co.za — the verified badge means employers trust you and you get hired faster.",
+        + "✅ *Speed it up:* finish your free verification at workitsa.co.za — verified workers get approved and hired faster.",
     );
     return true;
   }
@@ -914,6 +916,16 @@ export async function handleWhatsAppJobReply(args: {
     return handleEmployerReply({ fromRaw, text, employer: worker, threadRef, send });
   }
 
+  // Is this worker through account approval? Onboarded-over-WhatsApp workers are
+  // created "pending" and must be approved (+ ideally verified) before they can
+  // apply or go available — same gate as app signups. Safety (SOS/REPORT),
+  // STOP, HELP and browsing (JOBS) stay open; offering/AVAILABLE are gated.
+  const approved = (worker.accountStatus ?? "approved") === "approved";
+  const underReview =
+    "⏳ Thanks! Your Workit profile is still being *reviewed* — once it's approved "
+    + "you can apply for jobs and show as available. Finish your free verification at "
+    + "workitsa.co.za to speed it up. (You can still text *JOBS* to browse work nearby.)";
+
   // --- SOS / emergency (checked early — safety first) ---
   if (SOS.test(text)) {
     const found = await findAssignedJob(worker.uid, ["assigned", "in_progress"]);
@@ -976,6 +988,10 @@ export async function handleWhatsAppJobReply(args: {
 
   // --- AVAILABLE: flag available-now (ranks higher + more alerts) ---
   if (AVAILABLE.test(text)) {
+    if (!approved) {
+      await send(fromRaw, underReview);
+      return true;
+    }
     await db.doc(`users/${worker.uid}`).set(
       { availableNow: true, availableNowAt: Date.now() },
       { merge: true },
@@ -1009,6 +1025,10 @@ export async function handleWhatsAppJobReply(args: {
   // --- OFFER <price>: counter-offer on the last job we showed this worker ---
   const om = text.match(OFFER);
   if (om) {
+    if (!approved) {
+      await send(fromRaw, underReview);
+      return true;
+    }
     const price = parseInt(om[1], 10);
     const thread = (await threadRef.get()).data() as ThreadDoc | undefined;
     const jobId = thread?.lastJobId ?? (Array.isArray(thread?.lastList) ? thread!.lastList[0] : undefined);
@@ -1062,6 +1082,10 @@ export async function handleWhatsAppJobReply(args: {
   const m = text.match(NUMBER);
   const n = m ? parseInt(m[1], 10) : ACCEPT.test(text) ? 1 : null;
   if (n != null) {
+    if (!approved) {
+      await send(fromRaw, underReview);
+      return true;
+    }
     const inlinePrice = m && m[2] ? parseInt(m[2], 10) : undefined;
     const thread = (await threadRef.get()).data() as ThreadDoc | undefined;
     let jobId: string | undefined;

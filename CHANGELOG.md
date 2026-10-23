@@ -1,5 +1,25 @@
 # Workit — Changelog
 
+## 2026-10-23 (WhatsApp onboarding — respect account approval + verification)
+
+### Fixed — onboarded workers are no longer auto-approved
+The first cut created WhatsApp-onboarded workers as `accountStatus: "approved"`,
+which bypassed the account-approval + verification gates (anyone who texts in
+became a matchable, approved worker). Now in
+[whatsappJobChannel.ts](workit/functions/src/whatsappJobChannel.ts):
+- `createWhatsAppWorker` creates them **`pending`** (and `availableNow:false`), so
+  they land in the **Account approvals** queue like app signups and get **no job
+  alerts** until an admin approves them (`onJobVisibleWhatsAppAlert` already
+  requires `accountStatus === "approved"`).
+- **Approval gate** in `handleWhatsAppJobReply`: offering (`1`/`ACCEPT`/`OFFER`)
+  and `AVAILABLE` return an "under review" message for non-approved workers;
+  `JOBS` browsing, `HELP`, `STOP` and safety (`SOS`/`REPORT`) stay open.
+- Welcome message reworded to "under review / finish verification to speed it up."
+
+Verified live end-to-end first (Simphiwe onboarded over WhatsApp: name → area →
+skills → POPIA consent → registered), which surfaced the auto-approve gap.
+tsc clean; `jarvisWhatsApp` deployed.
+
 ## 2026-10-23 (WhatsApp — app-less worker onboarding)
 
 ### Added — register as a worker entirely over WhatsApp (no app, no data)
