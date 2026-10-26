@@ -64,13 +64,14 @@ const ALERT_SETTLE_MS = 45_000;
  *  24h after the user's last inbound message. Outside it, templates only. */
 const SESSION_WINDOW_MS = 24 * 60 * 60 * 1000;
 /** How many jobs a "JOBS" pull lists. */
-const JOBS_LIST_LIMIT = 5;
+const JOBS_LIST_LIMIT = 35;
 
 const ACCEPT = /^(?:accept|yes|y|yebo|ok|okay)\b/i;
 const START = /^(?:start|started|on site|onsite)\b/i;
 const DONE = /^(?:done|finished|finish|complete|completed)\b/i;
 const STOP = /^(?:stop|cancel|unsubscribe|opt ?out)\b/i;
 const JOBS = /^(?:jobs|work|list)\b/i;
+const VIEW = /^(?:view|details|info|more)\b/i;
 const AVAILABLE = /^(?:available|avail|ready|online|i'?m available)\b/i;
 const SOS = /^(?:sos|help\s*me|emergency|danger|unsafe|i'?m (?:not safe|in danger))\b/i;
 const REPORT = /^report\b/i;
@@ -96,12 +97,13 @@ const MENU = /^(?:menu|help|options|commands|hi+|hey+|hello+|howzit)\b/i;
 const isEmployerSideRole = (r?: string) => r === "employer" || r === "business";
 
 const isJobKeyword = (t: string) =>
-  ACCEPT.test(t) || START.test(t) || DONE.test(t) || STOP.test(t) || JOBS.test(t)
+  ACCEPT.test(t) || VIEW.test(t) || START.test(t) || DONE.test(t) || STOP.test(t) || JOBS.test(t)
   || AVAILABLE.test(t) || SOS.test(t) || REPORT.test(t) || OFFER.test(t) || NUMBER.test(t)
   || OFFERS.test(t) || EMP_DECLINE.test(t) || MENU.test(t);
 
 type JobDoc = {
   title?: string;
+  description?: string;
   status?: string;
   moderationStatus?: string;
   employerId?: string;
@@ -115,6 +117,10 @@ type JobDoc = {
   lat?: number;
   lng?: number;
   urgent?: boolean;
+  estimatedHours?: number;
+  estimatedUnit?: "hours" | "days";
+  dueAt?: number;
+  paymentMethod?: string;
   assignedWorkerId?: string;
   assignedWorkerIds?: string[];
 };
@@ -139,6 +145,7 @@ type WorkerDoc = {
   blockedUserIds?: string[];
   whatsappJobOptIn?: boolean;
   whatsappNumber?: string;
+  verifyToken?: string;
 };
 
 type ThreadDoc = {
@@ -147,6 +154,9 @@ type ThreadDoc = {
   lastJobTitle?: string;
   lastInboundAt?: number;
   lastList?: string[];
+  /** Tracks alert→details→offer flow: "alerted" after a push, "details_shown" after viewing. */
+  lastAlertState?: "alerted" | "details_shown";
+  lastJobPrice?: number | null;
   /** Employer's last numbered offers list (for ACCEPT n / DECLINE n). */
   empOfferList?: Array<{ jobId: string; offerId: string }>;
 };
@@ -218,13 +228,14 @@ const sendTemplate = (to: string, name: string, params: string[]) =>
 /** Copy of the job_alert body for the free-text (in-window) path. */
 const alertText = (title: string, area: string, price: string) =>
   `🛠️ New job near you on Workit: *${title}* in ${area} — pay ${price}.\n`
-  + "Reply *1* to send an offer, *HELP* for options, or *STOP* to opt out.";
+  + "Reply *VIEW* to see full details, *ACCEPT* to offer at that price, or *STOP* to opt out.";
 
 /** What a worker can text — shown on HELP / MENU / a greeting. */
 const WORKER_MENU =
   "👋 *Here's what you can text me:*\n\n"
   + "• *JOBS* — see open jobs near you\n"
-  + "• a number like *1* — offer on that job (or *1 400* to name your price)\n"
+  + "• a number like *1* — view that job's details\n"
+  + "• *VIEW* — see details for the last job alert\n"
   + "• *AVAILABLE* — show you're available now\n"
   + "• *START* / *DONE* — when you begin / finish a job\n"
   + "• *REPORT …* — tell us about a problem\n"
@@ -278,12 +289,27 @@ export const onJobVisibleWhatsAppAlert = onDocumentWritten(
     const jobProvince = norm(job.province);
     const hasCoords = typeof job.lat === "number" && typeof job.lng === "number";
 
+    // Demo override: numbers in config/demoAlerts.alwaysAlert[] receive EVERY
+    // job alert regardless of role, area, category, or opt-in. Remove after launch.
+    const demoSnap = await db.doc("config/demoAlerts").get();
+    const alwaysList: string[] = (demoSnap.data()?.alwaysAlert as string[]) ?? [];
+    const ALWAYS_ALERT = new Set(alwaysList);
+
     const recipients: Array<{ wa: string; uid: string; distanceKm: number | null }> = [];
+    const seen = new Set<string>();
     workersSnap.forEach((d) => {
       const w = { ...(d.data() as WorkerDoc), uid: d.id };
-      if (!w.whatsappJobOptIn) return;
       const wa = toWa(w.whatsappNumber);
       if (!wa) return;
+
+      // Always-alert list bypasses ALL filters (opt-in, area, category, self).
+      if (ALWAYS_ALERT.has(wa)) {
+        recipients.push({ wa, uid: w.uid, distanceKm: 0 });
+        seen.add(wa);
+        return;
+      }
+
+      if (!w.whatsappJobOptIn) return;
       if ((w.accountStatus ?? "approved") !== "approved") return;
       if (w.uid === job.employerId) return;
       if (employerBlocked.includes(w.uid)) return;
@@ -304,6 +330,13 @@ export const onJobVisibleWhatsAppAlert = onDocumentWritten(
         recipients.push({ wa, uid: w.uid, distanceKm: null });
       }
     });
+
+    // Add always-alert numbers that weren't found as workers (e.g. employer accounts).
+    for (const wa of ALWAYS_ALERT) {
+      if (!seen.has(wa)) {
+        recipients.push({ wa, uid: "demo", distanceKm: 0 });
+      }
+    }
 
     recipients.sort((a, b) => (a.distanceKm ?? RADIUS_KM + 1) - (b.distanceKm ?? RADIUS_KM + 1));
     const chosen = recipients.slice(0, MAX_RECIPIENTS);
@@ -334,7 +367,7 @@ export const onJobVisibleWhatsAppAlert = onDocumentWritten(
           template++;
         }
         await db.doc(`waJobThreads/${r.wa}`).set(
-          { workerUid: r.uid, lastJobId: jobId, lastJobTitle: title, lastJobPrice: job.suggestedPrice ?? null, lastJobAt: now },
+          { workerUid: r.uid, lastJobId: jobId, lastJobTitle: title, lastJobPrice: job.suggestedPrice ?? null, lastJobAt: now, lastAlertState: "alerted" },
           { merge: true },
         );
       }),
@@ -402,9 +435,18 @@ async function findAssignedJob(workerUid: string, wantStatuses: string[]): Promi
 }
 
 /** Open jobs that match a worker (reverse of the alert matching), nearest first. */
-async function openJobsForWorker(worker: WorkerDoc): Promise<Array<{ id: string; job: JobDoc }>> {
+async function openJobsForWorker(worker: WorkerDoc, waNumber?: string): Promise<Array<{ id: string; job: JobDoc }>> {
   const db = getFirestore();
   const snap = await db.collection("jobs").where("status", "==", "open").get();
+
+  // Demo override: always-alert numbers see ALL open jobs (no area/category/self filter).
+  let demoBypass = false;
+  if (waNumber) {
+    const demoSnap = await db.doc("config/demoAlerts").get();
+    const list: string[] = (demoSnap.data()?.alwaysAlert as string[]) ?? [];
+    demoBypass = list.includes(waNumber);
+  }
+
   const wHasCoords = typeof worker.approxLat === "number" && typeof worker.approxLng === "number";
   const wCity = norm(worker.city);
   const wProv = norm(worker.province);
@@ -412,6 +454,12 @@ async function openJobsForWorker(worker: WorkerDoc): Promise<Array<{ id: string;
   snap.forEach((doc) => {
     const j = doc.data() as JobDoc;
     if (j.moderationStatus) return;
+
+    if (demoBypass) {
+      out.push({ id: doc.id, job: j, d: null });
+      return;
+    }
+
     if (j.employerId === worker.uid) return;
     if (worker.categories && worker.categories.length > 0 && j.category && !worker.categories.includes(j.category)) return;
     const jHas = typeof j.lat === "number" && typeof j.lng === "number";
@@ -638,6 +686,9 @@ const ONB_CATS: Array<[string, string]> = [
   ["events-catering", "Events & catering"],
   ["tutoring-education", "Tutoring & lessons"],
   ["construction-labour", "Construction & general labour"],
+  ["tech-digital", "Tech & digital"],
+  ["personal", "Personal services"],
+  ["_other", "Other"],
 ];
 
 const CATS_PROMPT =
@@ -682,11 +733,13 @@ async function createWhatsAppWorker(
   name: string,
   area: string,
   categories: string[],
-): Promise<string> {
+): Promise<{ uid: string; verifyToken: string }> {
   const db = getFirestore();
   const now = Date.now();
   const coords = GAUTENG_COORDS[areaKey(area)];
   const uid = `wa_${wa}`;
+  const { randomBytes } = await import("crypto");
+  const verifyToken = randomBytes(24).toString("hex");
   await db.doc(`users/${uid}`).set(
     {
       role: "worker",
@@ -710,12 +763,14 @@ async function createWhatsAppWorker(
       ratingAvg: null,
       ratingCount: 0,
       source: "whatsapp_onboarding",
+      verifyToken,
+      verifyTokenAt: now,
       createdAt: now,
       updatedAt: now,
     },
     { merge: true },
   );
-  return uid;
+  return { uid, verifyToken };
 }
 
 type OnbDoc = { step?: string; name?: string; area?: string; categories?: string[] };
@@ -749,7 +804,7 @@ async function handleOnboarding(args: {
     await send(
       fromRaw,
       "👋 *Welcome to Workit!* Find everyday work near you — *no app, no data needed*, all on WhatsApp.\n\n"
-        + "Let's get you started. First, what's your *name*?\n\n_(Reply STOP any time to cancel.)_",
+        + "Let's get you started. What's your *full name and surname*?\n\n_(Reply STOP any time to cancel.)_",
     );
     return true;
   }
@@ -770,7 +825,7 @@ async function handleOnboarding(args: {
 
   if (step === "name") {
     if (text.replace(/[^a-zA-Z]/g, "").length < 2) {
-      await send(fromRaw, "Please reply with your name (e.g. *Thabo Mokoena*).");
+      await send(fromRaw, "Please reply with your *full name and surname* (e.g. *Thabo Mokoena*).");
       return true;
     }
     const name = text.slice(0, 60);
@@ -796,8 +851,9 @@ async function handleOnboarding(args: {
       await send(fromRaw, "Reply with the *number(s)* that match your work, e.g. *1 3*.\n\n" + CATS_PROMPT);
       return true;
     }
-    const cats = nums.map((n) => ONB_CATS[n - 1][0]);
-    const labels = nums.map((n) => ONB_CATS[n - 1][1]).join(", ");
+    const hasOther = nums.some((n) => ONB_CATS[n - 1][0] === "_other");
+    const cats = hasOther ? [] : nums.map((n) => ONB_CATS[n - 1][0]).filter((c) => c !== "_other");
+    const labels = hasOther ? "All types of work" : nums.map((n) => ONB_CATS[n - 1][1]).join(", ");
     await onbRef.set({ categories: cats, step: "consent", updatedAt: Date.now() }, { merge: true });
     await send(
       fromRaw,
@@ -813,17 +869,16 @@ async function handleOnboarding(args: {
     }
     const name = sess.name ?? "there";
     const area = sess.area ?? "your area";
-    const uid = await createWhatsAppWorker(wa, name, area, sess.categories ?? []);
+    const { uid, verifyToken } = await createWhatsAppWorker(wa, name, area, sess.categories ?? []);
     await onbRef.delete();
     // Open their 24h window so the welcome + an immediate JOBS reply is free-text.
     await db.doc(`waJobThreads/${wa}`).set({ workerUid: uid, lastInboundAt: Date.now() }, { merge: true });
+    const verifyLink = `https://workitsa.co.za/verify-wa?token=${verifyToken}`;
     await send(
       fromRaw,
       `🎉 Thanks, *${name}* — you're registered with *Workit*!\n\n`
-        + `Your profile is now being *reviewed* (usually quick). Once it's approved, we'll WhatsApp you jobs near *${area}* that match your skills and you'll be able to apply.\n\n`
-        + "• Text *JOBS* to browse open work nearby now\n"
-        + "• Text *HELP* any time for options\n\n"
-        + "✅ *Speed it up:* finish your free verification at workitsa.co.za — verified workers get approved and hired faster.",
+        + `Your profile is now being *reviewed* (usually quick). Once approved, we'll send you a full guide on how to find and accept work.\n\n`
+        + `✅ *Speed it up:* tap the link below to upload your ID, proof of address, and finish verification — verified workers get approved and hired faster.\n👉 ${verifyLink}`,
     );
     return true;
   }
@@ -923,10 +978,14 @@ export async function handleWhatsAppJobReply(args: {
   // apply or go available — same gate as app signups. Safety (SOS/REPORT),
   // STOP, HELP and browsing (JOBS) stay open; offering/AVAILABLE are gated.
   const approved = (worker.accountStatus ?? "approved") === "approved";
+  const verifyLink = worker.verifyToken
+    ? `\n👉 https://workitsa.co.za/verify-wa?token=${worker.verifyToken}`
+    : "\n👉 https://workitsa.co.za";
   const underReview =
-    "⏳ Thanks! Your Workit profile is still being *reviewed* — once it's approved "
-    + "you can apply for jobs and show as available. Finish your free verification at "
-    + "workitsa.co.za to speed it up. (You can still text *JOBS* to browse work nearby.)";
+    "⏳ Your Workit profile is still being *reviewed*. To get approved, "
+    + "upload your ID and complete verification:"
+    + verifyLink
+    + "\n\nOnce approved you'll be able to browse jobs, apply, and get hired.";
 
   // --- SOS / emergency (checked early — safety first) ---
   if (SOS.test(text)) {
@@ -1008,7 +1067,11 @@ export async function handleWhatsAppJobReply(args: {
 
   // --- JOBS / WORK: list open jobs near the worker ---
   if (JOBS.test(text)) {
-    const jobs = await openJobsForWorker(worker);
+    if (!approved) {
+      await send(fromRaw, underReview);
+      return true;
+    }
+    const jobs = await openJobsForWorker(worker, wa);
     if (jobs.length === 0) {
       await send(fromRaw, "No open jobs match your area right now. We'll WhatsApp you as soon as one is posted. 👍");
       return true;
@@ -1079,10 +1142,86 @@ export async function handleWhatsAppJobReply(args: {
     return true;
   }
 
+  // --- Helper: show full job details for a given jobId, set state to details_shown ---
+  const showJobDetails = async (jobId: string, threadRefLocal: FirebaseFirestore.DocumentReference) => {
+    const db = getFirestore();
+    const jobSnap = await db.doc(`jobs/${jobId}`).get();
+    if (!jobSnap.exists) {
+      await send(fromRaw, "That job isn't available anymore. Text *JOBS* to see what else is open.");
+      return;
+    }
+    const job = jobSnap.data() as JobDoc;
+    const title = job.title ?? "Job";
+    const desc = job.description ? `\n${job.description.slice(0, 300)}` : "";
+    const loc = where(job);
+    const price = job.suggestedPrice ? `R${job.suggestedPrice}` : "TBD";
+    const employer = job.employerName ? `\n👤 Posted by: ${job.employerName}` : "";
+    const duration = job.estimatedHours
+      ? `\n⏱️ Estimated: ${job.estimatedHours} ${job.estimatedUnit ?? "hours"}`
+      : "";
+    const due = job.dueAt
+      ? `\n📅 Due: ${new Date(job.dueAt).toLocaleDateString("en-ZA", { day: "numeric", month: "short", year: "numeric" })}`
+      : "";
+    const pay = job.paymentMethod ? `\n💳 Payment: ${job.paymentMethod}` : "";
+
+    await threadRefLocal.set({ lastJobId: jobId, lastJobTitle: title, lastAlertState: "details_shown" }, { merge: true });
+    await send(
+      fromRaw,
+      `📋 *${title}*${desc}\n\n📍 ${loc}  ·  💰 ${price}${employer}${duration}${due}${pay}\n\n`
+        + `Reply *ACCEPT* to offer at ${price}, or *OFFER 400* to name your own price.`,
+    );
+  };
+
+  // --- VIEW: show full details for the last alerted job ---
+  if (VIEW.test(text)) {
+    if (!approved) {
+      await send(fromRaw, underReview);
+      return true;
+    }
+    const thread = (await threadRef.get()).data() as ThreadDoc | undefined;
+    const jobId = thread?.lastJobId;
+    if (!jobId) {
+      await send(fromRaw, "No job to view right now. Text *JOBS* to see open jobs near you.");
+      return true;
+    }
+    await showJobDetails(jobId, threadRef);
+    return true;
+  }
+
+  // --- ACCEPT / YES: if coming from an alert (state "alerted"), show details first;
+  //     if details already shown (state "details_shown" or missing), send the offer ---
+  if (ACCEPT.test(text)) {
+    if (!approved) {
+      await send(fromRaw, underReview);
+      return true;
+    }
+    const thread = (await threadRef.get()).data() as ThreadDoc | undefined;
+    const jobId = thread?.lastJobId;
+    if (!jobId) {
+      await send(fromRaw, "Nothing to accept right now. Text *JOBS* to see open jobs near you.");
+      return true;
+    }
+    if (thread?.lastAlertState === "alerted") {
+      await showJobDetails(jobId, threadRef);
+      return true;
+    }
+    const outcome = await createWhatsAppOffer(jobId, worker, undefined);
+    const jobTitle = thread?.lastJobTitle;
+    await send(
+      fromRaw,
+      outcome === "ok"
+        ? `✅ Offer sent${jobTitle ? ` for "${jobTitle}"` : ""}. The employer will be notified — you'll hear back if they accept.`
+        : outcome === "dupe"
+          ? "You've already sent an offer on that job. 👍"
+          : "Sorry, that job has just been taken or closed. Text *JOBS* to see what else is open.",
+    );
+    return true;
+  }
+
   // --- A number (pick from the last JOBS list), optionally with a price
-  //     ("1 400" → offer R400 on job 1), or ACCEPT/1 (the last single alert) ---
+  //     ("1 400" → offer R400 on job 1) ---
   const m = text.match(NUMBER);
-  const n = m ? parseInt(m[1], 10) : ACCEPT.test(text) ? 1 : null;
+  const n = m ? parseInt(m[1], 10) : null;
   if (n != null) {
     if (!approved) {
       await send(fromRaw, underReview);
@@ -1091,26 +1230,56 @@ export async function handleWhatsAppJobReply(args: {
     const inlinePrice = m && m[2] ? parseInt(m[2], 10) : undefined;
     const thread = (await threadRef.get()).data() as ThreadDoc | undefined;
     let jobId: string | undefined;
-    let jobTitle: string | undefined;
     if (thread?.lastList && Array.isArray(thread.lastList) && n >= 1 && n <= thread.lastList.length) {
       jobId = thread.lastList[n - 1];
-    } else if (thread?.lastJobId && (n === 1 || ACCEPT.test(text))) {
+    } else if (thread?.lastJobId && n === 1) {
       jobId = thread.lastJobId;
-      jobTitle = thread.lastJobTitle;
     }
     if (!jobId) {
       await send(fromRaw, "No job with that number right now. Text *JOBS* to see open jobs near you.");
       return true;
     }
-    const outcome = await createWhatsAppOffer(jobId, worker, inlinePrice);
-    const priceLine = inlinePrice ? ` of *R${inlinePrice}*` : "";
+
+    // If they included a price (e.g. "1 400"), send the counter-offer directly.
+    if (inlinePrice) {
+      const outcome = await createWhatsAppOffer(jobId, worker, inlinePrice);
+      await send(
+        fromRaw,
+        outcome === "ok"
+          ? `✅ Your offer of *R${inlinePrice}* has been sent. The employer will be notified — you'll hear back if they accept.`
+          : outcome === "dupe"
+            ? "You've already sent an offer on that job. 👍"
+            : "Sorry, that job has just been taken or closed. Text *JOBS* to see what else is open.",
+      );
+      return true;
+    }
+
+    // Otherwise show full job details and ask for confirmation.
+    const db = getFirestore();
+    const jobSnap = await db.doc(`jobs/${jobId}`).get();
+    if (!jobSnap.exists) {
+      await send(fromRaw, "That job isn't available anymore. Text *JOBS* to see what else is open.");
+      return true;
+    }
+    const job = jobSnap.data() as JobDoc;
+    const title = job.title ?? "Job";
+    const desc = job.description ? `\n${job.description.slice(0, 300)}` : "";
+    const loc = where(job);
+    const price = job.suggestedPrice ? `R${job.suggestedPrice}` : "TBD";
+    const employer = job.employerName ? `\n👤 Posted by: ${job.employerName}` : "";
+    const duration = job.estimatedHours
+      ? `\n⏱️ Estimated: ${job.estimatedHours} ${job.estimatedUnit ?? "hours"}`
+      : "";
+    const due = job.dueAt
+      ? `\n📅 Due: ${new Date(job.dueAt).toLocaleDateString("en-ZA", { day: "numeric", month: "short", year: "numeric" })}`
+      : "";
+    const pay = job.paymentMethod ? `\n💳 Payment: ${job.paymentMethod}` : "";
+
+    await threadRef.set({ lastJobId: jobId, lastJobTitle: title, lastAlertState: "details_shown" }, { merge: true });
     await send(
       fromRaw,
-      outcome === "ok"
-        ? `✅ Offer${priceLine} sent${jobTitle ? ` for "${jobTitle}"` : ""}. The employer will be notified — you'll hear back if they accept.`
-        : outcome === "dupe"
-          ? "You've already sent an offer on that job. 👍"
-          : "Sorry, that job has just been taken or closed. Text *JOBS* to see what else is open.",
+      `📋 *${title}*${desc}\n\n📍 ${loc}  ·  💰 ${price}${employer}${duration}${due}${pay}\n\n`
+        + `Reply *ACCEPT* to offer at ${price}, or *OFFER 400* to name your own price.`,
     );
     return true;
   }

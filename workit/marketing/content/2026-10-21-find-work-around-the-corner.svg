@@ -1,0 +1,57 @@
+<svg width="1080" height="1080" viewBox="0 0 1080 1080" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>Workit &#8212; find work around the corner</title>
+  <desc>Cream Workit social post for workers: wordmark, a location pin with radiating rings, headline "Your next job could be around the corner.", three steps (get ID-verified, see jobs near you, get paid when it's done), trust line, workitsa.co.za call to action and trilingual greeting.</desc>
+  <defs>
+    <linearGradient id="bg1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#faf4ec"/>
+      <stop offset="1" stop-color="#f1e2cc"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="1080" height="1080" fill="url(#bg1)"/>
+
+  <text x="540" y="74" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" letter-spacing="4" fill="#d97742">WORKIT &#183; FOR WORKERS</text>
+  <text x="540" y="150" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="78" font-weight="700" fill="#1f1612">Workit</text>
+  <rect x="490" y="170" width="100" height="6" rx="3" fill="#d97742"/>
+
+  <!-- pin with "nearby" rings -->
+  <g transform="translate(540 262)">
+    <circle cx="0" cy="18" r="62" fill="none" stroke="#5d7a47" stroke-opacity="0.18" stroke-width="3"/>
+    <circle cx="0" cy="18" r="40" fill="none" stroke="#5d7a47" stroke-opacity="0.32" stroke-width="3"/>
+    <ellipse cx="0" cy="18" rx="16" ry="5" fill="#1f1612" fill-opacity="0.15"/>
+    <path d="M0 16 C -8 2, -26 -14, -26 -32 A 26 26 0 1 1 26 -32 C 26 -14, 8 2, 0 16 Z" fill="#d97742"/>
+    <circle cx="0" cy="-32" r="10" fill="#faf4ec"/>
+  </g>
+
+  <text x="540" y="398" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="50" font-weight="700" fill="#1f1612">Your next job could be</text>
+  <text x="540" y="458" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="50" font-weight="700" font-style="italic" fill="#b85a2a">around the corner.</text>
+
+  <g font-family="Arial, Helvetica, sans-serif">
+    <g>
+      <rect x="72" y="500" width="936" height="108" rx="18" fill="#dee6d4"/>
+      <circle cx="140" cy="554" r="32" fill="#5d7a47"/>
+      <text x="140" y="567" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="36" font-weight="700" fill="#faf4ec">1</text>
+      <text x="200" y="545" font-size="29" font-weight="700" fill="#1f1612">Get ID-verified</text>
+      <text x="200" y="580" font-size="19" fill="#5a4636">Sign up, pick your skills, verify your ID. Free during launch.</text>
+    </g>
+    <g>
+      <rect x="72" y="626" width="936" height="108" rx="18" fill="#f0dcc2"/>
+      <circle cx="140" cy="680" r="32" fill="#d97742"/>
+      <text x="140" y="693" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="36" font-weight="700" fill="#faf4ec">2</text>
+      <text x="200" y="671" font-size="29" font-weight="700" fill="#1f1612">See jobs near you</text>
+      <text x="200" y="706" font-size="19" fill="#5a4636">Accept the offer &#8212; or counter with the price you think is fair.</text>
+    </g>
+    <g>
+      <rect x="72" y="752" width="936" height="108" rx="18" fill="#dee6d4"/>
+      <circle cx="140" cy="806" r="32" fill="#b85a2a"/>
+      <text x="140" y="819" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="36" font-weight="700" fill="#faf4ec">3</text>
+      <text x="200" y="797" font-size="29" font-weight="700" fill="#1f1612">Get paid when it&#8217;s done</text>
+      <text x="200" y="832" font-size="19" fill="#5a4636">Cash or EFT on completion. Every good rating builds your name.</text>
+    </g>
+  </g>
+
+  <rect x="270" y="890" width="540" height="68" rx="34" fill="#d97742"/>
+  <text x="540" y="933" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="700" fill="#faf4ec">Sign up to work &#183; workitsa.co.za</text>
+
+  <text x="540" y="1008" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="20" fill="#5a4636">Launching in Gauteng &#183; employers are ID-verified too</text>
+  <text x="540" y="1046" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="22" font-style="italic" fill="#5d7a47">Sawubona &#183; Dumela &#183; Goeie dag</text>
+</svg>

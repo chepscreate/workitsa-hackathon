@@ -1,5 +1,48 @@
 # Workit — Changelog
 
+## 2026-10-25 (WhatsApp onboarding polish + approval notification + job details)
+
+### Changed — alert→details→offer flow (two-step acceptance)
+Job alerts now guide workers through: VIEW (see full details) → ACCEPT (send offer).
+Replying ACCEPT directly to an alert shows the job details first instead of
+immediately sending an offer. Workers can also reply OFFER 400 to counter-offer.
+A second ACCEPT after viewing details sends the offer. Added VIEW command.
+
+### Added — demo always-alert override
+New `config/demoAlerts` Firestore doc with `alwaysAlert[]` array. Numbers in the
+list bypass ALL filters (opt-in, area, category, employer-self) for both job alerts
+and the JOBS listing — ensures demo recordings capture every posted job.
+
+### Changed — JOBS list limit raised from 10 to 35
+Workers now see up to 35 open jobs when they text JOBS.
+
+### Changed — alert text uses ACCEPT instead of number
+Job alerts now say "Reply *ACCEPT*" instead of "Reply *1*" to avoid confusion with
+the numbered JOBS list.
+
+### Changed — picking a job number now shows full details before offering
+When a worker replies with a job number (e.g. "1"), they now see the full job
+details first — title, description, location, price, employer name, duration,
+due date, and payment method — then reply ACCEPT or OFFER with a price. Previously
+the offer was sent immediately with no detail view.
+
+### Changed — onboarding asks for full name and surname
+The name step now prompts "What's your *full name and surname*?" instead of just
+"name", so workers provide both from the start.
+
+### Changed — "Other" category text simplified
+Removed "I'll do anything" from the Other category label — now just "Other".
+
+### Changed — post-onboarding welcome message
+Removed JOBS/HELP commands from the welcome message (they're gated behind approval
+anyway). Instead tells the worker they'll receive a full guide once approved.
+
+### Added — WhatsApp approval notification with instruction manual
+When an admin approves a worker who has a `whatsappNumber`, the
+`onVerificationDecision` trigger now sends a WhatsApp message with the full
+instruction manual (JOBS, counter-offers, AVAILABLE, SOS, STOP, HELP commands).
+Workers only learn the commands after they're approved and can actually use them.
+
 ## 2026-10-24 (WhatsApp — cold notifications via approved templates)
 
 ### Added — offer_accepted template wiring

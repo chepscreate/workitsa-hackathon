@@ -1,0 +1,74 @@
+<svg width="1080" height="1080" viewBox="0 0 1080 1080" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>Workit &#8212; category spotlight: handy jobs around the house</title>
+  <desc>Cream Workit social post: wordmark, headline "That dripping tap? Somebody nearby can fix it.", six job tiles (plumbing, painting, fixing, mounting, tiling, assembly), trust strip, workitsa.co.za call to action.</desc>
+  <defs>
+    <linearGradient id="bg1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#faf4ec"/>
+      <stop offset="1" stop-color="#f1e2cc"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="1080" height="1080" fill="url(#bg1)"/>
+
+  <text x="540" y="74" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" letter-spacing="4" fill="#d97742">CATEGORY SPOTLIGHT &#183; HANDY JOBS</text>
+  <text x="540" y="150" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="78" font-weight="700" fill="#1f1612">Workit</text>
+  <rect x="490" y="170" width="100" height="6" rx="3" fill="#d97742"/>
+
+  <text x="540" y="260" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="58" font-weight="700" fill="#1f1612">That dripping tap?</text>
+  <text x="540" y="320" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="38" font-style="italic" fill="#b85a2a">Somebody nearby can fix it.</text>
+
+  <g font-family="Arial, Helvetica, sans-serif">
+    <!-- row 1 -->
+    <g>
+      <rect x="72" y="370" width="296" height="140" rx="18" fill="#f0dcc2"/>
+      <rect x="96" y="394" width="36" height="6" rx="3" fill="#d97742"/>
+      <text x="96" y="430" font-size="16" font-weight="700" letter-spacing="2" fill="#b85a2a">PLUMBING</text>
+      <text x="96" y="465" font-size="24" font-weight="700" fill="#1f1612">Leaking taps</text>
+      <text x="96" y="494" font-size="24" font-weight="700" fill="#1f1612">&amp; running toilets</text>
+    </g>
+    <g>
+      <rect x="392" y="370" width="296" height="140" rx="18" fill="#dee6d4"/>
+      <rect x="416" y="394" width="36" height="6" rx="3" fill="#5d7a47"/>
+      <text x="416" y="430" font-size="16" font-weight="700" letter-spacing="2" fill="#5d7a47">PAINTING</text>
+      <text x="416" y="465" font-size="24" font-weight="700" fill="#1f1612">A room, a wall,</text>
+      <text x="416" y="494" font-size="24" font-weight="700" fill="#1f1612">a front gate</text>
+    </g>
+    <g>
+      <rect x="712" y="370" width="296" height="140" rx="18" fill="#f0dcc2"/>
+      <rect x="736" y="394" width="36" height="6" rx="3" fill="#d97742"/>
+      <text x="736" y="430" font-size="16" font-weight="700" letter-spacing="2" fill="#b85a2a">FIXING</text>
+      <text x="736" y="465" font-size="24" font-weight="700" fill="#1f1612">Sticking doors,</text>
+      <text x="736" y="494" font-size="24" font-weight="700" fill="#1f1612">loose handles</text>
+    </g>
+    <!-- row 2 -->
+    <g>
+      <rect x="72" y="534" width="296" height="140" rx="18" fill="#dee6d4"/>
+      <rect x="96" y="558" width="36" height="6" rx="3" fill="#5d7a47"/>
+      <text x="96" y="594" font-size="16" font-weight="700" letter-spacing="2" fill="#5d7a47">MOUNTING</text>
+      <text x="96" y="629" font-size="24" font-weight="700" fill="#1f1612">Shelves &amp;</text>
+      <text x="96" y="658" font-size="24" font-weight="700" fill="#1f1612">curtain rails</text>
+    </g>
+    <g>
+      <rect x="392" y="534" width="296" height="140" rx="18" fill="#f0dcc2"/>
+      <rect x="416" y="558" width="36" height="6" rx="3" fill="#d97742"/>
+      <text x="416" y="594" font-size="16" font-weight="700" letter-spacing="2" fill="#b85a2a">TILING</text>
+      <text x="416" y="629" font-size="24" font-weight="700" fill="#1f1612">Re-grouting,</text>
+      <text x="416" y="658" font-size="24" font-weight="700" fill="#1f1612">a cracked tile</text>
+    </g>
+    <g>
+      <rect x="712" y="534" width="296" height="140" rx="18" fill="#dee6d4"/>
+      <rect x="736" y="558" width="36" height="6" rx="3" fill="#5d7a47"/>
+      <text x="736" y="594" font-size="16" font-weight="700" letter-spacing="2" fill="#5d7a47">ASSEMBLY</text>
+      <text x="736" y="629" font-size="24" font-weight="700" fill="#1f1612">Flat-pack</text>
+      <text x="736" y="658" font-size="24" font-weight="700" fill="#1f1612">furniture</text>
+    </g>
+  </g>
+
+  <rect x="72" y="706" width="936" height="72" rx="18" fill="#1f1612"/>
+  <text x="540" y="751" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="23" fill="#faf4ec">You agree the price &#183; ID-verified workers &#183; cash or EFT when done</text>
+
+  <rect x="250" y="818" width="580" height="70" rx="35" fill="#d97742"/>
+  <text x="540" y="862" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="700" fill="#faf4ec">Post a handy job &#183; workitsa.co.za</text>
+
+  <text x="540" y="944" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="22" fill="#5a4636">Free during launch &#183; launching in Gauteng</text>
+  <text x="540" y="990" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="24" font-style="italic" fill="#5d7a47">Doorstep start code &#183; trusted-contact share &#183; SOS</text>
+</svg>

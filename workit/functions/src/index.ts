@@ -117,6 +117,8 @@ export { migrateVerificationToPrivate } from "./migratePrivate";
 
 export { backfillEmployerHires } from "./backfillHires";
 
+export { claimWhatsAppProfile } from "./claimWaProfile";
+
 export {
   scheduledMarketingOutreach,
   scheduledMarketingOutreachAfternoon,

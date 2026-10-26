@@ -1,0 +1,27 @@
+[
+  {
+    "_comment": "EXAMPLE ROW — replace every field with a REAL business you want to invite onto Workit. The 'email' values below are deliberately invalid (no @) so an accidental import is skipped and nothing is sent until you add real addresses.",
+    "businessName": "Example Garden Services",
+    "email": "REPLACE-with-real-address",
+    "contactName": "",
+    "suburb": "Alberton",
+    "category": "Gardening",
+    "source": "Google Maps — 'garden services Alberton'"
+  },
+  {
+    "businessName": "Example Guest House",
+    "email": "REPLACE-with-real-address",
+    "contactName": "",
+    "suburb": "Benoni",
+    "category": "Cleaning / hospitality",
+    "source": "Facebook business page"
+  },
+  {
+    "businessName": "Example Moving Company",
+    "email": "REPLACE-with-real-address",
+    "contactName": "",
+    "suburb": "Roodepoort",
+    "category": "Moving / labour",
+    "source": "company website contact page"
+  }
+]

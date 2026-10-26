@@ -1,0 +1,64 @@
+<svg width="1080" height="1080" viewBox="0 0 1080 1080" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>Workit &#8212; your to-do list just got shorter</title>
+  <desc>Cream Workit social post: wordmark, headline "Your to-do list just got shorter.", a stylised checklist showing everyday jobs (fix the tap, deep clean, tidy the garden, move the furniture) all ticked off, three value points, workitsa.co.za call to action.</desc>
+  <defs>
+    <linearGradient id="bg1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#faf4ec"/>
+      <stop offset="1" stop-color="#f1e2cc"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="1080" height="1080" fill="url(#bg1)"/>
+
+  <text x="540" y="74" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" letter-spacing="4" fill="#d97742">WORKIT &#183; GAUTENG</text>
+  <text x="540" y="150" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="78" font-weight="700" fill="#1f1612">Workit</text>
+  <rect x="490" y="170" width="100" height="6" rx="3" fill="#d97742"/>
+
+  <text x="540" y="252" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="50" font-weight="700" fill="#1f1612">Your to-do list</text>
+  <text x="540" y="312" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="50" font-weight="700" fill="#5d7a47">just got shorter.</text>
+
+  <!-- checklist card -->
+  <g font-family="Arial, Helvetica, sans-serif">
+    <rect x="160" y="356" width="760" height="340" rx="20" fill="#fffaf3" stroke="#e3cfb3" stroke-width="2"/>
+    <text x="540" y="404" text-anchor="middle" font-size="18" font-weight="700" letter-spacing="3" fill="#8a7462">THIS WEEK&#8217;S LIST</text>
+    <line x1="200" y1="424" x2="880" y2="424" stroke="#d9c4a8" stroke-width="2" stroke-dasharray="8 8"/>
+
+    <!-- item 1: checked -->
+    <rect x="200" y="444" width="36" height="36" rx="8" fill="#dee6d4" stroke="#5d7a47" stroke-width="2"/>
+    <path d="M210,462 L216,470 L230,454" fill="none" stroke="#5d7a47" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="256" y="472" font-size="26" fill="#8a7462" text-decoration="line-through">Fix the leaking tap</text>
+
+    <!-- item 2: checked -->
+    <rect x="200" y="500" width="36" height="36" rx="8" fill="#dee6d4" stroke="#5d7a47" stroke-width="2"/>
+    <path d="M210,518 L216,526 L230,510" fill="none" stroke="#5d7a47" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="256" y="528" font-size="26" fill="#8a7462" text-decoration="line-through">Deep clean before visitors</text>
+
+    <!-- item 3: checked -->
+    <rect x="200" y="556" width="36" height="36" rx="8" fill="#dee6d4" stroke="#5d7a47" stroke-width="2"/>
+    <path d="M210,574 L216,582 L230,566" fill="none" stroke="#5d7a47" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="256" y="584" font-size="26" fill="#8a7462" text-decoration="line-through">Tidy the garden</text>
+
+    <!-- item 4: checked -->
+    <rect x="200" y="612" width="36" height="36" rx="8" fill="#dee6d4" stroke="#5d7a47" stroke-width="2"/>
+    <path d="M210,630 L216,638 L230,622" fill="none" stroke="#5d7a47" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="256" y="640" font-size="26" fill="#8a7462" text-decoration="line-through">Move the furniture</text>
+  </g>
+
+  <!-- "all done with Workit" badge -->
+  <rect x="350" y="716" width="380" height="44" rx="22" fill="#5d7a47"/>
+  <text x="540" y="746" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" fill="#faf4ec">All sorted &#183; via Workit</text>
+
+  <!-- value points -->
+  <g font-family="Arial, Helvetica, sans-serif" font-size="22" fill="#5a4636">
+    <circle cx="130" cy="808" r="8" fill="#d97742"/>
+    <text x="150" y="816">ID-verified workers nearby</text>
+    <circle cx="470" cy="808" r="8" fill="#5d7a47"/>
+    <text x="490" y="816">You set the price</text>
+    <circle cx="730" cy="808" r="8" fill="#b85a2a"/>
+    <text x="750" y="816">Free during launch</text>
+  </g>
+
+  <rect x="250" y="860" width="580" height="70" rx="35" fill="#d97742"/>
+  <text x="540" y="904" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="700" fill="#faf4ec">Get help today &#183; workitsa.co.za</text>
+
+  <text x="540" y="990" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="26" font-style="italic" fill="#5d7a47">One less thing to worry about.</text>
+</svg>

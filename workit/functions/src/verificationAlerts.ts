@@ -11,9 +11,14 @@
  */
 import { onDocumentWritten } from "firebase-functions/v2/firestore";
 import { logger } from "firebase-functions";
+import { defineSecret } from "firebase-functions/params";
 import { SENDGRID_API_KEY, SENDGRID_FROM_EMAIL, APP_URL, SUPPORT_EMAIL, send, shell } from "./mailer";
 import { dispatchPush } from "./notify";
 import { buildWelcomeEmail, loadSocialLinks } from "./welcomeContent";
+
+const WHATSAPP_TOKEN = defineSecret("WHATSAPP_TOKEN");
+const WHATSAPP_PHONE_NUMBER_ID = defineSecret("WHATSAPP_PHONE_NUMBER_ID");
+const GRAPH_VERSION = "v22.0";
 
 type UserDoc = {
   role?: string;
@@ -21,6 +26,7 @@ type UserDoc = {
   displayName?: string;
   verificationStatus?: string;
   verification?: { reviewerNote?: string };
+  whatsappNumber?: string;
 };
 
 const MESSAGES: Record<
@@ -66,7 +72,7 @@ const CTA_PATH: Record<string, string> = {
 export const onVerificationDecision = onDocumentWritten(
   {
     document: "users/{uid}",
-    secrets: [SENDGRID_API_KEY, SENDGRID_FROM_EMAIL],
+    secrets: [SENDGRID_API_KEY, SENDGRID_FROM_EMAIL, WHATSAPP_TOKEN, WHATSAPP_PHONE_NUMBER_ID],
   },
   async (event) => {
     const before = event.data?.before.data() as UserDoc | undefined;
@@ -119,6 +125,44 @@ export const onVerificationDecision = onDocumentWritten(
         logger.warn("Verification decision email failed", { uid, err: String(err) });
       }
     }
+    // WhatsApp — for workers who onboarded via WhatsApp, send the approval
+    // notification + instruction manual directly to their chat.
+    const waNumber = after.whatsappNumber;
+    if (next === "approved" && after.role === "worker" && waNumber) {
+      try {
+        const phoneId = WHATSAPP_PHONE_NUMBER_ID.value();
+        const token = WHATSAPP_TOKEN.value();
+        const manual =
+          `✅ *Great news, ${name}!* Your Workit profile has been *approved*.\n\n`
+          + "You're now a verified worker — employers see a ✓ badge on your profile and you can start finding work.\n\n"
+          + "📋 *Here's how to use Workit on WhatsApp:*\n\n"
+          + "• *JOBS* — browse open jobs near you\n"
+          + "• *1* or *2* — apply for a job from the list\n"
+          + "• *1 500* — counter-offer R500 on job 1\n"
+          + "• *AVAILABLE* — set yourself as available now (gets you more alerts)\n"
+          + "• *UNAVAILABLE* — pause job alerts\n"
+          + "• *SOS* — emergency help button\n"
+          + "• *STOP* — opt out of WhatsApp alerts\n"
+          + "• *HELP* — see this list again\n\n"
+          + "Good luck out there! 💪";
+        const res = await fetch(`https://graph.facebook.com/${GRAPH_VERSION}/${phoneId}/messages`, {
+          method: "POST",
+          headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+          body: JSON.stringify({
+            messaging_product: "whatsapp",
+            to: waNumber,
+            type: "text",
+            text: { body: manual },
+          }),
+        });
+        if (!res.ok) {
+          logger.warn("WhatsApp approval notification failed", { uid, status: res.status, body: await res.text() });
+        }
+      } catch (err) {
+        logger.warn("WhatsApp approval notification error", { uid, err: String(err) });
+      }
+    }
+
     logger.info(`Verification decision notified: ${prev} → ${next}`, { uid });
   },
 );

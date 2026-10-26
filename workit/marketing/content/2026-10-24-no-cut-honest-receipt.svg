@@ -1,0 +1,51 @@
+<svg width="1080" height="1080" viewBox="0 0 1080 1080" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>Workit &#8212; no commission during launch</title>
+  <desc>Cream Workit social post: wordmark, headline "The price you agree is the price they get.", a simple receipt card showing agreed price, Workit commission R0 during launch, and the worker taking home the full amount, three trust points, workitsa.co.za call to action.</desc>
+  <defs>
+    <linearGradient id="bg1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#faf4ec"/>
+      <stop offset="1" stop-color="#f1e2cc"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="1080" height="1080" fill="url(#bg1)"/>
+
+  <text x="540" y="74" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" letter-spacing="4" fill="#d97742">WORKIT &#183; GAUTENG</text>
+  <text x="540" y="150" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="78" font-weight="700" fill="#1f1612">Workit</text>
+  <rect x="490" y="170" width="100" height="6" rx="3" fill="#d97742"/>
+
+  <text x="540" y="252" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="50" font-weight="700" fill="#1f1612">The price you agree</text>
+  <text x="540" y="312" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="50" font-weight="700" fill="#b85a2a">is the price they get.</text>
+
+  <!-- receipt card -->
+  <g font-family="Arial, Helvetica, sans-serif">
+    <rect x="200" y="356" width="680" height="330" rx="20" fill="#fffaf3" stroke="#e3cfb3" stroke-width="2"/>
+    <text x="540" y="406" text-anchor="middle" font-size="18" font-weight="700" letter-spacing="3" fill="#8a7462">JOB DONE &#183; HOW THE MONEY MOVES</text>
+    <line x1="244" y1="430" x2="836" y2="430" stroke="#d9c4a8" stroke-width="2" stroke-dasharray="8 8"/>
+
+    <text x="250" y="482" font-size="27" fill="#1f1612">Price you agreed together</text>
+    <text x="830" y="482" text-anchor="end" font-size="27" font-weight="700" fill="#1f1612">100%</text>
+
+    <text x="250" y="540" font-size="27" fill="#1f1612">Workit commission</text>
+    <text x="250" y="568" font-size="18" fill="#8a7462">during launch</text>
+    <text x="830" y="546" text-anchor="end" font-size="27" font-weight="700" fill="#5d7a47">R0</text>
+
+    <line x1="244" y1="596" x2="836" y2="596" stroke="#d9c4a8" stroke-width="2" stroke-dasharray="8 8"/>
+    <rect x="232" y="612" width="616" height="58" rx="12" fill="#dee6d4"/>
+    <text x="256" y="651" font-size="28" font-weight="700" fill="#1f1612">Worker takes home</text>
+    <text x="824" y="651" text-anchor="end" font-family="Georgia, 'Times New Roman', serif" font-size="30" font-weight="700" fill="#5d7a47">All of it</text>
+  </g>
+
+  <g font-family="Arial, Helvetica, sans-serif" font-size="22" fill="#5a4636">
+    <circle cx="150" cy="740" r="8" fill="#d97742"/>
+    <text x="170" y="748">ID-verified on both sides</text>
+    <circle cx="470" cy="740" r="8" fill="#5d7a47"/>
+    <text x="490" y="748">Cash or EFT, paid direct</text>
+    <circle cx="780" cy="740" r="8" fill="#b85a2a"/>
+    <text x="800" y="748">Only once it&#8217;s done</text>
+  </g>
+
+  <rect x="250" y="800" width="580" height="70" rx="35" fill="#d97742"/>
+  <text x="540" y="844" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="700" fill="#faf4ec">Free during launch &#183; workitsa.co.za</text>
+
+  <text x="540" y="930" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="26" font-style="italic" fill="#5d7a47">Honest work, honest pay.</text>
+</svg>

@@ -1,0 +1,59 @@
+<svg width="1080" height="1080" viewBox="0 0 1080 1080" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>Workit &#8212; post your weekend to-do list</title>
+  <desc>Cream Workit social post for employers: wordmark, headline "That weekend to-do list?", a paper to-do card with four everyday jobs, three trust points (ID-verified workers, you agree the price, cash or EFT when done), workitsa.co.za call to action and launch line.</desc>
+  <defs>
+    <linearGradient id="bg1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#faf4ec"/>
+      <stop offset="1" stop-color="#f1e2cc"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="1080" height="1080" fill="url(#bg1)"/>
+
+  <text x="540" y="74" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" letter-spacing="4" fill="#d97742">WORKIT &#183; GAUTENG</text>
+  <text x="540" y="150" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="78" font-weight="700" fill="#1f1612">Workit</text>
+  <rect x="490" y="170" width="100" height="6" rx="3" fill="#d97742"/>
+
+  <text x="540" y="252" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="56" font-weight="700" fill="#1f1612">That weekend to-do list?</text>
+  <text x="540" y="298" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="30" font-style="italic" fill="#b85a2a">Post it tonight. Let someone nearby help.</text>
+
+  <!-- to-do card -->
+  <g transform="rotate(-1.5 540 490)">
+    <rect x="196" y="338" width="688" height="300" rx="16" fill="#1f1612" opacity="0.08" transform="translate(6 8)"/>
+    <rect x="196" y="338" width="688" height="300" rx="16" fill="#fffaf3" stroke="#e6d3ba" stroke-width="2"/>
+    <rect x="196" y="338" width="688" height="56" rx="16" fill="#d97742"/>
+    <rect x="196" y="370" width="688" height="24" fill="#d97742"/>
+    <text x="236" y="375" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" letter-spacing="3" fill="#faf4ec">THIS SATURDAY</text>
+    <g font-family="Arial, Helvetica, sans-serif" font-size="29" fill="#1f1612">
+      <rect x="236" y="420" width="30" height="30" rx="7" fill="none" stroke="#5d7a47" stroke-width="3"/>
+      <text x="290" y="445">Cut the grass &amp; trim the hedge</text>
+      <line x1="236" y1="472" x2="844" y2="472" stroke="#efe2cf" stroke-width="2"/>
+      <rect x="236" y="486" width="30" height="30" rx="7" fill="none" stroke="#5d7a47" stroke-width="3"/>
+      <text x="290" y="511">Clean the gutters</text>
+      <line x1="236" y1="538" x2="844" y2="538" stroke="#efe2cf" stroke-width="2"/>
+      <rect x="236" y="552" width="30" height="30" rx="7" fill="none" stroke="#5d7a47" stroke-width="3"/>
+      <text x="290" y="577">Fix the dripping kitchen tap</text>
+      <line x1="236" y1="604" x2="844" y2="604" stroke="#efe2cf" stroke-width="2" opacity="0"/>
+    </g>
+    <text x="290" y="622" font-family="Georgia, 'Times New Roman', serif" font-size="22" font-style="italic" fill="#8a6f58">...and finally move those boxes to the garage</text>
+  </g>
+
+  <!-- trust points -->
+  <g font-family="Arial, Helvetica, sans-serif" text-anchor="middle">
+    <rect x="72" y="690" width="296" height="104" rx="18" fill="#dee6d4"/>
+    <text x="220" y="734" font-size="25" font-weight="700" fill="#1f1612">ID-verified</text>
+    <text x="220" y="768" font-size="19" fill="#5a4636">workers near you</text>
+
+    <rect x="392" y="690" width="296" height="104" rx="18" fill="#f0dcc2"/>
+    <text x="540" y="734" font-size="25" font-weight="700" fill="#1f1612">You agree</text>
+    <text x="540" y="768" font-size="19" fill="#5a4636">the price together</text>
+
+    <rect x="712" y="690" width="296" height="104" rx="18" fill="#dee6d4"/>
+    <text x="860" y="734" font-size="25" font-weight="700" fill="#1f1612">Cash or EFT</text>
+    <text x="860" y="768" font-size="19" fill="#5a4636">when the job is done</text>
+  </g>
+
+  <rect x="250" y="832" width="580" height="72" rx="36" fill="#d97742"/>
+  <text x="540" y="877" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="27" font-weight="700" fill="#faf4ec">Post your job &#183; workitsa.co.za</text>
+
+  <text x="540" y="958" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="23" fill="#5a4636">No card needed &#183; free during launch &#183; launching in Gauteng</text>
+</svg>

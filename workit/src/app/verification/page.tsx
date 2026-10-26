@@ -31,6 +31,12 @@ function VerificationInner() {
   const { user, profile, loading, refreshProfile } = useAuth();
   const { t } = useTranslation();
 
+  useEffect(() => {
+    if (profile?.verificationStatus === "approved" && welcome) {
+      router.replace("/");
+    }
+  }, [profile, welcome, router]);
+
   const [idNumber, setIdNumber] = useState("");
   const [idPhotoURL, setIdPhotoURL] = useState<string>("");
   const [selfieVideoURL, setSelfieVideoURL] = useState<string>("");
@@ -547,6 +553,13 @@ function EmployerVerificationForm() {
   const { t } = useTranslation();
   const router = useRouter();
   const welcome = useSearchParams().get("welcome") === "1";
+
+  useEffect(() => {
+    if (profile?.verificationStatus === "approved" && welcome) {
+      router.replace("/");
+    }
+  }, [profile, welcome, router]);
+
   const [idNumber, setIdNumber] = useState("");
   const [idPhotoURL, setIdPhotoURL] = useState("");
   const [selfieVideoURL, setSelfieVideoURL] = useState("");
