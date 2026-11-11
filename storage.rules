@@ -1,0 +1,62 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    function isSignedIn() { return request.auth != null; }
+    function isSelf(uid) { return isSignedIn() && request.auth.uid == uid; }
+
+    // Admin check via Firestore role lookup.
+    function isAdmin() {
+      return isSignedIn()
+        && firestore.exists(/databases/(default)/documents/users/$(request.auth.uid))
+        && firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    // --- AVATARS (public profile photos) ---
+    // World-readable so chat bubbles / offer cards can show them.
+    // Only the owner can write to their own folder.
+    match /avatars/{uid}/{file=**} {
+      allow read: if true;
+      allow write: if isSelf(uid)
+        && request.resource.size < 5 * 1024 * 1024
+        && request.resource.contentType.matches('image/.*');
+      allow delete: if isSelf(uid) || isAdmin();
+    }
+
+    // --- VERIFICATION DOCS (ID, selfie video, proof of address) ---
+    // Sensitive. Owner + admins only.
+    match /verification/{uid}/{file=**} {
+      allow read: if isSelf(uid) || isAdmin();
+      allow write: if isSelf(uid)
+        && request.resource.size < 50 * 1024 * 1024
+        && request.resource.contentType.matches('image/.*|video/.*|application/pdf');
+      allow delete: if isSelf(uid) || isAdmin();
+    }
+
+    // --- PORTFOLIO (CV, public showcase photos + videos shown on /u) ---
+    // World-readable so signed-in visitors can see them on the public profile.
+    // Owner writes only. Images, videos, PDFs up to 50 MB.
+    match /portfolio/{uid}/{file=**} {
+      allow read: if true;
+      allow write: if isSelf(uid)
+        && request.resource.size < 50 * 1024 * 1024
+        && request.resource.contentType.matches('image/.*|video/.*|application/pdf');
+      allow delete: if isSelf(uid) || isAdmin();
+    }
+
+    // --- JOB PHOTOS (posting photos + completion proof) ---
+    // Public read so a job link shared via WhatsApp shows the photos to
+    // non-signed-in visitors (matches /jobs Firestore rule which is also
+    // public-read). Write requires sign-in.
+    match /jobs/{jobId}/{file=**} {
+      allow read: if true;
+      allow write: if isSignedIn()
+        && request.resource.size < 15 * 1024 * 1024
+        && request.resource.contentType.matches('image/.*|video/.*');
+      allow delete: if isAdmin();
+    }
+
+    match /{allPaths=**} { allow read, write: if false; }
+  }
+}

@@ -1,0 +1,431 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() { return request.auth != null; }
+    function isSelf(uid) { return isSignedIn() && request.auth.uid == uid; }
+    function userDoc(uid) {
+      return get(/databases/$(database)/documents/users/$(uid)).data;
+    }
+    function myRole() { return userDoc(request.auth.uid).role; }
+    function isAdmin() {
+      return isSignedIn()
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && myRole() == 'admin';
+    }
+    // --- RBAC phase 2 (ADMIN_ROLES.md §4c) ---
+    // Once a person's token carries an adminRole claim (assigned via the
+    // setAdminRole callable, lands on their next sign-in), their perms map is
+    // the SOLE authority — e.g. an "operations" admin can no longer touch
+    // broadcast/erase surfaces even though users/{uid}.role is still "admin".
+    // Legacy binary admins WITHOUT a role claim keep full power (no-lockout
+    // migration); once both founders are tagged, that branch matches nobody.
+    function hasRoleClaim() {
+      return isSignedIn() && 'adminRole' in request.auth.token;
+    }
+    function permClaim(p) {
+      return isSignedIn()
+        && 'perms' in request.auth.token
+        && p in request.auth.token.perms
+        && request.auth.token.perms[p] == true;
+    }
+    function can(p) {
+      return permClaim(p) || (!hasRoleClaim() && isAdmin());
+    }
+    // Coarse "any admin-side actor" — every role qualifies (e.g. audit writes).
+    function isStaff() {
+      return hasRoleClaim() || isAdmin();
+    }
+    // True only when the caller's session passed a second factor (TOTP). The
+    // `in` guard avoids an error when the claim is absent (non-MFA sessions).
+    function usedSecondFactor() {
+      return isSignedIn()
+        && 'sign_in_second_factor' in request.auth.token.firebase
+        && request.auth.token.firebase.sign_in_second_factor != null;
+    }
+    // Account-level approval gate. Legacy users (no accountStatus field)
+    // are treated as approved so old test accounts keep working.
+    function isApprovedAccount() {
+      return isSignedIn()
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && (
+          myRole() == 'admin'
+          || !('accountStatus' in userDoc(request.auth.uid))
+          || userDoc(request.auth.uid).accountStatus == 'approved'
+        );
+    }
+
+    // --- USERS ---
+    match /users/{uid} {
+      allow read: if isSignedIn();
+      allow create: if isSelf(uid)
+        && request.resource.data.uid == uid
+        && request.resource.data.role in ['employer', 'worker', 'business'];
+      // Self can update own profile fields BUT cannot change role,
+      // cannot self-approve verification, cannot fake rating aggregate.
+      // Admins can update anything (used for verification review).
+      // Self may update their own profile but cannot touch protected fields
+      // (role, verification, badge, rating aggregate, account status).
+      // Admins can change anything. Any signed-in user may bump just the
+      // rating aggregate on someone else's profile (used by rating flow).
+      allow update: if can('approvals.manage') || can('verification.review')
+        || can('business.verify') || can('users.suspend')
+        || (isSelf(uid)
+            && !request.resource.data.diff(resource.data).affectedKeys()
+                 .hasAny(['role', 'verificationStatus', 'backgroundVerified',
+                          'ratingAvg', 'ratingCount', 'accountStatus',
+                          'accountReviewedAt', 'accountReviewerNote',
+                          // Trust signals — server-authored only. A user must not
+                          // be able to fabricate their reputation: referral count
+                          // (Connector/Ambassador badges), the completed/cancelled
+                          // job tallies (worker level + experience badges), and the
+                          // employer hire count (shown to workers as a trust signal).
+                          'referralsCount', 'jobsCompleted', 'jobsCancelled',
+                          'employerJobsHired',
+                          // Payment-handshake tallies — only the confirmPayment
+                          // callable moves these (payment reliability signal).
+                          'paymentsConfirmedCount', 'employerPaymentsConfirmed'])
+            // A business may submit its own verification (status pending) but
+            // can NEVER self-approve — only an admin can set approved/rejected.
+            && (
+                 !request.resource.data.diff(resource.data).affectedKeys().hasAny(['businessVerification'])
+                 || request.resource.data.businessVerification.get('status', 'none') in ['none', 'pending']
+               ))
+        // Self-upgrade employer -> business ONLY (never to worker/admin, and
+        // this write may change nothing but the role).
+        || (isSelf(uid)
+            && resource.data.role == 'employer'
+            && request.resource.data.role == 'business'
+            && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['role']))
+        // Rating aggregates are now ONLY written by the submitRating callable
+        // (admin SDK bypasses rules), which authors the rating itself after
+        // verifying the caller's role. Client-side ratingAvg/ratingCount writes
+        // are not allowed.
+        // Bump referralsCount by exactly 1 on SOMEONE ELSE's profile
+        // (used at signup by the new referee crediting their referrer). Only the
+        // count goes up — nothing else may change in the same write — and the
+        // target must not be the caller, so nobody can farm their own badges.
+        || (isSignedIn()
+            && request.auth.uid != uid
+            && request.resource.data.diff(resource.data).affectedKeys()
+                 .hasOnly(['referralsCount'])
+            && request.resource.data.referralsCount is number
+            && request.resource.data.referralsCount == (resource.data.get('referralsCount', 0) + 1));
+      allow delete: if can('users.erase');
+
+      // --- PRIVATE PROFILE DATA (sensitive PII) ---
+      // The user's ID number, verification document URLs, and other sensitive
+      // fields live here — NOT on the world-readable users/{uid} doc — so only
+      // the owner and admins can ever read them. Migrated 2026-06-08.
+      match /private/{doc} {
+        // Owners read their own. Admins may read others' ONLY from a
+        // two-step-verified session (defence-in-depth on ID numbers + home
+        // GPS). The normal admin review flow uses the getVerificationPayload
+        // callable (admin SDK), so this admin path has no client blast radius.
+        allow read: if isSelf(uid) || (can('verification.review') && usedSecondFactor());
+        allow write: if isSelf(uid);
+      }
+
+      // Per-user saved-jobs list (worker bookmarks). Only the owner reads /
+      // writes it; admins can read for support purposes.
+      match /saved/{jobId} {
+        allow read: if isSelf(uid) || can('users.read');
+        allow write: if isSelf(uid);
+      }
+
+      // --- BUSINESS LEADS (worker → business "express interest") ---
+      // The business (owner of {uid}) reads + updates its own leads. A worker
+      // may create a lead about THEMSELVES, and read only their own.
+      match /leads/{leadId} {
+        allow read: if isSelf(uid) || can('users.read')
+          || (isSignedIn() && resource.data.workerUid == request.auth.uid);
+        allow create: if isSignedIn()
+          && request.resource.data.workerUid == request.auth.uid
+          && request.resource.data.businessUid == uid;
+        allow update: if isSelf(uid) || can('users.read');
+        allow delete: if isSelf(uid) || can('moderation.act');
+      }
+
+      // Job templates — owner reads + writes their own
+      match /templates/{templateId} {
+        allow read, write: if isSelf(uid);
+      }
+
+      // --- WORKER SAVED SEARCHES (job alerts) ---
+      // Only the owner sees + manages their own searches.
+      match /searches/{searchId} {
+        allow read, write: if isSelf(uid);
+      }
+
+      // --- FCM PUSH TOKENS ---
+      // Owner writes their own device tokens. Cloud Functions read via
+      // admin SDK (bypasses rules) to dispatch push notifications.
+      // No one else can read someone else's tokens.
+      match /fcmTokens/{tokenId} {
+        allow read, write: if isSelf(uid);
+      }
+    }
+
+    // --- JOBS ---
+    match /jobs/{jobId} {
+      // PUBLIC READ — a job link shared via WhatsApp opens for non-signed-in
+      // visitors so they can preview before signing up. Offers + messages
+      // (subcollections below) remain locked down.
+      allow read: if true;
+
+      // Create: approved-account user posts a job under their own ID, status must be 'open'.
+      allow create: if isApprovedAccount()
+        && request.resource.data.employerId == request.auth.uid
+        && request.resource.data.status == 'open'
+        && request.resource.data.suggestedPrice is number
+        && request.resource.data.suggestedPrice > 0;
+
+      // Update: the employer (for assign/cancel/confirm), the assigned worker
+      // (for in_progress/completed transitions + location sharing) — that
+      // includes any worker in a crew job (assignedWorkerIds[] is the
+      // denormalised list of active crew member UIDs), or any signed-in user
+      // bumping ONLY offer/message counters.
+      allow update: if isSignedIn() && (
+        // Employer owns the job, but may NOT author the worker's rating of them
+        // (workerRating — submitRating callable) or any payment-handshake stamp
+        // (payment* — confirmPayment callable authors both sides).
+        (resource.data.employerId == request.auth.uid
+         && !request.resource.data.diff(resource.data).affectedKeys()
+              .hasAny(['workerRating', 'paymentPaidAt', 'paymentReceivedAt', 'paymentConfirmedAt']))
+        // Assigned worker (single OR any active crew member) drives their own
+        // lifecycle (in_progress/completed), location sharing and completion
+        // photos — but may NOT author the employer's rating of them, change the
+        // price, or reassign ownership. Those are the trust/fraud-sensitive
+        // fields; ratings go through the submitRating callable.
+        || ((resource.data.assignedWorkerId == request.auth.uid
+             || (resource.data.assignedWorkerIds != null
+                 && request.auth.uid in resource.data.assignedWorkerIds))
+            && !request.resource.data.diff(resource.data).affectedKeys()
+                 .hasAny(['employerRating', 'agreedPrice', 'suggestedPrice',
+                          'employerId', 'employerName', 'assignedWorkerId',
+                          'paymentPaidAt', 'paymentReceivedAt', 'paymentConfirmedAt']))
+        || can('disputes.resolve')
+        // Social-proof counter bump (worker sending an offer). Tightened
+        // (security audit 🟡): approved accounts only, counters may move up by
+        // at most 1 per write, photo stack capped — no more bulk inflation.
+        || (isApprovedAccount()
+            && request.resource.data.diff(resource.data).affectedKeys()
+                 .hasOnly(['lastOfferAt', 'offerCount', 'lastMessageAt', 'messageCount', 'offerWorkerPhotos', 'updatedAt'])
+            && request.resource.data.get('offerCount', 0) >= resource.data.get('offerCount', 0)
+            && request.resource.data.get('offerCount', 0) <= resource.data.get('offerCount', 0) + 1
+            && request.resource.data.get('messageCount', 0) >= resource.data.get('messageCount', 0)
+            && request.resource.data.get('messageCount', 0) <= resource.data.get('messageCount', 0) + 1
+            && request.resource.data.get('offerWorkerPhotos', []).size() <= 8)
+      );
+
+      allow delete: if (isSignedIn() && resource.data.employerId == request.auth.uid && resource.data.status == 'open')
+        || can('moderation.act');
+
+      // --- SECURE (subcollection) — job start PIN ---
+      // The 4-digit doorstep start code lives here, NOT on the world-readable
+      // job doc. No client may read or write it: the employer fetches the code
+      // via the getJobStartPin callable, and the worker's entry is checked by
+      // the verifyJobStartPin callable. Both use the Admin SDK (bypasses rules),
+      // so a 4-digit code can never be read off the public doc and brute-forced.
+      match /secure/{doc} {
+        allow read, write: if false;
+      }
+
+      // --- MESSAGES (subcollection) ---
+      // Group chat: employer + every active worker (legacy assignedWorkerId
+      // OR any UID in the crew's assignedWorkerIds[] list) can read + post.
+      match /messages/{messageId} {
+        allow read: if isSignedIn() && (
+          get(/databases/$(database)/documents/jobs/$(jobId)).data.employerId == request.auth.uid
+          || get(/databases/$(database)/documents/jobs/$(jobId)).data.assignedWorkerId == request.auth.uid
+          || (get(/databases/$(database)/documents/jobs/$(jobId)).data.assignedWorkerIds != null
+              && request.auth.uid in get(/databases/$(database)/documents/jobs/$(jobId)).data.assignedWorkerIds)
+          || can('disputes.resolve') || can('moderation.act')
+        );
+        allow create: if isSignedIn()
+          && request.resource.data.senderId == request.auth.uid
+          && request.resource.data.text is string
+          && request.resource.data.text.size() <= 2000
+          // Allow image-only messages: require either non-empty text OR an
+          // imageURL string. Blocks fully-empty messages.
+          && (
+            request.resource.data.text.size() > 0
+            || (request.resource.data.imageURL is string
+                && request.resource.data.imageURL.size() > 0)
+          )
+          && (
+            get(/databases/$(database)/documents/jobs/$(jobId)).data.employerId == request.auth.uid
+            || get(/databases/$(database)/documents/jobs/$(jobId)).data.assignedWorkerId == request.auth.uid
+            || (get(/databases/$(database)/documents/jobs/$(jobId)).data.assignedWorkerIds != null
+                && request.auth.uid in get(/databases/$(database)/documents/jobs/$(jobId)).data.assignedWorkerIds)
+          );
+        allow update, delete: if can('moderation.act');
+      }
+
+      // --- OFFERS (subcollection) ---
+      match /offers/{offerId} {
+        // Job employer and the offer's worker can read. Admins too.
+        allow read: if isSignedIn() && (
+          get(/databases/$(database)/documents/jobs/$(jobId)).data.employerId == request.auth.uid
+          || resource.data.workerId == request.auth.uid
+          || can('disputes.resolve')
+        );
+
+        // Workers create offers on open jobs. Must be account-approved.
+        allow create: if isApprovedAccount()
+          && request.resource.data.workerId == request.auth.uid
+          && request.resource.data.status == 'pending'
+          && request.resource.data.price is number
+          && request.resource.data.price > 0
+          && get(/databases/$(database)/documents/jobs/$(jobId)).data.status == 'open';
+
+        // Updates: the offer's worker may only WITHDRAW their own offer — they
+        // must not be able to self-accept (status 'accepted' is the employer's
+        // decision). The job's employer may accept / reject / manage any offer.
+        allow update: if isSignedIn() && (
+          (resource.data.workerId == request.auth.uid
+           && request.resource.data.status == 'withdrawn')
+          || get(/databases/$(database)/documents/jobs/$(jobId)).data.employerId == request.auth.uid
+        );
+
+        allow delete: if can('moderation.act');
+      }
+    }
+
+    // --- WORK RECORDS (worker's shareable proof-of-work certificate) ---
+    // Written ONLY by the generateWorkRecord callable (Admin SDK), which
+    // aggregates the worker's confirmed jobs server-side. The doc id is an
+    // unguessable bearer token the worker chose to share (same model as a
+    // job's publicShareToken): direct get is public so a landlord/lender can
+    // verify the record from the link, but the collection can't be listed —
+    // Firestore queries require `list`, which stays denied.
+    match /workRecords/{token} {
+      allow get: if true;
+      allow list: if false;
+      allow write: if false; // server-only
+    }
+
+    // --- POPIA DELETION REQUESTS ---
+    // Users submit; admins read + update status. No deletes — keep a record.
+    // (Actual erasure is the eraseUserData callable — users.erase, owner-only.)
+    match /deletionRequests/{requestId} {
+      allow read: if can('approvals.manage');
+      allow create: if isSignedIn()
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.status == 'pending';
+      allow update: if can('approvals.manage');
+      allow delete: if false;
+    }
+
+    // --- AUDIT LOG ---
+    // Any admin-side actor creates entries when acting; reading the log is the
+    // audit.view capability. Nothing is ever updated or deleted.
+    match /auditLog/{entryId} {
+      allow read: if can('audit.view');
+      allow create: if isStaff()
+        && request.resource.data.adminUid == request.auth.uid;
+      allow update, delete: if false;
+    }
+
+    // --- ID-DOC ACCESS LOG (RBAC phase 3 · POPIA PII access logging) ---
+    // Every VIEW of a person's verification documents (getVerificationPayload,
+    // Admin SDK) writes one immutable entry here. Read is the audit.view
+    // capability; clients never write — the record must be tamper-proof.
+    match /idDocAccessLog/{entryId} {
+      allow read: if can('audit.view');
+      allow write: if false; // server-only (Admin SDK bypasses rules)
+    }
+
+    // --- MODERATION LOG ---
+    // Only Cloud Functions (admin SDK) write to this.
+    match /moderationLog/{entryId} {
+      allow read: if can('moderation.act');
+      allow write: if false;
+    }
+
+    // --- SCHEDULER HEARTBEATS (System-health card) ---
+    // Written only by Cloud Functions (heartbeat.ts).
+    match /opsHealth/{fnName} {
+      allow read: if can('analytics.view');
+      allow write: if false;
+    }
+
+    // --- INTERNAL ADMIN NOTES ---
+    // Admin-to-admin context about a user ("called him, docs coming Monday").
+    // NEVER user-visible — deliberately a top-level collection, NOT under
+    // users/{uid}, because owners can read their own private subtree.
+    match /adminNotes/{uid} {
+      allow read, write: if can('users.read');
+    }
+
+    // --- MODERATION FLAGS (text screen, rate limit, first-post review) ---
+    // Cloud Functions write; moderation reads + updates (mark reviewed).
+    match /moderation/{flagId} {
+      allow read: if can('moderation.act');
+      allow create: if false; // server only
+      allow update: if can('moderation.act');
+      allow delete: if false;
+    }
+
+    // --- USER REPORTS ---
+    // Any signed-in user can create a report on themselves' behalf.
+    // Admins read + resolve. Reporters can read their own. Nothing is ever
+    // deleted (audit trail).
+    match /reports/{reportId} {
+      allow read: if can('moderation.act')
+        || (isSignedIn() && resource.data.reporterId == request.auth.uid);
+      allow create: if isSignedIn()
+        && request.resource.data.reporterId == request.auth.uid
+        && request.resource.data.status == 'open'
+        && request.resource.data.targetType in ['job', 'user', 'message', 'offer']
+        && request.resource.data.reason is string
+        && request.resource.data.description is string
+        && request.resource.data.description.size() <= 500;
+      allow update: if can('moderation.act');
+      allow delete: if false;
+    }
+
+    // --- MARKETING LEADS (B2B outreach pipeline) ---
+    // Created ONLY server-side (import script / Admin SDK). Admins read the
+    // pipeline + update statuses from the admin Outreach tab (mark replied /
+    // signed-up / skip). Never client-created or deleted; opt-outs are
+    // recorded by the marketingOptOut function.
+    match /marketingLeads/{leadId} {
+      // Growth pipeline: owner (broadcast.send) + operations (approvals.manage).
+      allow read, update: if can('broadcast.send') || can('approvals.manage');
+      allow create, delete: if false;
+    }
+
+    // --- PLATFORM STATS (server-maintained counters) ---
+    // Written ONLY by Cloud Function triggers (admin SDK bypasses rules).
+    match /stats/{doc} {
+      allow read: if can('analytics.view');
+      allow write: if false;
+    }
+    match /statsDaily/{day} {
+      allow read: if can('analytics.view');
+      allow write: if false;
+    }
+
+    // --- BROADCASTS (admin push campaigns) ---
+    // Written ONLY by the sendBroadcast callable (admin SDK). Owner capability.
+    match /broadcasts/{id} {
+      allow read: if can('broadcast.send');
+      allow write: if false;
+    }
+
+    // --- SUPPORT (WhatsApp front door) ---
+    // Written ONLY by the jarvisWhatsApp webhook (admin SDK bypasses rules).
+    match /supportMessages/{id} {
+      allow read: if can('support.respond');
+      allow write: if false;
+    }
+    match /supportState/{waNumber} {
+      allow read: if can('support.respond');
+      allow write: if false;
+    }
+
+    match /{document=**} { allow read, write: if false; }
+  }
+}
